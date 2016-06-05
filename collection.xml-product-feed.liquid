@@ -1,0 +1,34 @@
+{% layout none %}<?xml version="1.0"?>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+{% assign GoogleProductCategory = collection.description %}
+{% assign CountryCode = 'CA' %}
+{% assign Gender = "unisex" %}
+<channel>
+<title>{{ collection.title | replace: '&', '&amp;' }}</title>
+<link>{{ shop.url }}</link>
+<description>{{ collection.description | strip_html }}</description>
+{% for product in collection.products %}
+  {% for variant in product.variants %}
+<item>
+<title>{{ product.title | replace: '&', '&amp;' }}</title>
+<link>{{ shop.url }}{{ variant.url }}</link>
+<description>{{ product.description | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
+<g:google_product_category>{{ GoogleProductCategory | strip_html }}</g:google_product_category>
+<g:item_group_id>shopify_{{ CountryCode }}_{{ product.id }}</g:item_group_id>
+<g:id>shopify_{{ CountryCode }}_{{ product.id }}_{{ variant.id }}</g:id>
+<g:condition>new</g:condition>
+<g:price>{{ variant.price | money_without_currency }} {{ shop.currency }}</g:price>
+<g:availability>{% if variant.available %}in stock{% else %}out of stock{% endif %}</g:availability>
+<g:image_link>{{ variant.image.src | product_img_url: 'grande' }}</g:image_link>
+<g:gtin/>
+<g:brand>{{ product.vendor }}</g:brand>
+<g:mpn>{{ variant.sku }}</g:mpn>
+<g:product_type>{{ product.type }}</g:product_type>
+<g:age_group>adult</g:age_group>
+{% for option in product.options %}{% if option == 'Color' %}<g:color>{{ variant.options[forloop.index0] }}</g:color>{% elsif option == 'Size' %}<g:size>{{ variant.options[forloop.index0] }}</g:size><g:size_system>US</g:size_system>{% endif%}{% endfor %}
+<g:gender>{{ Gender }}</g:gender>
+</item>
+  {% endfor %}
+{% endfor %}
+</channel>
+</rss>
