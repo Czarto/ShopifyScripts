@@ -3,14 +3,26 @@
 {% assign GoogleProductCategory = collection.description %}
 {% assign CountryCode = 'CA' %}
 {% assign Gender = "unisex" %}
+{% assign AgeGroup = "adult" %}
+{% assign Color = "" %}
+{% assign Size = "" %}
 <channel>
-<title>{{ collection.title | replace: '&', '&amp;' }}</title>
+<title>{{ product.vendor }} {{ collection.title | replace: '&', '&amp;' }}</title>
 <link>{{ shop.url }}</link>
 <description>{{ collection.description | strip_html }}</description>
 {% for product in collection.products %}
+  {% capture Gender %}{% if product.title contains "Ladies" %}female{% elsif product.title contains "Men" %}male{% else %}unisex{% endif %}{% endcapture %} 
+  {% capture AgeGroup %}{% if product.title contains "Baby" %}infant{% elsif product.title contains "Girl" %}kids{% elsif  product.title contains "Boy" %}kids{% elsif product.title contains "Kid" %}kids{% elsif product.title contains "Youth" %}kids{% else %}adult{% endif %}{% endcapture %}
+  {% for option in product.options %}
+  	{% if option == 'Color' %}{% assign Color = variant.options[forloop.index0] %}
+  	{% elsif option == 'Size' %}{% assign Size = variant.options[forloop.index0] %}
+  	{% endif %}
+  {% endfor %}
+
   {% for variant in product.variants %}
+
 <item>
-<title>{{ product.title | replace: '&', '&amp;' }}</title>
+<title>{{ product.vendor }} {{ product.title | replace: '&', '&amp;' }} {{ Color }}</title>
 <link>{{ shop.url }}{{ variant.url }}</link>
 <description>{{ product.description | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
 <g:google_product_category>{{ GoogleProductCategory | strip_html }}</g:google_product_category>
@@ -24,11 +36,13 @@
 <g:brand>{{ product.vendor }}</g:brand>
 <g:mpn>{{ variant.sku }}</g:mpn>
 <g:product_type>{{ product.type }}</g:product_type>
-<g:age_group>adult</g:age_group>
-{% for option in product.options %}{% if option == 'Color' %}<g:color>{{ variant.options[forloop.index0] }}</g:color>{% elsif option == 'Size' %}<g:size>{{ variant.options[forloop.index0] }}</g:size><g:size_system>US</g:size_system>{% endif%}{% endfor %}
+<g:age_group>{{ AgeGroup }}</g:age_group>
+{% unless Color == "" %}<g:color>{{ Color  | remove: ' CG55' }}</g:color>{% endunless %}
+{% unless Size == "" %}<g:size>{{ Size }}</g:size><g:size_system>US</g:size_system>{% endunless %}
 <g:gender>{{ Gender }}</g:gender>
 </item>
-  {% endfor %}
+
+{% endfor %}
 {% endfor %}
 </channel>
 </rss>
