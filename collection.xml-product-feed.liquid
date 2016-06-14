@@ -7,7 +7,7 @@
 {% assign Color = "" %}
 {% assign Size = "" %}
 <channel>
-<title>{{ product.vendor }} {{ collection.title | replace: '&', '&amp;' }}</title>
+<title>{{ shop.name }} {{ collection.title | replace: '&', '&amp;' }}</title>
 <link>{{ shop.url }}</link>
 <description>{{ collection.description | strip_html }}</description>
 {% for product in collection.products %}
