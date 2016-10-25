@@ -1,4 +1,11 @@
 <!-- Google Dynamic Remarketing -->
+{% comment %} Enter your account specific value below {% endcomment %}
+{% assign google_conversion_id = 0 %}
+{% assign google_conversion_label = "abcdefghijklmnop" %}
+{% assign google_conversion_currency = "USD" %}
+{% assign shopify_store_country = "USD" %}
+
+
 <script type="text/javascript">
 var google_tag_params = {
   ecomm_prodid: [{% for item in order.line_items %}'shopify_CA_{{ item.product.id }}_{{ item.variant.id }}'{% unless forloop.last %}, {% endunless %}{% endfor %}],
