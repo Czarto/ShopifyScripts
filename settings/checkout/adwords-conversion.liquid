@@ -2,7 +2,6 @@
 {% comment %} Enter your account specific value below {% endcomment %}
 {% assign google_conversion_id = 0 %}
 {% assign google_conversion_label = "abcdefghijklmnop" %}
-{% assign google_conversion_currency = "USD" %}
 <script type="text/javascript">
 /* <![CDATA[ */
 var google_conversion_id = {{ google_conversion_id }};
@@ -12,7 +11,7 @@ var google_conversion_color = "ffffff";
 var google_conversion_label = "{{ google_conversion_label }}";
 var google_conversion_value = {{ total_price | money_without_currency | remove: ',' }};
 var google_conversion_order_id = "{{ order.order_number }}";
-var google_conversion_currency = "{{ google_conversion_currency }}";
+var google_conversion_currency = "{{ shop.currency }}";
 var google_remarketing_only = false;
 /* ]]> */
 </script>
@@ -20,6 +19,6 @@ var google_remarketing_only = false;
 </script>
 <noscript>
 <div style="display:inline;">
-<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/{{ google_conversion_id }}/?value={{ total_price | money_without_currency | remove: ',' }}&oid={{ order.order_number }}&currency_code={{ google_conversion_currency }}&label={{ google_conversion_label }}&guid=ON&script=0"/>
+<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/{{ google_conversion_id }}/?value={{ total_price | money_without_currency | remove: ',' }}&oid={{ order.order_number }}&currency_code={{ shop.currency }}&label={{ google_conversion_label }}&guid=ON&script=0"/>
 </div>
 </noscript>
