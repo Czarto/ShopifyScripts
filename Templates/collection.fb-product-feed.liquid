@@ -1,0 +1,47 @@
+{% layout none %}<?xml version="1.0"?>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+{% paginate collection.products by 1000 %}
+{% assign CountryCode = 'CA' %}
+{% assign Color = "" %}
+{% assign Size = "" %}
+<channel>
+<title>{{ shop.name }} {{ collection.title | replace: '&', '&amp;' }}</title>
+<link>{{ shop.url }}</link>
+<description>{{ collection.description | strip_html }}</description>
+{% for product in collection.products %} 
+  {% assign GoogleProductCategory = product.metafields.google.google_product_type %}
+  {% assign Gender = product.metafields.google.gender %}
+  {% assign AgeGroup = product.metafields.google.age_group %}
+    
+  {% for variant in product.variants %}
+    {% for option in product.options %}
+  	{% if option == 'Color' %}{% capture Color %}{{ variant.options[forloop.index0] }}{% endcapture %}
+  	{% elsif option == 'Size' %}{% capture Size %}{{ variant.options[forloop.index0] }}{% endcapture %}
+  	{% endif %}
+  	{% endfor %}
+<item>
+<title>{{ product.title | strip_html | strip_newlines | replace: '&', '&amp;' }}</title>
+<link>{{ shop.url }}{{ variant.url }}</link>
+<description>{{ product.description | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
+<g:google_product_category>{{ GoogleProductCategory | replace: '&', '&amp;'  }}</g:google_product_category>
+<g:item_group_id>shopify_{{ CountryCode }}_{{ product.id }}</g:item_group_id>
+<g:id>{{ variant.id }}</g:id>
+<g:condition>new</g:condition>
+<g:price>{{ variant.price | money_without_currency }} {{ shop.currency }}</g:price>
+<g:availability>{% if variant.available %}in stock{% else %}out of stock{% endif %}</g:availability>
+<g:image_link>http:{{ variant.image.src | product_img_url: 'grande' }}</g:image_link>
+<g:gtin>{{ variant.barcode }}</g:gtin>
+<g:brand>{{ product.vendor }}</g:brand>
+<g:mpn>{{ variant.sku }}</g:mpn>
+<g:product_type>{{ product.type }}</g:product_type>
+<g:age_group>{{ AgeGroup }}</g:age_group>
+{% unless Color == "" %}<g:color>{{ Color }}</g:color>{% endunless %}
+{% unless Size == "" %}<g:size>{{ Size  | remove: 'Mens ' | remove: 'Ladies ' | remove: 'Child ' | remove: 'Infant ' }}</g:size><g:size_system>US</g:size_system>{% endunless %}
+<g:gender>{{ Gender }}</g:gender>
+</item>
+
+{% endfor %}
+{% endfor %}
+</channel>
+</rss>
+{% endpaginate %}
