@@ -6,9 +6,9 @@
 {% assign Color = "" %}
 {% assign Size = "" %}
 <channel>
-<title>{{ shop.name }} {{ collection.title | replace: '&', '&amp;' }}</title>
+<title>{{ shop.name }} {{ collection.title | strip_html | strip_newlines | replace: '&', '&amp;' }}</title>
 <link>{{ shop.url }}</link>
-<description>{{ collection.description | strip_html }}</description>
+<description>{{ collection.description | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
 {% for product in collection.products %} 
   {% assign GoogleProductCategory = product.metafields.google.google_product_type %}
   {% assign Gender = product.metafields.google.gender %}
