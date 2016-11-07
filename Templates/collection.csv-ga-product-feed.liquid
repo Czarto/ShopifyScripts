@@ -1,0 +1,2 @@
+{% layout none %}{% paginate collection.products by 1000 %}ga:productSku,ga:productName,ga:productVariant{% for product in collection.products %}{% for variant in product.variants %}
+{{ variant.sku }},{{ product.title | replace: ',','' }},{{variant.title | replace: ',',''}}{% endfor %}{% endfor %}{% endpaginate %}
