@@ -14,6 +14,26 @@
   {% assign Gender = product.metafields.google.gender %}
   {% assign AgeGroup = product.metafields.google.age_group %}
     
+  {% comment %}Output the top level product and then all variants{% endcomment%}
+<item>
+<title>{{ product.title | strip_html | strip_newlines | replace: '&', '&amp;' }}</title>
+<link>{{ shop.url }}{{ product.url }}</link>
+<description>{{ product.description | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
+<g:google_product_category>{{ GoogleProductCategory | replace: '&', '&amp;'  }}</g:google_product_category>
+<g:item_group_id>shopify_{{ CountryCode }}_{{ product.id }}</g:item_group_id>
+<g:id>{{ product.id }}</g:id>
+<g:condition>new</g:condition>
+<g:price>{{ product.price | money_without_currency }} {{ shop.currency }}</g:price>
+<g:availability>{% if product.available %}in stock{% else %}out of stock{% endif %}</g:availability>
+<g:image_link>http:{{ product.image.src | product_img_url: 'grande' }}</g:image_link>
+<g:gtin>{{ product.barcode }}</g:gtin>
+<g:brand>{{ product.vendor }}</g:brand>
+<g:mpn>{{ product.sku }}</g:mpn>
+<g:product_type>{{ product.type }}</g:product_type>
+<g:age_group>{{ AgeGroup }}</g:age_group>
+<g:gender>{{ Gender }}</g:gender>
+</item>
+
   {% for variant in product.variants %}
     {% for option in product.options %}
   	{% if option == 'Color' %}{% capture Color %}{{ variant.options[forloop.index0] }}{% endcapture %}
