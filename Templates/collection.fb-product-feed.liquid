@@ -25,7 +25,7 @@
 <g:condition>new</g:condition>
 <g:price>{{ product.price | money_without_currency }} {{ shop.currency }}</g:price>
 <g:availability>{% if product.available %}in stock{% else %}out of stock{% endif %}</g:availability>
-<g:image_link>http:{{ product.image.src | product_img_url: 'grande' }}</g:image_link>
+<g:image_link>http:{{ product.featured_image.src | product_img_url: 'grande' }}</g:image_link>
 <g:gtin>{{ product.barcode }}</g:gtin>
 <g:brand>{{ product.vendor }}</g:brand>
 <g:mpn>{{ product.sku }}</g:mpn>
