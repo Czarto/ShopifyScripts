@@ -36,8 +36,8 @@
 <g:mpn>{{ variant.sku }}</g:mpn>
 <g:product_type>{{ product.type }}</g:product_type>
 <g:age_group>{{ AgeGroup }}</g:age_group>
-{% unless Color == "" %}<g:color>{{ Color }}</g:color>{% endunless %}
-{% unless Size == "" %}<g:size>{{ Size }}</g:size><g:size_system>US</g:size_system>{% endunless %}
+{% unless Color == "" %}<g:color>{{ Color | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:color>{% endunless %}
+{% unless Size == "" %}<g:size>{{ Size | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:size><g:size_system>US</g:size_system>{% endunless %}
 <g:gender>{{ Gender }}</g:gender>
 </item>
 
