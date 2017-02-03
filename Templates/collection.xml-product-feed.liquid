@@ -44,6 +44,8 @@
 <g:custom_label_2>{{ product.metafields.google.custom_label_2 }}</g:custom_label_2>
 <g:custom_label_3>{{ product.metafields.google.custom_label_3 }}</g:custom_label_3>
 <g:custom_label_4>{{ product.metafields.google.custom_label_4 }}</g:custom_label_4>
+
+<g:shipping_weight>{{ variant.weight | weight_with_unit }}</g:shipping_weight>
 </item>
 
 {% endfor %}
