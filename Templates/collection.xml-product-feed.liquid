@@ -1,6 +1,8 @@
 {% layout none %}<?xml version="1.0"?>
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
 {% paginate collection.products by 1000 %}
+{% assign useSEOtile = false %}
+{% assign useSEOdescription = false %}
 {% assign CountryCode = 'US' %}
 {% if shop.currency == 'CAD' %}{% assign CountryCode = 'CA' %}{% endif %}
 {% assign Color = "" %}
@@ -13,17 +15,23 @@
   {% assign GoogleProductCategory = product.metafields.google.google_product_type %}
   {% assign Gender = product.metafields.google.gender %}
   {% assign AgeGroup = product.metafields.google.age_group %}
-    
+      
   {% for variant in product.variants %}
     {% for option in product.options %}
   	{% if option == 'Color' %}{% capture Color %}{{ variant.options[forloop.index0] }}{% endcapture %}
   	{% elsif option == 'Size' %}{% capture Size %}{{ variant.options[forloop.index0]  }}{% endcapture %}
   	{% endif %}
   	{% endfor %}
+    
+    {% capture productTitle %}{{ product.vendor }} {{ product.title }} {{ Color }}{% endcapture %}
+    {% if useSEOtitle and product.metafields.global.title_tag.size > 0 %}{% assign productTitle = product.metafields.global.title_tag %}{% endif %}
+    {% assign productDescrition = product.description %}
+    {% if useSEOdescription and product.metafields.global.description_tag.size > 0 %}{% assign productDescrition = product.metafields.global.description_tag %}{% endif %}
+
 <item>
-<title>{{ product.vendor }} {{ product.title | replace: '&', '&amp;' }} {{ Color }}</title>
+<title>{{ productTitle | replace: '&', '&amp;' }}</title>
 <link>{{ shop.url }}{{ variant.url }}</link>
-<description>{{ product.description | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
+<description>{{ productDescrition | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
 <g:google_product_category>{{ GoogleProductCategory | replace: '&', '&amp;'  }}</g:google_product_category>
 <g:item_group_id>shopify_{{ CountryCode }}_{{ product.id }}</g:item_group_id>
 <g:id>shopify_{{ CountryCode }}_{{ product.id }}_{{ variant.id }}</g:id>
