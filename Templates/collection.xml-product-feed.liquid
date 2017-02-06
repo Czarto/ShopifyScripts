@@ -1,7 +1,7 @@
 {% layout none %}<?xml version="1.0"?>
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
 {% paginate collection.products by 1000 %}
-{% assign useSEOtile = false %}
+{% assign useSEOtitle = false %}
 {% assign useSEOdescription = false %}
 {% assign CountryCode = 'US' %}
 {% if shop.currency == 'CAD' %}{% assign CountryCode = 'CA' %}{% endif %}
