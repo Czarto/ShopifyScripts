@@ -1,0 +1,15 @@
+{% for option in product.options %}
+  {% if option == 'Color' %}
+    {% assign index = forloop.index0 %}
+    {% assign colorlist = '' %}
+    {% assign color = '' %}
+    {% for variant in product.variants %}
+      {% capture color %}{{ variant.options[index] }}{% endcapture %}
+      {% unless colorlist contains color %}
+        <img src="{{ color | downcase | append: '.gif' | asset_url }}" alt="{{ color }}" width="16" height="16" />
+        {% capture tempList %}{{colorlist | append: color | append: ‘ ‘}}{% endcapture %}
+        {% assign colorlist = tempList %}
+      {% endunless %}
+    {% endfor %}
+  {% endif %}
+{% endfor %}
