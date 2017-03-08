@@ -45,7 +45,7 @@
 <link>{{ shop.url }}{{ variant.url }}</link>
 <description>{{ product.title | strip_html | strip_newlines | replace: '&', '&amp;' }} {{ variant.title | strip_html | strip_newlines | replace: '&', '&amp;' }} {{ product.description | replace: '</', ' </' | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
 <g:google_product_category>{{ GoogleProductCategory | replace: '&', '&amp;'  }}</g:google_product_category>
-<g:item_group_id>shopify_{{ CountryCode }}_{{ product.id }}</g:item_group_id>
+<g:item_group_id>{{ product.id }}</g:item_group_id>
 <g:id>{{ variant.id }}</g:id>
 <g:condition>new</g:condition>
 <g:price>{{ variant.price | money_without_currency }} {{ shop.currency }}</g:price>
