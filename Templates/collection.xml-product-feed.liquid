@@ -38,7 +38,7 @@
 <g:condition>new</g:condition>
 <g:price>{{ variant.price | money_without_currency }} {{ shop.currency }}</g:price>
 <g:availability>{% if variant.available %}in stock{% else %}out of stock{% endif %}</g:availability>
-<g:image_link>http:{{ variant.image.src | product_img_url: 'grande' }}</g:image_link>
+<g:image_link>http:{% if variant.image.src %}{{ variant.image.src | product_img_url: 'grande' }}{% else %}{{ product.featured_image.src | product_img_url: 'grande' }}{% endif %}</g:image_link>
 <g:gtin>{{ variant.barcode }}</g:gtin>
 <g:brand>{{ product.vendor }}</g:brand>
 <g:mpn>{{ variant.sku }}</g:mpn>
