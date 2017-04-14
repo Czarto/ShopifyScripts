@@ -30,7 +30,7 @@
 	var google_tag_params = {
       ecomm_prodid: 'shopify_{{ shopify_store_country  }}_{{ product.id }}_{{ product.selected_or_first_available_variant.id }}',
   		ecomm_pagetype: 'product',
-  		ecomm_totalvalue: {{ product.price | money_without_currency  | remove: ','  }}
+  		ecomm_totalvalue: {{ product.selected_or_first_available_variant.price | money_without_currency  | remove: ','  }}
 	};
   
   {% elsif template contains 'search' %}
