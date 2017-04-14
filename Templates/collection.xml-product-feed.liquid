@@ -25,13 +25,13 @@
     
     {% capture productTitle %}{{ product.vendor }} {{ product.title }} {{ Color }}{% endcapture %}
     {% if useSEOtitle and product.metafields.global.title_tag.size > 0 %}{% assign productTitle = product.metafields.global.title_tag %}{% endif %}
-    {% assign productDescrition = product.description %}
-    {% if useSEOdescription and product.metafields.global.description_tag.size > 0 %}{% assign productDescrition = product.metafields.global.description_tag %}{% endif %}
+    {% assign productDescription = product.description %}
+    {% if useSEOdescription and product.metafields.global.description_tag.size > 0 %}{% assign productDescription = product.metafields.global.description_tag %}{% endif %}
 
 <item>
 <title>{{ productTitle | replace: '&', '&amp;' }}</title>
 <link>{{ shop.url }}{{ variant.url }}</link>
-<description>{{ productDescrition | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
+<description>{{ productDescription | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
 <g:google_product_category>{{ GoogleProductCategory | replace: '&', '&amp;'  }}</g:google_product_category>
 <g:item_group_id>shopify_{{ CountryCode }}_{{ product.id }}</g:item_group_id>
 <g:id>shopify_{{ CountryCode }}_{{ product.id }}_{{ variant.id }}</g:id>
