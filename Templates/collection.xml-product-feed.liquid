@@ -17,6 +17,8 @@
   {% assign AgeGroup = product.metafields.google.age_group %}
       
   {% for variant in product.variants %}
+    {% assign Color = "" %}
+    {% assign Size = "" %}
     {% for option in product.options %}
   	{% if option == 'Color' %}{% capture Color %}{{ variant.options[forloop.index0] }}{% endcapture %}
   	{% elsif option == 'Size' %}{% capture Size %}{{ variant.options[forloop.index0]  }}{% endcapture %}
