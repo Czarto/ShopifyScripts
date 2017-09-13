@@ -8,7 +8,7 @@
 {% assign Color = "" %}
 {% assign Size = "" %}
 <channel>
-<title>{{ shop.name }} {{ collection.title | strip_html | strip_newlines | replace: '&', '&amp;' }}</title>
+<title>{{ shop.name }} {{ collection.title | strip_html | strip_newlines | replace: '&', '&amp;' | replace }}</title>
 <link>{{ shop.url }}</link>
 <description>{{ collection.description | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
 {% for product in collection.products %} 
@@ -31,7 +31,7 @@
     {% if useSEOdescription and product.metafields.global.description_tag.size > 0 %}{% assign productDescription = product.metafields.global.description_tag %}{% endif %}
 
 <item>
-<title>{{ productTitle | replace: '&', '&amp;' }}</title>
+<title>{{ productTitle | strip_html | replace: '&', '&amp;' }}</title>
 <link>{{ shop.url }}{{ variant.url }}</link>
 <description>{{ productDescription | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
 <g:google_product_category>{{ GoogleProductCategory | replace: '&', '&amp;'  }}</g:google_product_category>
