@@ -41,7 +41,7 @@
   	{% endif %}
   	{% endfor %}
 <item>
-<title>{{ product.title | strip_html | strip_newlines | replace: '&', '&amp;' }}  {{ Color }}</title>
+<title>{{ product.title | strip_html | strip_newlines | replace: '&', '&amp;' }}  {{ Color | replace: '&', '&amp;' }}</title>
 <link>{{ shop.url }}{{ variant.url }}</link>
 <description>{{ product.title | strip_html | strip_newlines | replace: '&', '&amp;' }} {{ variant.title | strip_html | strip_newlines | replace: '&', '&amp;' }} {{ product.description | replace: '</', ' </' | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
 <g:google_product_category>{{ GoogleProductCategory | replace: '&', '&amp;'  }}</g:google_product_category>
