@@ -39,7 +39,7 @@
   	{% if option == 'Color' %}{% capture Color %}{{ variant.options[forloop.index0] }}{% endcapture %}
   	{% elsif option == 'Size' %}{% capture Size %}{{ variant.options[forloop.index0] }}{% endcapture %}
   	{% endif %}
-  	{% endfor %}
+  {% endfor %}
 <item>
 <title>{{ product.title | strip_html | strip_newlines | replace: '&', '&amp;' }}  {{ Color | replace: '&', '&amp;' }}</title>
 <link>{{ shop.url }}{{ variant.url }}</link>
@@ -50,14 +50,14 @@
 <g:condition>new</g:condition>
 <g:price>{{ variant.price | money_without_currency }} {{ shop.currency }}</g:price>
 <g:availability>{% if variant.available %}in stock{% else %}out of stock{% endif %}</g:availability>
-<g:image_link>http:{{ variant.image.src | product_img_url: 'grande' }}</g:image_link>
+<g:image_link>http:{% if variant.image.src %}{{ variant.image.src | product_img_url: 'grande' }}{% else %}{{ product.featured_image.src | product_img_url: 'grande' }}{% endif %}</g:image_link>
 <g:gtin>{{ variant.barcode }}</g:gtin>
 <g:brand>{{ product.vendor }}</g:brand>
 <g:mpn>{{ variant.sku }}</g:mpn>
 <g:product_type>{{ product.type }}</g:product_type>
 <g:age_group>{{ AgeGroup }}</g:age_group>
-{% unless Color == "" %}<g:color>{{ Color  | replace: '&', '&amp;' }}</g:color>{% endunless %}
-{% unless Size == "" %}<g:size>{{ Size  | remove: 'Mens ' | remove: 'Ladies ' | remove: 'Child ' | remove: 'Infant ' | replace: '&', '&amp;' }}</g:size><g:size_system>US</g:size_system>{% endunless %}
+{% unless Color == "" %}<g:color>{{ Color | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:color>{% endunless %}
+{% unless Size == "" %}<g:size>{{ Size | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:size><g:size_system>US</g:size_system>{% endunless %}
 <g:gender>{{ Gender }}</g:gender>
 </item>
 
