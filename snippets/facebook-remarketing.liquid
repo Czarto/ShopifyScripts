@@ -22,7 +22,7 @@ Include this file at the bottom of your product page template.
     	content_name: "{{ product.title }}",
       	content_category: "{{ product.type }}",
   		  value: {{ product.price | money_without_currency  | remove: ','  }},
-      	currency: '{{ shop.currency }}',
+      	currency: "{{ shop.currency }}",
       	content_ids: [{{ product.selected_or_first_available_variant.id }}],
       	content_type: "product"
       });
