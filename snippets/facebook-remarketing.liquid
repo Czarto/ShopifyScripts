@@ -6,26 +6,27 @@ Include this file at the bottom of your product page template.
  
   $( document ).ready(function() {
   
-    fbq('track', 'ViewContent', {
-    	content_name: '{{ product.title }}',
-      	content_category: '{{ product.type }}',
+    if( fbq ) {
+    fbq("track", "ViewContent", {
+    	content_name: "{{ product.title }}",
+      	content_category: "{{ product.type }}",
   		  value: {{ product.price | money_without_currency  | remove: ','  }},
-      	currency: '{{ shop.currency }}',
+      	currency: "{{ shop.currency }}",
       	content_ids: [{{ product.selected_or_first_available_variant.id }}],
-      	content_type: 'product'
+      	content_type: "product"
     });
     
     // Attache add to cart event
-    $( '#AddToCart' ).click(function() {
-      fbq('track', 'AddToCart', {
-    	content_name: '{{ product.title }}',
-      	content_category: '{{ product.type }}',
+    $( "'#AddToCart" ).click(function() {
+      fbq("track", "AddToCart", {
+    	content_name: "{{ product.title }}",
+      	content_category: "{{ product.type }}",
   		  value: {{ product.price | money_without_currency  | remove: ','  }},
       	currency: '{{ shop.currency }}',
       	content_ids: [{{ product.selected_or_first_available_variant.id }}],
-      	content_type: 'product'
+      	content_type: "product"
       });
     });
-
+    }
   });
 </script>
