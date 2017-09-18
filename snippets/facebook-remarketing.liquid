@@ -17,7 +17,7 @@ Include this file at the bottom of your product page template.
     });
     
     // Attache add to cart event
-    $( "'#AddToCart" ).click(function() {
+    $( "#AddToCart" ).click(function() {
       fbq("track", "AddToCart", {
     	content_name: "{{ product.title }}",
       	content_category: "{{ product.type }}",
