@@ -25,7 +25,8 @@
   	{% endif %}
   	{% endfor %}
     
-    {% capture productTitle %}{{ product.vendor }} {{ product.title }} {{ Color }}{% endcapture %}
+    {% capture productTitle %}{{ product.vendor }} {{ product.title }}{% endcapture %}
+    {% unless productTitle contains Color %}{% capture productTitle %}{{ productTitle }} {{ Color }}{% endcapture %}{% endunless %}
     {% if useSEOtitle and product.metafields.global.title_tag.size > 0 %}{% assign productTitle = product.metafields.global.title_tag %}{% endif %}
     {% assign productDescription = product.description %}
     {% if useSEOdescription and product.metafields.global.description_tag.size > 0 %}{% assign productDescription = product.metafields.global.description_tag %}{% endif %}
