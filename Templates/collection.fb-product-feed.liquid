@@ -3,8 +3,6 @@
 {% paginate collection.products by 1000 %}
 {% assign CountryCode = 'US' %}
 {% if shop.currency == 'CAD' %}{% assign CountryCode = 'CA' %}{% endif %}
-{% assign Color = "" %}
-{% assign Size = "" %}
 <channel>
 <title>{{ shop.name }} {{ collection.title | replace: '&', '&amp;' }}</title>
 <link>{{ shop.url }}</link>
@@ -13,6 +11,8 @@
   {% assign GoogleProductCategory = product.metafields.google.google_product_type %}
   {% assign Gender = product.metafields.google.gender %}
   {% assign AgeGroup = product.metafields.google.age_group %}
+  {% assign Color = "" %}
+  {% assign Size = "" %}
     
   {% if product.variants.size > 0 %}
   {% for variant in product.variants %}
