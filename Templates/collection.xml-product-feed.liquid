@@ -1,6 +1,6 @@
-{%- layout none -%}<?xml version="1.0"?>
+{% layout none %}<?xml version="1.0"?>
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
-{%- paginate collection.products by 1000 -%}
+{% paginate collection.products by 1000 %}
 {%- assign useSEOtitle = false -%}
 {%- assign useSEOdescription = false -%}
 {%- assign CountryCode = 'US' -%}
@@ -11,7 +11,7 @@
 <title>{{ shop.name }} {{ collection.title | strip_html | strip_newlines | replace: '&', '&amp;' | replace }}</title>
 <link>{{ shop.url }}</link>
 <description>{{ collection.description | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
-{%- for product in collection.products -%} 
+{% for product in collection.products %} 
   {%- assign GoogleProductCategory = product.metafields.google.google_product_type -%}
   {%- assign Gender = product.metafields.google.gender -%}
   {%- assign AgeGroup = product.metafields.google.age_group -%}
@@ -51,15 +51,18 @@
 {%- if OnSale -%}
 <g:sale_price>{{ SalePrice | money_without_currency }} {{ shop.currency }}</g:sale_price>
 {%- endif -%}
-<g:availability>{%- if variant.available -%}in stock{%- else -%}out of stock{%- endif -%}</g:availability>
-<g:image_link>http:{%- if variant.image.src -%}{{ variant.image.src | product_img_url: 'grande' }}{%- else -%}{{ product.featured_image.src | product_img_url: 'grande' }}{%- endif -%}</g:image_link>
+<g:availability>{% if variant.available %}in stock{% else %}out of stock{% endif %}</g:availability>
+<g:image_link>http:{% if variant.image.src %}{{ variant.image.src | product_img_url: 'grande' }}{% else %}{{ product.featured_image.src | product_img_url: 'grande' }}{% endif %}</g:image_link>
 <g:gtin>{{ variant.barcode }}</g:gtin>
 <g:brand>{{ product.vendor }}</g:brand>
 <g:mpn>{{ variant.sku }}</g:mpn>
 <g:product_type>{{ product.type }}</g:product_type>
 <g:age_group>{{ AgeGroup }}</g:age_group>
-{%- unless Color == "" -%}<g:color>{{ Color | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:color>{%- endunless -%}
-{%- unless Size == "" -%}<g:size>{{ Size | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:size><g:size_system>US</g:size_system>{%- endunless -%}
+{% unless Color == "" %}<g:color>{{ Color | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:color>{% endunless %}
+{%- unless Size == "" -%}
+<g:size>{{ Size | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:size>
+<g:size_system>US</g:size_system>
+{%- endunless -%}
 <g:gender>{{ Gender }}</g:gender>
 <g:custom_label_0>{{ product.metafields.google.custom_label_0 }}</g:custom_label_0>
 <g:custom_label_1>{{ product.metafields.google.custom_label_1 }}</g:custom_label_1>
@@ -70,7 +73,7 @@
 </item>
 
 {% endfor %}
-{%- endfor -%}
+{% endfor %}
 </channel>
 </rss>
-{%- endpaginate -%}
+{% endpaginate %}
