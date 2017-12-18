@@ -1,43 +1,44 @@
-{% layout none %}<?xml version="1.0"?>
+{%- layout none -%}<?xml version="1.0"?>
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
-{% paginate collection.products by 1000 %}
-{% assign useSEOtitle = false %}
-{% assign useSEOdescription = false %}
-{% assign CountryCode = 'US' %}
-{% if shop.currency == 'CAD' %}{% assign CountryCode = 'CA' %}{% endif %}
-{% assign Color = "" %}
-{% assign Size = "" %}
+{%- paginate collection.products by 1000 -%}
+{%- assign useSEOtitle = false -%}
+{%- assign useSEOdescription = false -%}
+{%- assign CountryCode = 'US' -%}
+{%- if shop.currency == 'CAD' -%}{%- assign CountryCode = 'CA' -%}{%- endif -%}
+{%- assign Color = "" -%}
+{%- assign Size = "" -%}
 <channel>
 <title>{{ shop.name }} {{ collection.title | strip_html | strip_newlines | replace: '&', '&amp;' | replace }}</title>
 <link>{{ shop.url }}</link>
 <description>{{ collection.description | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
-{% for product in collection.products %} 
-  {% assign GoogleProductCategory = product.metafields.google.google_product_type %}
-  {% assign Gender = product.metafields.google.gender %}
-  {% assign AgeGroup = product.metafields.google.age_group %}
+{%- for product in collection.products -%} 
+  {%- assign GoogleProductCategory = product.metafields.google.google_product_type -%}
+  {%- assign Gender = product.metafields.google.gender -%}
+  {%- assign AgeGroup = product.metafields.google.age_group -%}
       
   {% for variant in product.variants %}
-    {% assign Color = "" %}
-    {% assign Size = "" %}
-    {% for option in product.options %}
-  	{% if option == 'Color' %}{% capture Color %}{{ variant.options[forloop.index0] }}{% endcapture %}
-  	{% elsif option == 'Size' %}{% capture Size %}{{ variant.options[forloop.index0]  }}{% endcapture %}
-  	{% endif %}
-  	{% endfor %}
+    {%- assign Color = "" -%}
+    {%- assign Size = "" -%}
+    {%- for option in product.options -%}
+  	{%- if option == 'Color' -%}{%- capture Color -%}{{ variant.options[forloop.index0] }}{%- endcapture -%}
+  	{%- elsif option == 'Size' -%}{%- capture Size -%}{{ variant.options[forloop.index0]  }}{%- endcapture -%}
+  	{%- endif -%}
+  	{%- endfor -%}
     
-    {% capture productTitle %}{{ product.vendor }} {{ product.title }}{% endcapture %}
-    {% unless productTitle contains Color %}{% capture productTitle %}{{ productTitle }} {{ Color }}{% endcapture %}{% endunless %}
-    {% if useSEOtitle and product.metafields.global.title_tag.size > 0 %}{% assign productTitle = product.metafields.global.title_tag %}{% endif %}
-    {% assign productDescription = product.description %}
-    {% if useSEOdescription and product.metafields.global.description_tag.size > 0 %}{% assign productDescription = product.metafields.global.description_tag %}{% endif %}
+    {%- capture productTitle -%}{{ product.vendor }} {{ product.title }}{%- endcapture -%}
+    {%- unless productTitle contains Color -%}{%- capture productTitle -%}{{ productTitle }} {{ Color }}{%- endcapture -%}{%- endunless -%}
+    {%- if useSEOtitle and product.metafields.global.title_tag.size > 0 -%}{%- assign productTitle = product.metafields.global.title_tag -%}{%- endif -%}
+    {%- assign productDescription = product.description -%}
+    {%- if useSEOdescription and product.metafields.global.description_tag.size > 0 -%}{%- assign productDescription = product.metafields.global.description_tag -%}{%- endif -%}
 
-    {% assign OnSale = false %}
-    {% assign Price = variant.price %}
-    {% if variant.compare_at_price > variant.price %}
-      {% assign OnSale = true %}
-      {% assign Price = variant.compare_at_price %}
-      {% assign SalePrice = variant.price %}
-    {% endif %}
+    {%- assign OnSale = false -%}
+    {%- assign Price = variant.price -%}
+    {%- if variant.compare_at_price > variant.price -%}
+      {%- assign OnSale = true -%}
+      {%- assign Price = variant.compare_at_price -%}
+      {%- assign SalePrice = variant.price -%}
+    {%- endif -%}
+
 <item>
 <title>{{ productTitle | strip_html | replace: '&', '&amp;' }}</title>
 <link>{{ shop.url }}{{ variant.url }}</link>
@@ -47,30 +48,29 @@
 <g:id>shopify_{{ CountryCode }}_{{ product.id }}_{{ variant.id }}</g:id>
 <g:condition>new</g:condition>
 <g:price>{{ Price | money_without_currency }} {{ shop.currency }}</g:price>
-{% if OnSale %}
+{%- if OnSale -%}
 <g:sale_price>{{ SalePrice | money_without_currency }} {{ shop.currency }}</g:sale_price>
-{% endif %}
-<g:availability>{% if variant.available %}in stock{% else %}out of stock{% endif %}</g:availability>
-<g:image_link>http:{% if variant.image.src %}{{ variant.image.src | product_img_url: 'grande' }}{% else %}{{ product.featured_image.src | product_img_url: 'grande' }}{% endif %}</g:image_link>
+{%- endif -%}
+<g:availability>{%- if variant.available -%}in stock{%- else -%}out of stock{%- endif -%}</g:availability>
+<g:image_link>http:{%- if variant.image.src -%}{{ variant.image.src | product_img_url: 'grande' }}{%- else -%}{{ product.featured_image.src | product_img_url: 'grande' }}{%- endif -%}</g:image_link>
 <g:gtin>{{ variant.barcode }}</g:gtin>
 <g:brand>{{ product.vendor }}</g:brand>
 <g:mpn>{{ variant.sku }}</g:mpn>
 <g:product_type>{{ product.type }}</g:product_type>
 <g:age_group>{{ AgeGroup }}</g:age_group>
-{% unless Color == "" %}<g:color>{{ Color | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:color>{% endunless %}
-{% unless Size == "" %}<g:size>{{ Size | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:size><g:size_system>US</g:size_system>{% endunless %}
+{%- unless Color == "" -%}<g:color>{{ Color | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:color>{%- endunless -%}
+{%- unless Size == "" -%}<g:size>{{ Size | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:size><g:size_system>US</g:size_system>{%- endunless -%}
 <g:gender>{{ Gender }}</g:gender>
 <g:custom_label_0>{{ product.metafields.google.custom_label_0 }}</g:custom_label_0>
 <g:custom_label_1>{{ product.metafields.google.custom_label_1 }}</g:custom_label_1>
 <g:custom_label_2>{{ product.metafields.google.custom_label_2 }}</g:custom_label_2>
 <g:custom_label_3>{{ product.metafields.google.custom_label_3 }}</g:custom_label_3>
 <g:custom_label_4>{{ product.metafields.google.custom_label_4 }}</g:custom_label_4>
-
 <g:shipping_weight>{{ variant.weight | weight_with_unit }}</g:shipping_weight>
 </item>
 
 {% endfor %}
-{% endfor %}
+{%- endfor -%}
 </channel>
 </rss>
-{% endpaginate %}
+{%- endpaginate -%}
