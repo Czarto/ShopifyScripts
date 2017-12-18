@@ -31,6 +31,13 @@
     {% assign productDescription = product.description %}
     {% if useSEOdescription and product.metafields.global.description_tag.size > 0 %}{% assign productDescription = product.metafields.global.description_tag %}{% endif %}
 
+    {% assign OnSale = false %}
+    {% assign Price = variant.price %}
+    {% if variant.compare_at_price > variant.price %}
+      {% assign OnSale = true %}
+      {% assign Price = variant.compare_at_price %}
+      {% assign SalePrice = variant.price %}
+    {% endif %}
 <item>
 <title>{{ productTitle | strip_html | replace: '&', '&amp;' }}</title>
 <link>{{ shop.url }}{{ variant.url }}</link>
@@ -39,7 +46,10 @@
 <g:item_group_id>shopify_{{ CountryCode }}_{{ product.id }}</g:item_group_id>
 <g:id>shopify_{{ CountryCode }}_{{ product.id }}_{{ variant.id }}</g:id>
 <g:condition>new</g:condition>
-<g:price>{{ variant.price | money_without_currency }} {{ shop.currency }}</g:price>
+<g:price>{{ Price | money_without_currency }} {{ shop.currency }}</g:price>
+{% if OnSale %}
+<g:sale_price>{{ SalePrice | money_without_currency }} {{ shop.currency }}</g:sale_price>
+{% endif %}
 <g:availability>{% if variant.available %}in stock{% else %}out of stock{% endif %}</g:availability>
 <g:image_link>http:{% if variant.image.src %}{{ variant.image.src | product_img_url: 'grande' }}{% else %}{{ product.featured_image.src | product_img_url: 'grande' }}{% endif %}</g:image_link>
 <g:gtin>{{ variant.barcode }}</g:gtin>
