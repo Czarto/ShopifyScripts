@@ -3,6 +3,8 @@
 {% assign shopify_store_country  = 'US' %}
 {% if shop.currency == 'CAD' %}
 {% assign shopify_store_country  = 'CA' %}
+{% if shop.currency == 'AUD' %}
+{% assign shopify_store_country  = 'AU' %}
 {% endif %}
 
 <script type="text/javascript">
