@@ -5,9 +5,22 @@
 {% assign shopify_store_country  = 'CA' %}
 {% if shop.currency == 'AUD' %}
 {% assign shopify_store_country  = 'AU' %}
+{% if shop.currency == 'GBP' %}
+{% assign shopify_store_country  = 'GB' %}
 {% endif %}
 
-<script type="text/javascript">
+<!-- Global site tag (gtag.js) - AdWords: XXXXXXXXX -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-XXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-XXXXXXXXX');
+</script>
+<script>
+  gtag('event', 'page_view', {
+    'send_to': 'AW-XXXXXXXXX',
   
     {% if template contains 'cart' %}
 	var google_tag_params = {
@@ -46,17 +59,7 @@
 	};
   
   {% endif %}
+  });
+</script>
 
-	/* <![CDATA[ */
-	var google_conversion_id = {{ google_conversion_id }};
-	var google_custom_params = window.google_tag_params;
-	var google_remarketing_only = true;
-	/* ]]> */
-</script>
-<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-</script>
-<noscript>
-<div style="display:inline;">
-<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/{{ google_conversion_id }}/?value=0&amp;guid=ON&amp;script=0"/>
-</div>
-</noscript>
+
