@@ -1,28 +1,22 @@
-<!-- Google Dynamic Remarketing -->
-{% comment %} Enter your account specific value below {% endcomment %}
-{% assign google_conversion_id = 0 %}
-{% assign shopify_store_country  = 'US' %}
-{% if shop.currency == 'CAD' %}
-{% assign shopify_store_country  = 'CA' %}
-{% endif %}
-<script type="text/javascript">
-var google_tag_params = {
-  ecomm_prodid: [{% for item in order.line_items %}'shopify_{{ shopify_store_country }}_{{ item.product.id }}_{{ item.variant.id }}'{% unless forloop.last %}, {% endunless %}{% endfor %}],
-  ecomm_pagetype: 'purchase',
-  ecomm_totalvalue: {{ total_price | money_without_currency | remove: ',' }}
-};
+<!-- Checkout Script (gtag.js) - AdWords: XXXXXXXXX -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-XXXXXXXXX"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'AW-XXXXXXXXX');
 </script>
-<script type="text/javascript">
-/* <![CDATA[ */
-var google_conversion_id = {{ google_conversion_id }};
-var google_custom_params = window.google_tag_params;
-var google_remarketing_only = true;
-/* ]]> */
+
+<script>
+  gtag('event', 'page_view', {
+    'send_to': 'AW-XXXXXXXXX',
+    
+  var google_tag_params = {
+      ecomm_prodid: [{% for item in order.line_items %}'shopify_{{ shopify_store_country }}_{{ item.product.id }}_{{ item.variant.id }}'{% unless forloop.last %}, {% endunless %}{% endfor %}],
+      ecomm_pagetype: 'purchase',
+      ecomm_totalvalue: {{ total_price | money_without_currency | remove: ',' }}
+  };
+  
+  });
 </script>
-<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-</script>
-<noscript>
-<div style="display:inline;">
-<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/{{ google_conversion_id }}/?guid=ON&amp;script=0"/>
-</div>
-</noscript>
