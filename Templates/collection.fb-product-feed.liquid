@@ -8,9 +8,9 @@
 <link>{{ shop.url }}</link>
 <description>{{ collection.description | strip_html }}</description>
 {% for product in collection.products %} 
-  {% assign GoogleProductCategory = product.metafields.google.google_product_type %}
-  {% assign Gender = product.metafields.google.gender %}
-  {% assign AgeGroup = product.metafields.google.age_group %}
+{%- assign GoogleProductCategory = product.metafields.mm-google-shopping.google_product_category -%}
+{%- assign Gender = product.metafields.mm-google-shopping.gender -%}
+{%- assign AgeGroup = product.metafields.mm-google-shopping.age_group -%}
   {% assign Color = "" %}
   {% assign Size = "" %}
     
@@ -40,11 +40,11 @@
 {% unless Color == "" %}<g:color>{{ Color | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:color>{% endunless %}
 {% unless Size == "" %}<g:size>{{ Size | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:size><g:size_system>US</g:size_system>{% endunless %}
 <g:gender>{{ Gender }}</g:gender>
-<g:custom_label_0>{{ product.metafields.google.custom_label_0 }}</g:custom_label_0>
-<g:custom_label_1>{{ product.metafields.google.custom_label_1 }}</g:custom_label_1>
-<g:custom_label_2>{{ product.metafields.google.custom_label_2 }}</g:custom_label_2>
-<g:custom_label_3>{{ product.metafields.google.custom_label_3 }}</g:custom_label_3>
-<g:custom_label_4>{{ product.metafields.google.custom_label_4 }}</g:custom_label_4>
+<g:custom_label_0>{{ product.metafields.mm-google-shopping.custom_label_0 }}</g:custom_label_0>
+<g:custom_label_1>{{ product.metafields.mm-google-shopping.custom_label_1 }}</g:custom_label_1>
+<g:custom_label_2>{{ product.metafields.mm-google-shopping.custom_label_2 }}</g:custom_label_2>
+<g:custom_label_3>{{ product.metafields.mm-google-shopping.custom_label_3 }}</g:custom_label_3>
+<g:custom_label_4>{{ product.metafields.mm-google-shopping.custom_label_4 }}</g:custom_label_4>
 <g:shipping_weight>{{ variant.weight | weight_with_unit }}</g:shipping_weight>
 </item>
 
@@ -67,11 +67,11 @@
 <g:product_type>{{ product.type }}</g:product_type>
 <g:age_group>{{ AgeGroup }}</g:age_group>
 <g:gender>{{ Gender }}</g:gender>
-<g:custom_label_0>{{ product.metafields.google.custom_label_0 }}</g:custom_label_0>
-<g:custom_label_1>{{ product.metafields.google.custom_label_1 }}</g:custom_label_1>
-<g:custom_label_2>{{ product.metafields.google.custom_label_2 }}</g:custom_label_2>
-<g:custom_label_3>{{ product.metafields.google.custom_label_3 }}</g:custom_label_3>
-<g:custom_label_4>{{ product.metafields.google.custom_label_4 }}</g:custom_label_4>
+<g:custom_label_0>{{ product.metafields.mm-google-shopping.custom_label_0 }}</g:custom_label_0>
+<g:custom_label_1>{{ product.metafields.mm-google-shopping.custom_label_1 }}</g:custom_label_1>
+<g:custom_label_2>{{ product.metafields.mm-google-shopping.custom_label_2 }}</g:custom_label_2>
+<g:custom_label_3>{{ product.metafields.mm-google-shopping.custom_label_3 }}</g:custom_label_3>
+<g:custom_label_4>{{ product.metafields.mm-google-shopping.custom_label_4 }}</g:custom_label_4>
 <g:shipping_weight>{{ variant.weight | weight_with_unit }}</g:shipping_weight>
 </item>
   {% endif %}
