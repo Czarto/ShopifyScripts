@@ -1,26 +1,38 @@
 {% layout none %}<?xml version="1.0"?>
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
-{% paginate collection.products by 1000 %}
-{% assign CountryCode = 'US' %}
-{% if shop.currency == 'CAD' %}{% assign CountryCode = 'CA' %}{% endif %}
+{%- paginate collection.products by 1000 -%}
+{%- assign CountryCode = 'US' -%}
+{%- if shop.currency == 'CAD' -%}{%- assign CountryCode = 'CA' -%}{%- endif -%}
+{%- assign PriceAdjustment = 1.0 -%}
+{%- assign PriceAdjustmentEffectiveDate =  '20181226T080000-0500/20190102T235900-0800' -%}
+
 <channel>
 <title>{{ shop.name }} {{ collection.title | replace: '&', '&amp;' }}</title>
 <link>{{ shop.url }}</link>
 <description>{{ collection.description | strip_html }}</description>
-{% for product in collection.products %} 
-{%- assign GoogleProductCategory = product.metafields.mm-google-shopping.google_product_category -%}
-{%- assign Gender = product.metafields.mm-google-shopping.gender -%}
-{%- assign AgeGroup = product.metafields.mm-google-shopping.age_group -%}
-  {% assign Color = "" %}
-  {% assign Size = "" %}
-    
-  {% if product.variants.size > 0 %}
-  {% for variant in product.variants %}
-    {% for option in product.options %}
-  	  {% if option == 'Color' %}{% capture Color %}{{ variant.options[forloop.index0] }}{% endcapture %}
-  	  {% elsif option == 'Size' %}{% capture Size %}{{ variant.options[forloop.index0] }}{% endcapture %}
-  	  {% endif %}
-    {% endfor %}
+{%- for product in collection.products -%} 
+  {%- assign GoogleProductCategory = product.metafields.mm-google-shopping.google_product_category -%}
+  {%- assign Gender = product.metafields.mm-google-shopping.gender -%}
+  {%- assign AgeGroup = product.metafields.mm-google-shopping.age_group -%}
+  {%- assign Color = "" -%}
+  {%- assign Size = "" -%}
+
+  {%- if product.variants.size > 0 -%}
+  {%- for variant in product.variants -%}
+    {%- for option in product.options -%}
+  	  {%- if option == 'Color' -%}{% capture Color %}{{ variant.options[forloop.index0] }}{% endcapture %}
+  	  {%- elsif option == 'Size' -%}{% capture Size %}{{ variant.options[forloop.index0] }}{% endcapture %}
+  	  {%- endif -%}
+    {%- endfor -%}
+
+    {% comment %} Calculate Sales vs Base Pricing {% endcomment %} 
+    {%- if variant.compare_at_price == blank -%}
+      {%- assign BasePrice = variant.price -%}
+    {%- else -%}
+      {%- assign BasePrice = variant.compare_at_price -%}
+    {%- endif -%}
+    {%- assign SalePrice = variant.price | times: PriceAdjustment -%}
+
 <item>
 <title>{{ product.title | strip_html | strip_newlines | replace: '&', '&amp;' }}  {{ Color | replace: '&', '&amp;' }}</title>
 <link>{{ shop.url }}{{ variant.url }}</link>
@@ -29,7 +41,9 @@
 <g:item_group_id>{{ product.id }}</g:item_group_id>
 <g:id>{{ variant.id }}</g:id>
 <g:condition>new</g:condition>
-<g:price>{{ variant.price | money_without_currency }} {{ shop.currency }}</g:price>
+<g:price>{{ BasePrice | money_without_currency }} {{ shop.currency }}</g:price>
+{%- if SalePrice < BasePrice -%}<g:sale_price>{{ SalePrice  | money_without_currency }} {{ shop.currency }}</g:sale_price>{%-  endif -%}
+{%- if PriceAdjustment < 1 -%}<g:sale_price_effective_date>{{ PriceAdjustmentEffectiveDate }}</g:sale_price_effective_date>{%- endif -%}
 <g:availability>{% if variant.available %}in stock{% else %}out of stock{% endif %}</g:availability>
 <g:image_link>http:{% if variant.image.src %}{{ variant.image.src | product_img_url: 'grande' }}{% else %}{{ product.featured_image.src | product_img_url: 'grande' }}{% endif %}</g:image_link>
 <g:gtin>{{ variant.barcode }}</g:gtin>
@@ -50,6 +64,15 @@
 
   {% endfor %}
   {% else %}
+
+  {% comment %} Calculate Sales vs Base Pricing {% endcomment %} 
+  {%- if product.compare_at_price_min == blank -%}
+    {%- assign BasePrice = product.price -%}
+  {%- else -%}
+    {%- assign BasePrice = product.compare_at_price_min -%}
+  {%- endif -%}
+  {%- assign SalePrice = product.price | times: PriceAdjustment -%}
+
 <item>
 <title>{{ product.title | strip_html | strip_newlines | replace: '&', '&amp;' }}</title>
 <link>{{ shop.url }}{{ product.url }}</link>
@@ -58,7 +81,9 @@
 <g:item_group_id>{{ product.id }}</g:item_group_id>
 <g:id>{{ product.id }}</g:id>
 <g:condition>new</g:condition>
-<g:price>{{ product.price | money_without_currency }} {{ shop.currency }}</g:price>
+<g:price>{{ BasePrice | money_without_currency }} {{ shop.currency }}</g:price>
+{%- if SalePrice < BasePrice -%}<g:sale_price>{{ SalePrice  | money_without_currency }} {{ shop.currency }}</g:sale_price>{%-  endif -%}
+{%- if PriceAdjustment < 1 -%}<g:sale_price_effective_date>{{ PriceAdjustmentEffectiveDate }}</g:sale_price_effective_date>{%- endif -%}
 <g:availability>{% if product.available %}in stock{% else %}out of stock{% endif %}</g:availability>
 <g:image_link>http:{{ product.featured_image.src | product_img_url: 'grande' }}</g:image_link>
 <g:gtin>{{ product.barcode }}</g:gtin>
