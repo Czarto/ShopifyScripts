@@ -1,26 +1,23 @@
 {% if first_time_accessed %}
-<!-- Google AdWords Conversion -->
-{% comment %} Enter your account specific value below {% endcomment %}
-{% assign google_conversion_id = 0 %}
+{% comment %} Enter your account specific values below {% endcomment %}
+{% assign google_converson_id = 123456789 %}
 {% assign google_conversion_label = "abcdefghijklmnop" %}
-<script type="text/javascript">
-/* <![CDATA[ */
-var google_conversion_id = {{ google_conversion_id }};
-var google_conversion_language = "en";
-var google_conversion_format = "3";
-var google_conversion_color = "ffffff";
-var google_conversion_label = "{{ google_conversion_label }}";
-var google_conversion_value = {{ total_price | money_without_currency | remove: ',' }};
-var google_conversion_order_id = "{{ order.order_number }}";
-var google_conversion_currency = "{{ shop.currency }}";
-var google_remarketing_only = false;
-/* ]]> */
+<!-- Global site tag (gtag.js) - Google Ads: 1012711092 -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-{{ google_converson_id }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-{{ google_converson_id }}');
 </script>
-<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
+
+<!-- Event snippet for Web Order conversion page -->
+<script>
+    gtag('event', 'conversion', {
+        'send_to': 'AW-{{ google_converson_id }}/{{ google_conversion_label }}',
+        'value': {{ checkout.subtotal_price | money_without_currency | remove: ',' }},
+        'currency': '{{ shop.currency }}',
+        'transaction_id': '{{ order.order_number  }}'
+    });
 </script>
-<noscript>
-<div style="display:inline;">
-<img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/{{ google_conversion_id }}/?value={{ total_price | money_without_currency | remove: ',' }}&oid={{ order.order_number }}&currency_code={{ shop.currency }}&label={{ google_conversion_label }}&guid=ON&script=0"/>
-</div>
-</noscript>
 {% endif %}
