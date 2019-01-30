@@ -1,3 +1,4 @@
+{% if first_time_accessed %}
 <!-- Google AdWords Conversion -->
 {% comment %} Enter your account specific value below {% endcomment %}
 {% assign google_conversion_id = 0 %}
@@ -22,3 +23,4 @@ var google_remarketing_only = false;
 <img height="1" width="1" style="border-style:none;" alt="" src="//www.googleadservices.com/pagead/conversion/{{ google_conversion_id }}/?value={{ total_price | money_without_currency | remove: ',' }}&oid={{ order.order_number }}&currency_code={{ shop.currency }}&label={{ google_conversion_label }}&guid=ON&script=0"/>
 </div>
 </noscript>
+{% endif %}
