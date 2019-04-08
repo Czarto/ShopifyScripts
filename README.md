@@ -20,10 +20,7 @@ Various collection templates that output product data in a machine readable form
 ## Checkout Scripts
 Scripts to be included in the checkout script section in Shopify
 
-- **Google Ads Dynamic Remarketing Tag**
-<br>https://github.com/Czarto/ShopifyScripts/blob/master/settings/checkout/adwords-remarketing.liquid
-
-- **Google Ads Conversion Tracking Tag**
+- **Google Ads Conversion + Remarketing Tracking Tag**
 <br>https://github.com/Czarto/ShopifyScripts/blob/master/settings/checkout/adwords-conversion.liquid
 
 
