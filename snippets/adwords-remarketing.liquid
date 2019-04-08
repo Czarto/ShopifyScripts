@@ -26,8 +26,7 @@
 		}
 	}
 
-	var _data = {'send_to': 'AW-{{ google_conversion_id }}', 'user_id': getUserId()};
-	var _pagetype = 'other';
+	var _data = {'send_to': 'AW-{{ google_conversion_id }}', 'ecomm_pagetype':'other', 'user_id': getUserId()};
 
 	{% if template contains 'cart' %}
 		_data["ecomm_pagetype"] = 'cart';
