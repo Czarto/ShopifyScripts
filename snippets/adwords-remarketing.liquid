@@ -1,62 +1,57 @@
 {% comment %} Enter your google conversion id below {% endcomment %}
-{% assign google_conversion_id = 0 %}
+{% assign google_conversion_id = 123456789 %}
+
 {% assign shopify_store_country  = 'US' %}
 {% if shop.currency == 'CAD' %}
 {% assign shopify_store_country  = 'CA' %}
-{% if shop.currency == 'AUD' %}
+{% elsif shop.currency == 'AUD' %}
 {% assign shopify_store_country  = 'AU' %}
 {% endif %}
 
-<script type="text/javascript">
-  
-    {% if template contains 'cart' %}
-	var google_tag_params = {
-  		ecomm_prodid: [{% for item in cart.items %}'shopify_{{ shopify_store_country  }}_{{ item.product.id }}_{{ item.variant.id }}'{% unless forloop.last %}, {% endunless %}{% endfor %}],
-  		ecomm_pagetype: 'cart',
-  		ecomm_totalvalue: {{ cart.total_price | money_without_currency  | remove: ','  }}
-	};
+<!-- Global site tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=AW-{{ google_conversion_id }}"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'AW-{{ google_conversion_id }}');
+</script>
+
+<script>
+	function getUserId() {
+		if(typeof __st !== 'undefined' && __st["cid"]) {
+			return __st["cid"];
+		} else {
+			return;
+		}
+	}
+
+	var _data = {'send_to': 'AW-{{ google_conversion_id }}', 'user_id': getUserId()};
+	var _pagetype = 'other';
+
+	{% if template contains 'cart' %}
+		_data["ecomm_pagetype"] = 'cart';
+		_data["ecomm_prodid"] = [{% for item in cart.items %}'shopify_{{ shopify_store_country  }}_{{ item.product.id }}_{{ item.variant.id }}'{% unless forloop.last %}, {% endunless %}{% endfor %}];
+		_data["ecomm_totalvalue"] = '{{ cart.total_price | money_without_currency  | remove: ','  }}';
   
   {% elsif template contains 'collection' %}
-	var google_tag_params = {
-  		ecomm_prodid: [{% for item in collection.products limit:5 %}'shopify_{{ shopify_store_country  }}_{{ item.id }}_{{ item.variants.first.id }}'{% unless forloop.last %}, {% endunless %}{% endfor %}],
-  		ecomm_pagetype: 'category',
-  		ecomm_category: '{{ collection.handle }}'
-	};
+  	var _prodid = [{% for item in collection.products limit:5 %}'shopify_{{ shopify_store_country  }}_{{ item.id }}_{{ item.variants.first.id }}'{% unless forloop.last %}, {% endunless %}{% endfor %}];
+  	_data["ecomm_pagetype"] = 'category';
+  	_data["ecomm_category"] = '{{ collection.handle }}';
   
   {% elsif template contains 'index' %}
-	var google_tag_params = {
-  		ecomm_pagetype: 'home'
-	};
+		_data["ecomm_pagetype"] = 'home';
   
   {% elsif template contains 'product' %}
-	var google_tag_params = {
-      ecomm_prodid: 'shopify_{{ shopify_store_country  }}_{{ product.id }}_{{ product.selected_or_first_available_variant.id }}',
-  		ecomm_pagetype: 'product',
-  		ecomm_totalvalue: {{ product.selected_or_first_available_variant.price | money_without_currency  | remove: ','  }}
-	};
+		_data["ecomm_prodid"] = 'shopify_{{ shopify_store_country  }}_{{ product.id }}_{{ product.selected_or_first_available_variant.id }}';
+  	_data["ecomm_pagetype"] = 'product';
+  	_data["ecomm_totalvalue"] = '{{ product.selected_or_first_available_variant.price | money_without_currency  | remove: ','  }}';
   
   {% elsif template contains 'search' %}
-	var google_tag_params = {
-  		ecomm_prodid: [{% for item in search.results limit:5 %}'shopify_{{ shopify_store_country  }}_{{ item.id }}_{{ item.variants.first.id }}'{% unless forloop.last %}, {% endunless %}{% endfor %}],
-  		ecomm_pagetype: 'searchresults'
-	};
-  {% else %}
-	var google_tag_params = {
-  		ecomm_pagetype: 'other'
-	};
-  
-  {% endif %}
+		_data["ecomm_prodid"] = [{% for item in search.results limit:5 %}'shopify_{{ shopify_store_country  }}_{{ item.id }}_{{ item.variants.first.id }}'{% unless forloop.last %}, {% endunless %}{% endfor %}];
+		_data["ecomm_pagetype"] = 'searchresults';
+		
+	{% endif %}
 
-	/* <![CDATA[ */
-	var google_conversion_id = {{ google_conversion_id }};
-	var google_custom_params = window.google_tag_params;
-	var google_remarketing_only = true;
-	/* ]]> */
+	gtag('event', 'page_view', _data);
 </script>
-<script type="text/javascript" src="//www.googleadservices.com/pagead/conversion.js">
-</script>
-<noscript>
-<div style="display:inline;">
-<img height="1" width="1" style="border-style:none;" alt="" src="//googleads.g.doubleclick.net/pagead/viewthroughconversion/{{ google_conversion_id }}/?value=0&amp;guid=ON&amp;script=0"/>
-</div>
-</noscript>
