@@ -1,0 +1,38 @@
+{% comment %}
+Dynamic collection titles and descriptions based on currently applied filters
+by Alex Czartoryski https://business.czarto.com/
+
+The latest version of this script is available here:
+https://github.com/Czarto/ShopifyScripts/snippets/seo-collection-dynamic-titles.liquid
+
+Documentation: TBA
+
+This snippet will inject various words into Page Title, Description, and on page text
+with the goal of richer and more granular SEO rankings.
+
+Currently configured to replace the text #gender# with Men's, Women's, or Children's
+You must include this script at the top of your Theme file if you want to modify 
+the Title tag or meta description. 
+You must include this script again at the top of your collection page if you want to
+modify the heading or text on your collection page.
+
+Usage once snippet installed:
+- Put #gender# in plain text in either the collection's seo title, description, or heading.
+- Add this to your theme collection page:
+<title>{{ page_title  | replace: seo_gender_placeholder, seo_gender  }}</title>
+- Add this to your collection template:
+<h1 class="title">{{ collection.title | replace: seo_gender_placeholder, seo_gender }}</h1>
+<p>{{ collection.description | replace: seo_gender_placeholder, seo_gender  }}</p>
+
+{% endcomment %}
+
+{% assign seo_gender = "" %}
+{% assign seo_gender_placeholder = "#gender#" %}
+
+{% if current_tags contains "Style_Women" %}
+{% assign seo_gender = "Women's " %}
+{% elsif current_tags contains "Style_Men" %}
+{% assign seo_gender = "Men's " %}
+{% elsif current_tags contains "Style_Children" %}
+{% assign seo_gender = "Children's " %}
+{% endif%}
