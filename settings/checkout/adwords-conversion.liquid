@@ -28,14 +28,6 @@ https://github.com/Czarto/ShopifyScripts/blob/master/settings/checkout/adwords-c
 
 <!-- Event snippet for Web Order conversion page -->
 <script>
-    function getUserId() {
-      if(typeof __st !== 'undefined' && __st["cid"]) {
-        return __st["cid"];
-      } else {
-        return;
-      }
-    }
-
     // Conversion
     gtag('event', 'conversion', {
         'send_to': 'AW-{{ google_conversion_id }}/{{ google_conversion_label }}',
@@ -47,7 +39,6 @@ https://github.com/Czarto/ShopifyScripts/blob/master/settings/checkout/adwords-c
     // Remarketing
     gtag('event', 'page_view', {
         'send_to': 'AW-{{ google_conversion_id }}',
-        'user_id': getUserId(),
         'ecomm_pagetype': 'purchase',
         'ecomm_prodid' : [{% for item in order.line_items %}'shopify_{{ shopify_store_country }}_{{ item.product.id }}_{{ item.variant.id }}'{% unless forloop.last %}, {% endunless %}{% endfor %}],
         'ecomm_totalvalue' : '{{ total_price | money_without_currency | remove: ',' }}'
