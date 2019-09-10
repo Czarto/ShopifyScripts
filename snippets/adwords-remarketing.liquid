@@ -26,15 +26,7 @@ https://github.com/Czarto/ShopifyScripts/blob/master/snippets/adwords-remarketin
 </script>
 
 <script>
-	function getUserId() {
-		if(typeof __st !== 'undefined' && __st["cid"]) {
-			return __st["cid"];
-		} else {
-			return;
-		}
-	}
-
-	var _data = {'send_to': 'AW-{{ google_conversion_id }}', 'ecomm_pagetype':'other', 'user_id': getUserId()};
+	var _data = {'send_to': 'AW-{{ google_conversion_id }}', 'ecomm_pagetype':'other'};
 
 	{% if template contains 'cart' %}
 		_data["ecomm_pagetype"] = 'cart';
