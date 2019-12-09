@@ -1,0 +1,57 @@
+{% comment %}
+Pinterest  Remarketing Tracking Script by Alex Czartoryski https://business.czarto.com/
+The latest version of this script available here:
+https://github.com/Czarto/ShopifyScripts/blob/master/snippets/pinterest-remarketing.liquid
+{% endcomment %}
+<!-- Pinterest Tag -->
+{% assign pinterest_tag_id = 2613156108072 %}
+
+{% assign shopify_store_country  = 'US' %}
+{% if shop.currency == 'CAD' %}
+{% assign shopify_store_country  = 'CA' %}
+{% elsif shop.currency == 'AUD' %}
+{% assign shopify_store_country  = 'AU' %}
+{% endif %}
+<script>
+    !function (e) {
+        if (!window.pintrk) {
+            window.pintrk = function () {
+                window.pintrk.queue.push(Array.prototype.slice.call(arguments))
+            }; var
+                n = window.pintrk; n.queue = [], n.version = "3.0"; var
+                    t = document.createElement("script"); t.async = !0, t.src = e; var
+                        r = document.getElementsByTagName("script")[0];
+            r.parentNode.insertBefore(t, r)
+        }
+    }("https://s.pinimg.com/ct/core.js");
+    pintrk('load', '{{ pinterest_tag_id }}', { em: '{{ customer.email }}' });
+    pintrk('page');
+
+
+    {% if template contains 'cart' %}
+    pintrk('track', 'addtocart', {
+        value: {{ cart.total_price | money_without_currency | remove: ', '  }},
+        order_quantity: {{ cart.items.size }},
+        currency: '{{ shop.currency }}'
+    });
+
+    {% elsif template contains 'collection' %}
+    pintrk('track', 'viewcategory');
+
+    {% elsif template contains 'product' %}
+    pintrk('track', 'pagevisit', {
+        line_items: [
+            {
+                product_id: 'shopify_{{ shopify_store_country  }}_{{ product.id }}_{{ product.selected_or_first_available_variant.id }}',
+                product_variant_id: 'shopify_{{ shopify_store_country  }}_{{ product.id }}_{{ product.selected_or_first_available_variant.id }}',
+                product_category: '{{ product.type }}'
+            }
+        ]
+    });
+
+    {% elsif template contains 'search' %}
+    pintrk('track', 'search');
+
+    {% endif %}
+</script>
+<!-- end Pinterest Tag -->
