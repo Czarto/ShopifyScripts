@@ -4,7 +4,7 @@ The latest version of this script available here:
 https://github.com/Czarto/ShopifyScripts/blob/master/snippets/twitter-remarketing.liquid
 {% endcomment %}
 <!-- Pinterest Tag -->
-{% assign twitter_tag_id = 'a123b' %}
+{% assign twitter_pixel_id = 'a123b' %}
 
 <!-- Twitter universal website tag code -->
 <script>
@@ -12,7 +12,7 @@ https://github.com/Czarto/ShopifyScripts/blob/master/snippets/twitter-remarketin
     },s.version='1.1',s.queue=[],u=t.createElement(n),u.async=!0,u.src='//static.ads-twitter.com/uwt.js',
     a=t.getElementsByTagName(n)[0],a.parentNode.insertBefore(u,a))}(window,document,'script');
     // Insert Twitter Pixel ID and Standard Event data below
-    twq('init','{{ twitter_tag_id }}');
+    twq('init','{{ twitter_pixel_id }}');
     twq('track','PageView');
 </script>
 <!-- End Twitter universal website tag code -->
