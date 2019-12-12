@@ -14,6 +14,7 @@ Various collection templates that output product data in a machine readable form
 <br>https://github.com/Czarto/ShopifyScripts/blob/master/Templates/collection.fb-product-feed.liquid
 <br>Blog Post: <a href="https://business.czarto.com/2016/11/22/shopify-diy-facebook-product-feed/">Shopify DIY Facebook Feed</a> 
 
+- **Facebook Product Update Feed**
 <br>https://github.com/Czarto/ShopifyScripts/blob/master/Templates/collection.fb-product-update.liquid
 <br>Blog Post: <a href="https://business.czarto.com/2019/12/11/update-your-shopify-facebook-product-feed-with-missing-attributes/">Fix missing attributes in Shopify's Facebook Product Feed</a> 
 
