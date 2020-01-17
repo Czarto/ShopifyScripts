@@ -32,7 +32,18 @@ https://github.com/Czarto/ShopifyScripts/blob/master/snippets/pinterest-remarket
     pintrk('track', 'addtocart', {
         value: {{ cart.total_price | money_without_currency | remove: ', '  }},
         order_quantity: {{ cart.items.size }},
-        currency: '{{ shop.currency }}'
+        currency: '{{ shop.currency }}',
+        line_items: 
+        [
+        {% for item in cart.items %}
+            {
+                product_category: '{{ item.product.type }}',
+                product_id: 'shopify_{{ shopify_store_country }}_{{ item.product.id }}_{{ item.variant.id }}',
+                product_variant_id: 'shopify_{{ shopify_store_country }}_{{ item.product.id }}_{{ item.variant.id }}',
+                product_quantity: {{ item.quantity }}
+            }{% unless forloop.last %}, {% endunless %}
+        {% endfor %}
+        ]
     });
 
     {% elsif template contains 'collection' %}
