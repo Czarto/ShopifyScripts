@@ -1,0 +1,71 @@
+{% layout none %}<?xml version="1.0"?>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+{%- paginate collection.products by 1000 -%}
+{% comment %}
+This template is used to add additional information to the Facebook product catalog
+{% endcomment %}
+
+<channel>
+<title>{{ shop.name }} {{ collection.title | replace: '&', '&amp;' }}</title>
+<link>{{ shop.url }}</link>
+<description>{{ collection.description | strip_html }}</description>
+{%- for product in collection.products -%} 
+  {%- assign GoogleProductCategory = product.metafields.mm-google-shopping.google_product_category -%}
+  {%- assign Gender = product.metafields.mm-google-shopping.gender -%}
+  {%- assign AgeGroup = product.metafields.mm-google-shopping.age_group -%}
+
+  {%- if product.variants.size > 0 -%}
+  {%- for variant in product.variants -%}
+<item>
+<g:id>{{ variant.id }}</g:id>
+<title>{{ product.title | strip_html | strip_newlines | replace: '&', '&amp;' }}</title>
+<description>{{ product.description | replace: '</', ' </' | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
+<link>{{ shop.url }}{{ variant.url }}</link>
+<g:google_product_category>{{ GoogleProductCategory | replace: '&', '&amp;'  }}</g:google_product_category>
+<g:item_group_id>{{ product.id }}</g:item_group_id>
+<g:content_id>{{ variant.id }}</g:content_id>
+<g:price>{{ variant.price | money_without_currency }} {{ shop.currency }}</g:price>
+<g:condition>new</g:condition>
+<g:availability>{% if variant.available %}in stock{% else %}out of stock{% endif %}</g:availability>
+<g:image_link>http:{% if variant.image.src %}{{ variant.image.src | product_img_url: 'grande' }}{% else %}{{ product.featured_image.src | product_img_url: 'grande' }}{% endif %}</g:image_link>
+<g:gtin>{{ variant.barcode }}</g:gtin>
+<g:mpn>{{ variant.sku }}</g:mpn>
+<g:product_type>{{ product.type | replace: '&', '&amp;' }}</g:product_type>
+<g:age_group>{{ AgeGroup }}</g:age_group>
+<g:gender>{{ Gender }}</g:gender>
+<g:custom_label_0>{{ product.metafields.mm-google-shopping.custom_label_0 }}</g:custom_label_0>
+<g:custom_label_1>{{ product.metafields.mm-google-shopping.custom_label_1 }}</g:custom_label_1>
+<g:custom_label_2>{{ product.metafields.mm-google-shopping.custom_label_2 }}</g:custom_label_2>
+<g:custom_label_3>{{ product.metafields.mm-google-shopping.custom_label_3 }}</g:custom_label_3>
+<g:custom_label_4>{{ product.metafields.mm-google-shopping.custom_label_4 }}</g:custom_label_4>
+</item>
+  {% endfor %}
+  {% else %}
+
+<item>
+<title>{{ product.title | strip_html | strip_newlines | replace: '&', '&amp;' }}</title>
+<description>{{ product.description | replace: '</', ' </' | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
+<g:id>{{ product.id }}</g:id>
+<link>{{ shop.url }}{{ product.url }}</link>
+<g:google_product_category>{{ GoogleProductCategory | replace: '&', '&amp;'  }}</g:google_product_category>
+<g:item_group_id>{{ product.id }}</g:item_group_id>
+<g:price>{{ product.price | money_without_currency }} {{ shop.currency }}</g:price>
+<g:condition>new</g:condition>
+<g:availability>{% if product.available %}in stock{% else %}out of stock{% endif %}</g:availability>
+<g:image_link>http:{{ product.featured_image.src | product_img_url: 'grande' }}</g:image_link>
+<g:gtin>{{ product.barcode }}</g:gtin>
+<g:mpn>{{ product.sku }}</g:mpn>
+<g:product_type>{{ product.type | replace: '&', '&amp;' }}</g:product_type>
+<g:age_group>{{ AgeGroup }}</g:age_group>
+<g:gender>{{ Gender }}</g:gender>
+<g:custom_label_0>{{ product.metafields.mm-google-shopping.custom_label_0 }}</g:custom_label_0>
+<g:custom_label_1>{{ product.metafields.mm-google-shopping.custom_label_1 }}</g:custom_label_1>
+<g:custom_label_2>{{ product.metafields.mm-google-shopping.custom_label_2 }}</g:custom_label_2>
+<g:custom_label_3>{{ product.metafields.mm-google-shopping.custom_label_3 }}</g:custom_label_3>
+<g:custom_label_4>{{ product.metafields.mm-google-shopping.custom_label_4 }}</g:custom_label_4>
+</item>
+  {% endif %}
+{% endfor %}
+</channel>
+</rss>
+{% endpaginate %}
