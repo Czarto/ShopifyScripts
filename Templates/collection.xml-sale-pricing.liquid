@@ -1,0 +1,27 @@
+{% layout none %}<?xml version="1.0"?>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+{% paginate collection.products by 1000 %}
+{%- assign CountryCode = 'US' -%}
+{%- if shop.currency == 'CAD' -%}{%- assign CountryCode = 'CA' -%}{%- endif -%}
+<channel>
+<title>{{ shop.name }} {{ collection.title | strip_html | strip_newlines | replace: '&', '&amp;' | replace }}</title>
+<link>{{ shop.url }}</link>
+<description>{{ collection.description | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
+{% for product in collection.products %} 
+  {% for variant in product.variants %}
+    {%- if variant.compare_at_price > variant.price -%}
+      {%- assign OnSale = true -%}
+      {%- assign Price = variant.compare_at_price -%}
+      {%- assign SalePrice = variant.price -%}
+        <item>
+            <g:item_group_id>shopify_{{ CountryCode }}_{{ product.id }}</g:item_group_id>
+            <g:id>shopify_{{ CountryCode }}_{{ product.id }}_{{ variant.id }}</g:id>
+            <g:price>{{ Price | money_without_currency }} {{ shop.currency }}</g:price>
+            <g:sale_price>{{ SalePrice | money_without_currency }} {{ shop.currency }}</g:sale_price>
+        </item>
+    {%- endif -%}
+{% endfor %}
+{% endfor %}
+</channel>
+</rss>
+{% endpaginate %}
