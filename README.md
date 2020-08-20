@@ -40,5 +40,5 @@ Shopify code snippets
 <br>Blog Post: <a href="https://business.czarto.com/2017/02/07/shopify-dynamic-remarketing-setup/">Shopify Dynamic Remarketing Setup</a> 
 
 - **Collection page color swatches**
-<br>https://github.com/Czarto/ShopifyScripts/blob/master/snippets/product-color-swatch
+<br>https://github.com/Czarto/ShopifyScripts/blob/master/snippets/product-color-swatch.liquid
 <br>Blog Post: <a href="https://business.czarto.com/2012/03/02/adding-color-swatches-to-your-shopify-collections-page/">Add Color Swatches to your Collection Page</a>
