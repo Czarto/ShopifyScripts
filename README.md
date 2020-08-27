@@ -18,6 +18,10 @@ Various collection templates that output product data in a machine readable form
 <br>https://github.com/Czarto/ShopifyScripts/blob/master/Templates/collection.fb-product-update.liquid
 <br>Blog Post: <a href="https://business.czarto.com/2019/12/11/update-your-shopify-facebook-product-feed-with-missing-attributes/">Fix missing attributes in Shopify's Facebook Product Feed</a> 
 
+- **Google Shopping Sale Price Feed**
+<br>https://github.com/Czarto/ShopifyScripts/blob/master/Templates/collection.xml-sale-pricing.liquid
+<br>Blog Post: <a href="https://business.czarto.com/2020/08/12/shopify-sale-price-google-shopping/">Add Sale Price to your Shopify Google Shopping Feed</a> 
+
 - **Google Shopping Product Feed** [deprecated]
 <br>https://github.com/Czarto/ShopifyScripts/blob/master/Templates/collection.xml-product-feed.liquid
 
@@ -36,5 +40,5 @@ Shopify code snippets
 <br>Blog Post: <a href="https://business.czarto.com/2017/02/07/shopify-dynamic-remarketing-setup/">Shopify Dynamic Remarketing Setup</a> 
 
 - **Collection page color swatches**
-<br>https://github.com/Czarto/ShopifyScripts/blob/master/snippets/product-color-swatch
+<br>https://github.com/Czarto/ShopifyScripts/blob/master/snippets/product-color-swatch.liquid
 <br>Blog Post: <a href="https://business.czarto.com/2012/03/02/adding-color-swatches-to-your-shopify-collections-page/">Add Color Swatches to your Collection Page</a>
