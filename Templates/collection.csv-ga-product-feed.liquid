@@ -1,2 +1,2 @@
 {% layout none %}{% paginate collection.products by 1000 %}ga:productSku,ga:productName,ga:productVariant{% for product in collection.products %}{% for variant in product.variants %}
-{{ variant.sku }},{% assign titleparts = product.title | split: '<br>' %}{{ titleparts[0] | replace: ',','' | strip }},{{variant.title | replace: ',','' | strip }}{% endfor %}{% endfor %}{% endpaginate %}
+{{ variant.sku }},{{ product.title | replace: ',','' | remove: '"' | remove: "'" | strip_html | strip }},{{variant.title | replace: ',','' | remove: '"' | remove: "'" | strip_html | strip }}{% endfor %}{% endfor %}{% endpaginate %}
