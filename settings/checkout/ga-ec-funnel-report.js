@@ -1,3 +1,4 @@
+<script>
 // Checkout steps for the Checkout Behavior report in Google Analytics from digitaldarts.com.au/analytics
 var ShopifyCheckoutstep = Shopify.Checkout.step;
 switch (ShopifyCheckoutstep) {
@@ -25,3 +26,4 @@ switch (ShopifyCheckoutstep) {
     });
     ga('send', 'event', 'checkout', 'payment', { nonInteraction: true });
 };
+</script>
