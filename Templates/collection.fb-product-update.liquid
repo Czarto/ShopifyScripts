@@ -5,6 +5,12 @@
 {%- assign additionalImagesForVariants = false -%}
 {% comment %}
 This template is used to add additional information to the Facebook product catalog
+
+
+TODO: Variant Images. 
+TODO: Handle deerskin moccasin special case (for variants, and also generic images)
+
+<comment:title>{{ product.title}} {{variant.title}}</comment:title>
 {% endcomment %}
 <channel>
 <title>{{ shop.name }} {{ collection.title | replace: '&', '&amp;' }}</title>
@@ -32,7 +38,7 @@ This template is used to add additional information to the Facebook product cata
 <g:age_group>{{ AgeGroup }}</g:age_group>
 {% if additionalImagesForVariants %}
 {% if product.images.size > 1 %}{%- for image in product.images offset:2 limit:10 -%}
-<g:additional_image_link>{{ image.src | product_img_url: 'master' }}</g:additional_image_link>
+<g:additional_image_link>https:{{ image.src | product_img_url: 'master' }}</g:additional_image_link>
 {% endfor %}{% endif %}
 {% endif %}
 </item>
@@ -51,7 +57,7 @@ This template is used to add additional information to the Facebook product cata
 <g:gender>{{ Gender }}</g:gender>
 <g:age_group>{{ AgeGroup }}</g:age_group>
 {% if product.images.size > 1 %}{%- for image in product.images offset:2 limit:10 -%}
-<g:additional_image_link>{{ image.src | product_img_url: 'master' }}</g:additional_image_link>
+<g:additional_image_link>https:{{ image.src | product_img_url: 'master' }}</g:additional_image_link>
 {% endfor %}{% endif %}
 </item>
 
