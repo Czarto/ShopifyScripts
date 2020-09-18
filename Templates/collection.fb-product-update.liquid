@@ -27,7 +27,7 @@ This template is used to add additional information to the Facebook product cata
 {%- endfor -%}
 
 {% assign additional_images = product.images %}
-{% if filterVariantImagesByColor %}{% assign additional_images = product.images | where: "alt", Color %}{% endif %}
+{% if filterVariantImagesByColor %}{% assign additional_images = product.images | where: "alt", Color | sort: 'attached_to_variant' | reverse%}{% endif %}
 
 <item>
 <g:id>{{ variant.id }}</g:id>
@@ -41,7 +41,7 @@ This template is used to add additional information to the Facebook product cata
 <g:gender>{{ Gender }}</g:gender>
 <g:age_group>{{ AgeGroup }}</g:age_group>
 {% if additionalImagesForVariants %}
-{% if additional_images.size > 1 %}{%- for image in additional_images offset:2 limit:10 -%}
+{% if additional_images.size > 1 %}{%- for image in additional_images offset:1 limit:10 -%}
 <g:additional_image_link>https:{{ image.src | product_img_url: 'master' }}</g:additional_image_link>
 {% endfor %}{% endif %}
 {% endif %}
@@ -60,7 +60,7 @@ This template is used to add additional information to the Facebook product cata
 <g:material>{{ Material }}</g:material>
 <g:gender>{{ Gender }}</g:gender>
 <g:age_group>{{ AgeGroup }}</g:age_group>
-{% if product.images.size > 1 %}{%- for image in product.images offset:2 limit:10 -%}
+{% if product.images.size > 1 %}{%- for image in product.images offset:1 limit:10 -%}
 <g:additional_image_link>https:{{ image.src | product_img_url: 'master' }}</g:additional_image_link>
 {% endfor %}{% endif %}
 </item>
