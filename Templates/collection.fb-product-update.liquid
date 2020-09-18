@@ -3,12 +3,9 @@
 {%- paginate collection.products by 1000 -%}
 {%- assign useSEOdescription = true -%}
 {%- assign additionalImagesForVariants = false -%}
+{%- assign filterVariantImagesByColor = false -%}
 {% comment %}
 This template is used to add additional information to the Facebook product catalog
-
-
-TODO: Variant Images. 
-TODO: Handle deerskin moccasin special case (for variants, and also generic images)
 
 <comment:title>{{ product.title}} {{variant.title}}</comment:title>
 {% endcomment %}
@@ -21,9 +18,16 @@ TODO: Handle deerskin moccasin special case (for variants, and also generic imag
 {%- assign Gender = product.metafields.mm-google-shopping.gender -%}
 {%- assign AgeGroup = product.metafields.mm-google-shopping.age_group -%}
 {%- assign Material = product.metafields.mm-google-shopping.material  -%}
+{%- assign Color = "" -%}
 
 {%- if product.variants.size > 0 -%}
 {%- for variant in product.variants -%}
+{%- for option in product.options -%}
+{%- if option == 'Color' -%}{% capture Color %}{{ variant.options[forloop.index0] }}{% endcapture %}{%- endif -%}
+{%- endfor -%}
+
+{% assign additional_images = product.images %}
+{% if filterVariantImagesByColor %}{% assign additional_images = product.images | where: "alt", Color %}{% endif %}
 
 <item>
 <g:id>{{ variant.id }}</g:id>
@@ -37,7 +41,7 @@ TODO: Handle deerskin moccasin special case (for variants, and also generic imag
 <g:gender>{{ Gender }}</g:gender>
 <g:age_group>{{ AgeGroup }}</g:age_group>
 {% if additionalImagesForVariants %}
-{% if product.images.size > 1 %}{%- for image in product.images offset:2 limit:10 -%}
+{% if additional_images.size > 1 %}{%- for image in additional_images offset:2 limit:10 -%}
 <g:additional_image_link>https:{{ image.src | product_img_url: 'master' }}</g:additional_image_link>
 {% endfor %}{% endif %}
 {% endif %}
