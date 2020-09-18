@@ -2,12 +2,9 @@
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
 {%- paginate collection.products by 1000 -%}
 {%- assign useSEOdescription = true -%}
+{%- assign additionalImagesForVariants = false -%}
 {% comment %}
 This template is used to add additional information to the Facebook product catalog
-
-TODO: Variant Images. Handle deerskin moccasin special case (for variants, and also generic images)
-
-<comment:title>{{ product.title}} {{variant.title}}</comment:title>
 {% endcomment %}
 <channel>
 <title>{{ shop.name }} {{ collection.title | replace: '&', '&amp;' }}</title>
@@ -33,6 +30,11 @@ TODO: Variant Images. Handle deerskin moccasin special case (for variants, and a
 <g:material>{{ Material }}</g:material>
 <g:gender>{{ Gender }}</g:gender>
 <g:age_group>{{ AgeGroup }}</g:age_group>
+{% if additionalImagesForVariants %}
+{% if product.images.size > 1 %}{%- for image in product.images offset:2 limit:10 -%}
+<g:additional_image_link>{{ image.src | product_img_url: 'master' }}</g:additional_image_link>
+{% endfor %}{% endif %}
+{% endif %}
 </item>
 
 {% endfor %}
@@ -48,8 +50,8 @@ TODO: Variant Images. Handle deerskin moccasin special case (for variants, and a
 <g:material>{{ Material }}</g:material>
 <g:gender>{{ Gender }}</g:gender>
 <g:age_group>{{ AgeGroup }}</g:age_group>
-{% if product.images.size > 1 %}{% for image in product.images offset:2 limit:10 %}
-<g:additional_image_link><img src="{{ image.src | product_img_url: 'master' }}"></g:additional_image_link>
+{% if product.images.size > 1 %}{%- for image in product.images offset:2 limit:10 -%}
+<g:additional_image_link>{{ image.src | product_img_url: 'master' }}</g:additional_image_link>
 {% endfor %}{% endif %}
 </item>
 
