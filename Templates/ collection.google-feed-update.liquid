@@ -1,0 +1,33 @@
+{% layout none %}<?xml version="1.0"?>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+{% paginate collection.products by 1000 %}
+{%- assign CountryCode = 'US' -%}
+{%- if shop.currency == 'CAD' -%}{%- assign CountryCode = 'CA' -%}{%- endif -%}
+{%- assign inStockVariantsOnly = true -%}
+{%- assign filterVariantImagesByColor = true -%}
+<channel>
+<title>{{ shop.name }} {{ collection.title | strip_html | strip_newlines | replace: '&', '&amp;' }}</title>
+<link>{{ shop.url }}</link>
+<description>{{ collection.description | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
+{% for product in collection.products %} 
+  {%- assign Color = "" -%}
+  {% for variant in product.variants %}
+    {%- if inStockVariantsOnly and variant.available -%}
+    {%- for option in product.options -%}
+    {%- if option == 'Color' -%}{% capture Color %}{{ variant.options[forloop.index0] }}{% endcapture %}{%- endif -%}
+    {%- endfor -%}
+    {% assign additional_images = product.images %}
+    {% if filterVariantImagesByColor %}{% assign additional_images = product.images | where: "alt", Color | sort: 'attached_to_variant' | reverse%}{% endif %}
+        <item>
+            <g:item_group_id>shopify_{{ CountryCode }}_{{ product.id }}</g:item_group_id>
+            <g:id>shopify_{{ CountryCode }}_{{ product.id }}_{{ variant.id }}</g:id>
+            {% if additional_images.size > 1 %}{%- for image in additional_images offset:1 limit:10 -%}
+            <g:additional_image_link>https:{{ image.src | product_img_url: 'master' }}</g:additional_image_link>
+            {% endfor %}{% endif %}
+        </item>
+    {%- endif -%}
+{% endfor %}
+{% endfor %}
+</channel>
+</rss>
+{% endpaginate %}
