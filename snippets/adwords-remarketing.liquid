@@ -2,6 +2,7 @@
 Google Ads Dynamic Remarketing Script by Alex Czartoryski
 https://business.czarto.com/2017/02/07/shopify-dynamic-remarketing-setup/
 
+This version: Sept 25, 2020
 The latest version of this script available here:
 https://github.com/Czarto/ShopifyScripts/blob/master/snippets/adwords-remarketing.liquid
 {% endcomment %}
@@ -53,7 +54,7 @@ https://github.com/Czarto/ShopifyScripts/blob/master/snippets/adwords-remarketin
 <script>
 	gtag('event', '{{ google_event }}', {
 	  'send_to': 'AW-{{ google_conversion_id }}',
-	  {% if google_value %}'value': '{{ google_value }}',{% endif %}
+	  {% if google_value %}'value': '{{ google_value | money_without_currency  | remove: ',' }}',{% endif %}
 	  'items': [{{ google_items }}]
 	});
 </script>
