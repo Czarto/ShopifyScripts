@@ -6,6 +6,9 @@ The latest version of this script available here:
 https://github.com/Czarto/ShopifyScripts/blob/master/snippets/adwords-remarketing.liquid
 {% endcomment %}
 
+{% comment %}Set to false if GTAG is already loaded on the page. Leave to true if unsure.{%endcomment%}
+{% assign load_gtag = true %}
+
 {% comment %} Enter your google conversion id below {% endcomment %}
 {% assign google_conversion_id = 123456789 %}
 
@@ -16,6 +19,7 @@ https://github.com/Czarto/ShopifyScripts/blob/master/snippets/adwords-remarketin
 {% assign shopify_store_country  = 'AU' %}
 {% endif %}
 
+{%if load_gtag %}
 <!-- Global site tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-{{ google_conversion_id }}"></script>
 <script>
@@ -24,33 +28,33 @@ https://github.com/Czarto/ShopifyScripts/blob/master/snippets/adwords-remarketin
   gtag('js', new Date());
   gtag('config', 'AW-{{ google_conversion_id }}');
 </script>
+{% endif %}
 
+{% assign google_event = false %}
+{% assign google_items = false %}
+{% assign google_value = false %}
+{% if template contains 'cart' %}
+	{% assign google_event = 'add_to_cart' %}
+	{% capture google_items %}{% for item in cart.items %}{'id':'shopify_{{ shopify_store_country  }}_{{ item.product.id }}_{{ item.variant.id }}','google_business_vertical': 'retail'}{% unless forloop.last %}, {% endunless %}{% endfor %}{% endcapture %}
+	{% assign google_value = cart.total_price %}
+{% elsif template contains 'collection' %}
+	{% assign google_event = 'view_item_list' %}
+	{% capture google_items %}{% for item in collection.products limit:5 %}{'id':'shopify_{{ shopify_store_country  }}_{{ item.id }}_{{ item.variants.first.id }}','google_business_vertical': 'retail'}{% unless forloop.last %}, {% endunless %}{% endfor %}{% endcapture %}
+{% elsif template contains 'product' %}
+	{% assign google_event = 'view_item' %}
+	{% capture google_items %}{'id':'shopify_{{ shopify_store_country  }}_{{ product.id }}_{{ product.selected_or_first_available_variant.id }}','google_business_vertical': 'retail'}{% endcapture %}
+	{% assign google_value = product.selected_or_first_available_variant.price %}
+{% elsif template contains 'search' %}
+	{% assign google_event = 'view_search_results' %}
+	{% capture google_items %}{% for item in search.results limit:5 %}{'id':'shopify_{{ shopify_store_country  }}_{{ item.id }}_{{ item.variants.first.id }}','google_business_vertical': 'retail'}{% unless forloop.last %}, {% endunless %}{% endfor %}{% endcapture %}
+{% endif %}
+
+{% if google_event %}
 <script>
-	var _data = {'send_to': 'AW-{{ google_conversion_id }}', 'ecomm_pagetype':'other'};
-
-	{% if template contains 'cart' %}
-		_data["ecomm_pagetype"] = 'cart';
-		_data["ecomm_prodid"] = [{% for item in cart.items %}'shopify_{{ shopify_store_country  }}_{{ item.product.id }}_{{ item.variant.id }}'{% unless forloop.last %}, {% endunless %}{% endfor %}];
-		_data["ecomm_totalvalue"] = '{{ cart.total_price | money_without_currency  | remove: ','  }}';
-  
-  {% elsif template contains 'collection' %}
-  	var _prodid = [{% for item in collection.products limit:5 %}'shopify_{{ shopify_store_country  }}_{{ item.id }}_{{ item.variants.first.id }}'{% unless forloop.last %}, {% endunless %}{% endfor %}];
-  	_data["ecomm_pagetype"] = 'category';
-  	_data["ecomm_category"] = '{{ collection.handle }}';
-  
-  {% elsif template contains 'index' %}
-		_data["ecomm_pagetype"] = 'home';
-  
-  {% elsif template contains 'product' %}
-		_data["ecomm_prodid"] = 'shopify_{{ shopify_store_country  }}_{{ product.id }}_{{ product.selected_or_first_available_variant.id }}';
-  	_data["ecomm_pagetype"] = 'product';
-  	_data["ecomm_totalvalue"] = '{{ product.selected_or_first_available_variant.price | money_without_currency  | remove: ','  }}';
-  
-  {% elsif template contains 'search' %}
-		_data["ecomm_prodid"] = [{% for item in search.results limit:5 %}'shopify_{{ shopify_store_country  }}_{{ item.id }}_{{ item.variants.first.id }}'{% unless forloop.last %}, {% endunless %}{% endfor %}];
-		_data["ecomm_pagetype"] = 'searchresults';
-		
-	{% endif %}
-
-	gtag('event', 'page_view', _data);
+	gtag('event', '{{ google_event }}', {
+	  'send_to': 'AW-{{ google_conversion_id }}',
+	  {% if google_value %}'value': '{{ google_value }}',{% endif %}
+	  'items': [{{ google_items }}]
+	});
 </script>
+{% endif %}
