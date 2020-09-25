@@ -1,9 +1,9 @@
 {% comment %}
-Google Ads Conversion Tracking Script by Alex Czartoryski https://business.czarto.com/
+Google Ads Dynamic Remarkting Script by Alex Czartoryski https://business.czarto.com/
 
 This version: Sep 25, 2020
 The latest version of this script available here:
-https://github.com/Czarto/ShopifyScripts/blob/master/settings/checkout/adwords-conversion.liquid
+https://github.com/Czarto/ShopifyScripts/blob/master/settings/checkout/adwords-remarketing.liquid
 {% endcomment %}
 
 {% comment %}Set to false if GTAG is already loaded on the page. Leave to true if unsure.{%endcomment%}
@@ -12,7 +12,6 @@ https://github.com/Czarto/ShopifyScripts/blob/master/settings/checkout/adwords-c
 {% if first_time_accessed %}
 {% comment %} Enter your account specific values below {% endcomment %}
 {% assign google_conversion_id = "123456789" %}
-{% assign google_conversion_label = "abcdefghijklmnop" %}
 
 {% assign shopify_store_country  = 'US' %}
 {% if shop.currency == 'CAD' %}
@@ -35,13 +34,12 @@ https://github.com/Czarto/ShopifyScripts/blob/master/settings/checkout/adwords-c
 
 <!-- Event snippet for Web Order conversion page -->
 <script>
-    // Google Ads Conversion
-    gtag('event', 'conversion', {
-        'send_to': 'AW-{{ google_conversion_id }}/{{ google_conversion_label }}',
-        'value': {{ checkout.subtotal_price | money_without_currency | remove: ',' }},
-        'currency': '{{ shop.currency }}',
-        'transaction_id': '{{ order.order_number }}'
-    });
+    // Google Ads Remarketing
+    gtag('event', 'purchase', {
+	  'send_to': 'AW-{{ google_conversion_id }}',
+	  'value': '{{ total_price | money_without_currency  | remove: ',' }}',
+	  'items': [{% for item in order.line_items %}{'id':'shopify_{{ shopify_store_country }}_{{ item.product.id }}_{{ item.variant.id }}','google_business_vertical': 'retail'}{% unless forloop.last %}, {% endunless %}{% endfor %}]
+	});
 </script>
 
 {% endif %}
