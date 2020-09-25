@@ -6,6 +6,9 @@ The latest version of this script available here:
 https://github.com/Czarto/ShopifyScripts/blob/master/settings/checkout/adwords-conversion.liquid
 {% endcomment %}
 
+{% comment %}Set to false if GTAG is already loaded on the page. Leave to true if unsure.{%endcomment%}
+{% assign load_gtag = true %}
+
 {% if first_time_accessed %}
 {% comment %} Enter your account specific values below {% endcomment %}
 {% assign google_conversion_id = "123456789" %}
@@ -19,8 +22,10 @@ https://github.com/Czarto/ShopifyScripts/blob/master/settings/checkout/adwords-c
 {% endif %}
 
 
+{%if load_gtag %}
 <!-- Global site tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-{{ google_conversion_id }}"></script>
+{% endif %}
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}

@@ -23,13 +23,13 @@ https://github.com/Czarto/ShopifyScripts/blob/master/snippets/adwords-remarketin
 {%if load_gtag %}
 <!-- Global site tag (gtag.js) -->
 <script async src="https://www.googletagmanager.com/gtag/js?id=AW-{{ google_conversion_id }}"></script>
+{% endif %}
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
   gtag('config', 'AW-{{ google_conversion_id }}');
 </script>
-{% endif %}
 
 {% assign google_event = false %}
 {% assign google_items = false %}
