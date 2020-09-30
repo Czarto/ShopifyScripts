@@ -37,7 +37,7 @@ https://github.com/Czarto/ShopifyScripts/blob/master/settings/checkout/adwords-r
     // Google Ads Remarketing
     gtag('event', 'purchase', {
 	  'send_to': 'AW-{{ google_conversion_id }}',
-	  'value': '{{ total_price | money_without_currency  | remove: ',' }}',
+	  'value': '{{ total_price | divided_by: 100.0 }}',
 	  'items': [{% for item in order.line_items %}{'id':'shopify_{{ shopify_store_country }}_{{ item.product.id }}_{{ item.variant.id }}','google_business_vertical': 'retail'}{% unless forloop.last %}, {% endunless %}{% endfor %}]
 	});
 </script>

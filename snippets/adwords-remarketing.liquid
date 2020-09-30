@@ -54,7 +54,7 @@ https://github.com/Czarto/ShopifyScripts/blob/master/snippets/adwords-remarketin
 <script>
 	gtag('event', '{{ google_event }}', {
 	  'send_to': 'AW-{{ google_conversion_id }}',
-	  {% if google_value %}'value': '{{ google_value | money_without_currency  | remove: ',' }}',{% endif %}
+	  {% if google_value %}'value': '{{ google_value | divided_by: 100.0 }}',{% endif %}
 	  'items': [{{ google_items }}]
 	});
 </script>
