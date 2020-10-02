@@ -1,33 +1,62 @@
 {% layout none %}<?xml version="1.0"?>
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
-{% paginate collection.products by 1000 %}
+
+{% comment %} Settings {% endcomment %}
+{%- assign exclude_variants_outOfStock = true -%}
+{%- assign filter_variantImages_byColor = true -%}
+
 {%- assign CountryCode = 'US' -%}
 {%- if shop.currency == 'CAD' -%}{%- assign CountryCode = 'CA' -%}{%- endif -%}
-{%- assign inStockVariantsOnly = true -%}
-{%- assign filterVariantImagesByColor = true -%}
+
 <channel>
 <title>{{ shop.name }} {{ collection.title | strip_html | strip_newlines | replace: '&', '&amp;' }}</title>
 <link>{{ shop.url }}</link>
 <description>{{ collection.description | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
+
+{% paginate collection.products by 1000 %}
 {% for product in collection.products %} 
-  {%- assign Color = "" -%}
   {% for variant in product.variants %}
-    {%- if inStockVariantsOnly and variant.available -%}
+  
+<item>
+    <g:item_group_id>shopify_{{ CountryCode }}_{{ product.id }}</g:item_group_id>
+    <g:id>shopify_{{ CountryCode }}_{{ product.id }}_{{ variant.id }}</g:id>
+    <g:mpn>{{ variant.sku }}</g:mpn>
+
+    {% comment %} Sale Price {% endcomment %}
+    {%- if variant.compare_at_price > variant.price -%}
+    {%- assign variant_onSale = true -%}
+    {%- assign variant_price = variant.compare_at_price -%}
+    {%- assign variant_salePrice = variant.price -%}
+    <g:price>{{ variant_price | money_without_currency }} {{ shop.currency }}</g:price>
+    <g:sale_price>{{ variant_salePrice | money_without_currency }} {{ shop.currency }}</g:sale_price>
+    {% endif %}
+
+    {% comment %} Additional Images by Color {% endcomment %}
+    {%- assign additional_images = product.images -%}
     {%- for option in product.options -%}
-    {%- if option == 'Color' -%}{% capture Color %}{{ variant.options[forloop.index0] }}{% endcapture %}{%- endif -%}
+    {%- if option == 'Color' -%}{% capture variant_color %}{{ variant.options[forloop.index0] }}{% endcapture %}{%- endif -%}
     {%- endfor -%}
-    {% assign additional_images = product.images %}
-    {% if filterVariantImagesByColor %}{% assign additional_images = product.images | where: "alt", Color | sort: 'attached_to_variant' | reverse%}{% endif %}
-        <item>
-            <g:item_group_id>shopify_{{ CountryCode }}_{{ product.id }}</g:item_group_id>
-            <g:id>shopify_{{ CountryCode }}_{{ product.id }}_{{ variant.id }}</g:id>
-            {% if additional_images.size > 1 %}{%- for image in additional_images offset:1 limit:10 -%}
-            <g:additional_image_link>https:{{ image.src | product_img_url: 'master' }}</g:additional_image_link>
-            {% endfor %}{% endif %}
-        </item>
-    {%- endif -%}
+    {% if filter_variantImages_byColor %}{% assign additional_images = product.images | where: "alt", variant_color | sort: 'attached_to_variant' | reverse%}{% endif %}
+    {% if additional_images.size > 1 %}{%- for image in additional_images offset:1 limit:10 -%}
+    <g:additional_image_link>https:{{ image.src | product_img_url: 'master' }}</g:additional_image_link>
+    {% endfor %}{% endif %}
+
+    {% comment %} Include / Exclude Variants {% endcomment %}
+    {% if variant.available %}
+    <g:included_destination>Display ads</g:included_destination>
+    <g:included_destination>Shopping ads</g:included_destination>
+    <g:included_destination>Shopping Actions</g:included_destination>
+    <g:included_destination>Surfaces across Google</g:included_destination>
+    {% elsif exclude_variants_outOfStock %}
+    <g:excluded_destination>Display ads</g:excluded_destination>
+    <g:excluded_destination>Shopping ads</g:excluded_destination>
+    <g:excluded_destination>Shopping Actions</g:excluded_destination>
+    <g:excluded_destination>Surfaces across Google</g:excluded_destination>
+    {% endif %}
+</item>
+
+  {% endfor %}
 {% endfor %}
-{% endfor %}
+{% endpaginate %}
 </channel>
 </rss>
-{% endpaginate %}
