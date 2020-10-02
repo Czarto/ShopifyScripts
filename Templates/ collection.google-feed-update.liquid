@@ -41,13 +41,8 @@
     <g:additional_image_link>https:{{ image.src | product_img_url: 'master' }}</g:additional_image_link>
     {% endfor %}{% endif %}
 
-    {% comment %} Include / Exclude Variants {% endcomment %}
-    {% if variant.available %}
-    <g:included_destination>Display ads</g:included_destination>
-    <g:included_destination>Shopping ads</g:included_destination>
-    <g:included_destination>Shopping Actions</g:included_destination>
-    <g:included_destination>Surfaces across Google</g:included_destination>
-    {% elsif exclude_variants_outOfStock %}
+    {% comment %} Exclude Out of Stock Variants {% endcomment %}
+    {% if variant.available == false and exclude_variants_outOfStock %}
     <g:excluded_destination>Display ads</g:excluded_destination>
     <g:excluded_destination>Shopping ads</g:excluded_destination>
     <g:excluded_destination>Shopping Actions</g:excluded_destination>
