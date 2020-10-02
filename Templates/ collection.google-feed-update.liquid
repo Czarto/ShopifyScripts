@@ -1,8 +1,16 @@
 {% layout none %}<?xml version="1.0"?>
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
 
-{% comment %} Settings {% endcomment %}
+{% comment %} Settings 
+
+TODO: Handle products without variants
+TODO: Hanlde products without color
+
+{% endcomment %}
 {%- assign exclude_variants_outOfStock = true -%}
+{%- assign exclude_variantColor_limitedStock = true -%}
+{%- assign exclude_variantColor_ignoreSizeOffset = 1 -%}
+{%- assign exclude_variant_byColorAvailabilityPercentage = 50 %}
 {%- assign filter_variantImages_byColor = true -%}
 
 {%- assign CountryCode = 'US' -%}
@@ -13,16 +21,44 @@
 <link>{{ shop.url }}</link>
 <description>{{ collection.description | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
 
-{% paginate collection.products by 1000 %}
-{% for product in collection.products %} 
-  {% for variant in product.variants %}
-  
+{%- paginate collection.products by 1000 -%}
+{%- for product in collection.products -%}
+
+    {%- comment -%} Get color option {%- endcomment -%}
+    {%- for option in product.options -%}
+    {%- if option == 'Color' -%}{% capture option_color %}option{{ forloop.index }}{% endcapture %}{%- endif -%}
+    {%- endfor -%}
+
+    {%- comment -%}Make a list of Colors to exclude{%- endcomment -%}
+    {%- assign colors_excludeList = "" -%}
+    {%- if exclude_variantColor_limitedStock -%}
+        {%- for color in product.options_by_name['Color'].values -%}
+            {%- assign variants_singleColor = product.variants | where: option_color, color -%}
+            {%- assign color_sizes_count = variants_singleColor.size -%}
+            {%- assign loop_start = exclude_variantColor_ignoreSizeOffset -%}
+            {%- assign loop_end = variants_singleColor.size | minus:exclude_variantColor_ignoreSizeOffset | minus:exclude_variantColor_ignoreSizeOffset -%}
+            {%- assign count_instock = 0 -%}
+            {%- assign count_total = 0 -%}
+            {%- for singleColorVariant in variants_singleColor offset:loop_start limit:loop_end -%}
+                {%- assign count_total = count_total | plus:1 -%}
+                {%- if singleColorVariant.available-%}{%-assign count_instock = count_instock | plus:1 -%}{%- endif -%}
+            {%- endfor -%}
+            {%- assign color_sizes_count = color_sizes_count | minus:exclude_variantColor_ignoreSizeOffset | minus:exclude_variantColor_ignoreSizeOffset -%}
+            {%- assign color_availabilityPercentage = count_instock | times: 100.0 | divided_by: color_sizes_count | round -%}
+            {%- if color_availabilityPercentage < exclude_variant_byColorAvailabilityPercentage -%}
+            {% capture colors_excludeList %}{{colors_excludeList}}#{{ color }}{%endcapture%}
+            {%- endif -%}
+        {%- endfor -%}
+        {%- assign colors_excludeList = colors_excludeList | split: "#" -%}
+    {%- endif -%}
+
+    {%- for variant in product.variants -%}
 <item>
     <g:item_group_id>shopify_{{ CountryCode }}_{{ product.id }}</g:item_group_id>
     <g:id>shopify_{{ CountryCode }}_{{ product.id }}_{{ variant.id }}</g:id>
     <g:mpn>{{ variant.sku }}</g:mpn>
 
-    {% comment %} Sale Price {% endcomment %}
+    {%- comment -%} Sale Price {%- endcomment -%}
     {%- if variant.compare_at_price > variant.price -%}
     {%- assign variant_onSale = true -%}
     {%- assign variant_price = variant.compare_at_price -%}
@@ -31,7 +67,7 @@
     <g:sale_price>{{ variant_salePrice | money_without_currency }} {{ shop.currency }}</g:sale_price>
     {% endif %}
 
-    {% comment %} Additional Images by Color {% endcomment %}
+    {%- comment -%} Additional Images by Color {%- endcomment -%}
     {%- assign additional_images = product.images -%}
     {%- for option in product.options -%}
     {%- if option == 'Color' -%}{% capture variant_color %}{{ variant.options[forloop.index0] }}{% endcapture %}{%- endif -%}
@@ -41,12 +77,15 @@
     <g:additional_image_link>https:{{ image.src | product_img_url: 'master' }}</g:additional_image_link>
     {% endfor %}{% endif %}
 
-    {% comment %} Exclude Out of Stock Variants {% endcomment %}
-    {% if variant.available == false and exclude_variants_outOfStock %}
+    {%- comment -%} Exclude Out of Stock Variants {%- endcomment -%}
+    {% if exclude_variants_outOfStock and variant.available == false %}
     <g:excluded_destination>Display ads</g:excluded_destination>
     <g:excluded_destination>Shopping ads</g:excluded_destination>
     <g:excluded_destination>Shopping Actions</g:excluded_destination>
-    <g:excluded_destination>Surfaces across Google</g:excluded_destination>
+    {% elsif exclude_variantColor_limitedStock and colors_excludeList contains variant_color %}
+    <g:excluded_destination>Display ads</g:excluded_destination>
+    <g:excluded_destination>Shopping ads</g:excluded_destination>
+    <g:excluded_destination>Shopping Actions</g:excluded_destination>
     {% endif %}
 </item>
 
