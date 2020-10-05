@@ -5,6 +5,7 @@
 
 TODO: Handle products without variants
 TODO: Hanlde products without color
+TODO: Specify Sizes to never exclude. eg: 7,8
 
 {% endcomment %}
 {%- assign exclude_variants_outOfStock = true -%}
@@ -83,9 +84,7 @@ TODO: Hanlde products without color
     <g:excluded_destination>Shopping ads</g:excluded_destination>
     <g:excluded_destination>Shopping Actions</g:excluded_destination>
     {% elsif exclude_variantColor_limitedStock and colors_excludeList contains variant_color %}
-    <g:excluded_destination>Display ads</g:excluded_destination>
     <g:excluded_destination>Shopping ads</g:excluded_destination>
-    <g:excluded_destination>Shopping Actions</g:excluded_destination>
     {% endif %}
 </item>
 
