@@ -3,7 +3,7 @@
 {%- paginate collection.products by 1000 -%}
 {%- assign useSEOdescription = true -%}
 {%- assign additionalImagesForVariants = false -%}
-{%- assign inStockVariantsOnly = true -%}
+{%- assign includeOutOfStock = false -%}
 {%- assign filterVariantImagesByColor = false -%}
 {% comment %}
 This template is used to add additional information to the Facebook product catalog
@@ -23,7 +23,7 @@ This template is used to add additional information to the Facebook product cata
 
 {%- if product.variants.size > 0 -%}
 {%- for variant in product.variants -%}
-{%- if inStockVariantsOnly and variant.available -%}
+{%- if includeOutOfStock or variant.available -%}
 {%- for option in product.options -%}
 {%- if option == 'Color' -%}{% capture Color %}{{ variant.options[forloop.index0] }}{% endcapture %}{%- endif -%}
 {%- endfor -%}
