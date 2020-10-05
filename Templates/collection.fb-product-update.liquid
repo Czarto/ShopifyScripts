@@ -37,6 +37,7 @@ This template is used to add additional information to the Facebook product cata
 {% if useSEOdescription and product.metafields.global.description_tag.size > 0 %}<g:description>{{ product.metafields.global.description_tag | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:description>{% endif %}
 <g:google_product_category>{{ GoogleProductCategory | replace: '&', '&amp;'  }}</g:google_product_category>
 <g:product_type>{{ product.type | replace: '&', '&amp;' }}</g:product_type>
+<g:mpn>{{ variant.sku }}</g:mpn>
 <g:item_group_id>{{ product.id }}</g:item_group_id>
 <g:content_id>{{ variant.id }}</g:content_id>
 <g:availability>{% if variant.available %}in stock{% else %}out of stock{% endif %}</g:availability>
