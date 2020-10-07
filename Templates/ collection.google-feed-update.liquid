@@ -8,10 +8,11 @@ TODO: Hanlde products without color
 TODO: Specify Sizes to never exclude. eg: 7,8
 
 {% endcomment %}
-{%- assign exclude_variants_outOfStock = true -%}
-{%- assign exclude_variantColor_limitedStock = true -%}
-{%- assign exclude_variantColor_ignoreSizeOffset = 1 -%}
-{%- assign exclude_variant_byColorAvailabilityPercentage = 50 %}
+{%- assign exclude_unavailable_variants = true -%}
+{%- assign exclude_variant_colors_with_limited_availability = true -%}
+{%- assign ignore_x_smallest_sizes = 1 -%}
+{%- assign ignore_x_largest_sizes = 1 -%}
+{%- assign minimum_percentage_availability = 50 -%}
 {%- assign filter_variantImages_byColor = true -%}
 
 {%- assign CountryCode = 'US' -%}
@@ -27,30 +28,30 @@ TODO: Specify Sizes to never exclude. eg: 7,8
 
     {%- comment -%} Get color option {%- endcomment -%}
     {%- for option in product.options -%}
-    {%- if option == 'Color' -%}{% capture option_color %}option{{ forloop.index }}{% endcapture %}{%- endif -%}
+      {%- if option == 'Color' -%}{% capture option_color %}option{{ forloop.index }}{% endcapture %}{%- endif -%}
     {%- endfor -%}
 
-    {%- comment -%}Make a list of Colors to exclude{%- endcomment -%}
-    {%- assign colors_excludeList = "" -%}
-    {%- if exclude_variantColor_limitedStock -%}
+    {%- comment -%} Make a list of Colors to exclude {%- endcomment -%}
+    {%- assign colors_to_exclude = "" -%}
+    {%- if exclude_variant_colors_with_limited_availability -%}
         {%- for color in product.options_by_name['Color'].values -%}
-            {%- assign variants_singleColor = product.variants | where: option_color, color -%}
-            {%- assign color_sizes_count = variants_singleColor.size -%}
-            {%- assign loop_start = exclude_variantColor_ignoreSizeOffset -%}
-            {%- assign loop_end = variants_singleColor.size | minus:exclude_variantColor_ignoreSizeOffset | minus:exclude_variantColor_ignoreSizeOffset -%}
-            {%- assign count_instock = 0 -%}
-            {%- assign count_total = 0 -%}
-            {%- for singleColorVariant in variants_singleColor offset:loop_start limit:loop_end -%}
-                {%- assign count_total = count_total | plus:1 -%}
-                {%- if singleColorVariant.available-%}{%-assign count_instock = count_instock | plus:1 -%}{%- endif -%}
+            {%- assign variants = product.variants | where: option_color, color -%}
+            {%- assign variants_to_process_count = variants.size | minus:ignore_x_smallest_sizes | minus:ignore_x_largest_sizes -%}
+            {%- assign available_count = 0 -%}
+            {%- assign total_processed_count = 0 -%}
+            {%- for variant in variants offset:ignore_x_smallest_sizes limit:variants_to_process_count -%}
+                {%- assign total_processed_count = total_processed_count | plus:1 -%}
+                {%- if variant.available -%}{%- assign available_count = available_count | plus:1 -%}{%- endif -%}
             {%- endfor -%}
-            {%- assign color_sizes_count = color_sizes_count | minus:exclude_variantColor_ignoreSizeOffset | minus:exclude_variantColor_ignoreSizeOffset -%}
-            {%- assign color_availabilityPercentage = count_instock | times: 100.0 | divided_by: color_sizes_count | round -%}
-            {%- if color_availabilityPercentage < exclude_variant_byColorAvailabilityPercentage -%}
-            {% capture colors_excludeList %}{{colors_excludeList}}#{{ color }}{%endcapture%}
+            {%- if total_processed_count == 0 -%}
+              {%- continue -%}
+            {%- endif -%}
+            {%- assign percentage_availability = available_count | times: 100.0 | divided_by: total_processed_count | round -%}
+            {%- if percentage_availability < minimum_percentage_availability -%}
+            {% capture colors_to_exclude %}{{colors_to_exclude}}#{{ color }}{%endcapture%}
             {%- endif -%}
         {%- endfor -%}
-        {%- assign colors_excludeList = colors_excludeList | split: "#" -%}
+        {%- assign colors_to_exclude = colors_to_exclude | split: "#" -%}
     {%- endif -%}
 
     {%- for variant in product.variants -%}
@@ -79,11 +80,11 @@ TODO: Specify Sizes to never exclude. eg: 7,8
     {% endfor %}{% endif %}
 
     {%- comment -%} Exclude Out of Stock Variants {%- endcomment -%}
-    {% if exclude_variants_outOfStock and variant.available == false %}
+    {% if exclude_unavailable_variants and variant.available == false %}
     <g:excluded_destination>Display ads</g:excluded_destination>
     <g:excluded_destination>Shopping ads</g:excluded_destination>
     <g:excluded_destination>Shopping Actions</g:excluded_destination>
-    {% elsif exclude_variantColor_limitedStock and colors_excludeList contains variant_color %}
+    {% elsif exclude_variant_colors_with_limited_availability and colors_to_exclude contains variant_color %}
     <g:excluded_destination>Shopping ads</g:excluded_destination>
     {% endif %}
 </item>
