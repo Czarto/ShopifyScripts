@@ -1,13 +1,20 @@
 {% layout none %}<?xml version="1.0"?>
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
 
-{% comment %} Settings 
+{% comment %}
+Google Shopping / Merchant Center + Shopify Product Update Feed by Alex Czartoryski
+https://business.czarto.com/2020/08/12/shopify-sale-price-google-shopping/
 
-TODO: Handle products without variants
-TODO: Hanlde products without color
-TODO: Specify Sizes to never exclude. eg: 7,8
+This version: Oct 14, 2020
+The latest version of this script available here:
+https://github.com/Czarto/ShopifyScripts/blob/master/Templates/collection.google-feed-update.liquid
 
+TODO: Test & handle products without variants
+TODO: Test  & hanlde products without color
+TODO: Specify Sizes to never exclude. eg: Women's 7,8
 {% endcomment %}
+
+{% comment %} Settings {% endcomment %}
 {%- assign exclude_unavailable_variants = true -%}
 {%- assign exclude_variant_colors_with_limited_availability = true -%}
 {%- assign ignore_x_smallest_sizes = 1 -%}
