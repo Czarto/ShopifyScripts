@@ -16,11 +16,11 @@ TODO: Specify Sizes to never exclude. eg: Women's 7,8
 
 {% comment %} Settings {% endcomment %}
 {%- assign exclude_unavailable_variants = true -%}
-{%- assign exclude_variant_colors_with_limited_availability = true -%}
+{%- assign exclude_variant_colors_with_limited_availability = false -%}
 {%- assign ignore_x_smallest_sizes = 1 -%}
 {%- assign ignore_x_largest_sizes = 1 -%}
 {%- assign minimum_percentage_availability = 50 -%}
-{%- assign filter_variantImages_byColor = true -%}
+{%- assign filter_variantImages_byColor = false -%}
 
 {%- assign CountryCode = 'US' -%}
 {%- if shop.currency == 'CAD' -%}{%- assign CountryCode = 'CA' -%}{%- endif -%}
