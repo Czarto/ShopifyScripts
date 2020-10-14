@@ -10,10 +10,6 @@ Various collection templates that output product data in a machine readable form
   - https://github.com/Czarto/ShopifyScripts/blob/master/Templates/collection.csv-ga-product-feed.liquid
   - Blog Post: <a href="https://business.czarto.com/2016/07/08/shopify-fix-your-google-analytics-product-performance-reports/">Fix your GA Product Performance Reports</a> 
 
-- **Facebook Product Catalog Feed** [deprecated]
-  - https://github.com/Czarto/ShopifyScripts/blob/master/Templates/collection.fb-product-feed.liquid
-  - Blog Post: <a href="https://business.czarto.com/2016/11/22/shopify-diy-facebook-product-feed/">Shopify DIY Facebook Feed</a> 
-
 - **Facebook Product Update Feed**
   - https://github.com/Czarto/ShopifyScripts/blob/master/Templates/collection.fb-product-update.liquid
   - Blog Post: <a href="https://business.czarto.com/2019/12/11/update-your-shopify-facebook-product-feed-with-missing-attributes/">Fix missing attributes in Shopify's Facebook Product Feed</a> 
@@ -27,8 +23,17 @@ Various collection templates that output product data in a machine readable form
   - https://github.com/Czarto/ShopifyScripts/blob/master/Templates/collection.xml-sale-pricing.liquid
   - Blog Post: <a href="https://business.czarto.com/2020/08/12/shopify-sale-price-google-shopping/">Add Sale Price to your Shopify Google Shopping Feed</a> 
 
+### Deprecated
+Old scripts and code that are no longer being maintained.
+
 - **Google Shopping Product Feed** [deprecated]
   - https://github.com/Czarto/ShopifyScripts/blob/master/Templates/collection.xml-product-feed.liquid
+  - *Deprecated in favor of Shopify's native Google Shopping integration via the Google Shopping channel / app combined with feed enhancement with <a href="https://business.czarto.com/2020/10/14/enhance-shopify-google-shopping/">Enhance Shopify’s Google Shopping feed</a>*
+  
+- **Facebook Product Catalog Feed** [deprecated]
+  - https://github.com/Czarto/ShopifyScripts/blob/master/Templates/collection.fb-product-feed.liquid
+  - Blog Post: <a href="https://business.czarto.com/2016/11/22/shopify-diy-facebook-product-feed/">Shopify DIY Facebook Feed</a>
+  - *Depracted in favor of Shopify's native Facebook integration via the Facebook Sales Channel in combination with feed enhancement with <a href="https://business.czarto.com/2019/12/11/update-your-shopify-facebook-product-feed-with-missing-attributes/">Fix missing attributes in Shopify's Facebook Product Feed</a>*
 
 ## Checkout Scripts
 Scripts to be included in the checkout script section in Shopify
