@@ -1,8 +1,13 @@
 {% layout none %}<?xml version="1.0"?>
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
 {% paginate collection.products by 1000 %}
-{%- assign CountryCode = 'US' -%}
-{%- if shop.currency == 'CAD' -%}{%- assign CountryCode = 'CA' -%}{%- endif -%}
+{%- case shop.currency -%}
+{%- when 'USD' -%}{%- assign CountryCode = 'US' -%}
+{%- when 'CAD' -%}{%- assign CountryCode = 'CA' -%}
+{%- when 'GBP' -%}{%- assign CountryCode = 'GB' -%}
+{%- when 'AUD' -%}{%- assign CountryCode = 'AU' -%}
+{%- else -%}{%- assign CountryCode = 'US' -%}
+{%- endcase -%}
 <channel>
 <title>{{ shop.name }} {{ collection.title | strip_html | strip_newlines | replace: '&', '&amp;' | replace }}</title>
 <link>{{ shop.url }}</link>
