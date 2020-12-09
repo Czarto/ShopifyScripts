@@ -22,8 +22,16 @@ TODO: Specify Sizes to never exclude. eg: Women's 7,8
 {%- assign minimum_percentage_availability = 50 -%}
 {%- assign filter_variantImages_byColor = false -%}
 
-{%- assign CountryCode = 'US' -%}
-{%- if shop.currency == 'CAD' -%}{%- assign CountryCode = 'CA' -%}{%- endif -%}
+{%- comment -%}
+TODO: Move this into a snippet and use capture to assign the variable
+{%- endcomment -%}}
+{%- case shop.currency -%}
+{%- when 'USD' -%}{%- assign CountryCode = 'US' -%}
+{%- when 'CAD' -%}{%- assign CountryCode = 'CA' -%}
+{%- when 'GBP' -%}{%- assign CountryCode = 'UK' -%}
+{%- when 'AUD' -%}{%- assign CountryCode = 'UK' -%}
+{%- else -%}{%- assign CountryCode = 'US' -%}
+{%- endcase -%}
 
 <channel>
 <title>{{ shop.name }} {{ collection.title | strip_html | strip_newlines | replace: '&', '&amp;' }}</title>
