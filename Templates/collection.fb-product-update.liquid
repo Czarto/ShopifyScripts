@@ -39,7 +39,6 @@ Documentation: https://business.czarto.com/2019/12/11/update-your-shopify-facebo
 <g:mpn>{{ variant.sku }}</g:mpn>
 <g:item_group_id>{{ product.id }}</g:item_group_id>
 <g:content_id>{{ variant.id }}</g:content_id>
-<g:availability>{% if variant.available %}in stock{% else %}out of stock{% endif %}</g:availability>
 <g:material>{{ Material }}</g:material>
 <g:gender>{{ Gender }}</g:gender>
 <g:age_group>{{ AgeGroup }}</g:age_group>
@@ -59,7 +58,6 @@ Documentation: https://business.czarto.com/2019/12/11/update-your-shopify-facebo
 {% if useSEOdescription and product.metafields.global.description_tag.size > 0 %}<description>{{ product.metafields.global.description_tag | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>{% endif %} 
 <g:product_type>{{ product.type | replace: '&', '&amp;' }}</g:product_type>
 <g:item_group_id>{{ product.id }}</g:item_group_id>
-<g:availability>{% if product.available %}in stock{% else %}out of stock{% endif %}</g:availability>
 <g:material>{{ Material }}</g:material>
 <g:gender>{{ Gender }}</g:gender>
 <g:age_group>{{ AgeGroup }}</g:age_group>
