@@ -1,5 +1,12 @@
 {% layout none %}<?xml version="1.0"?>
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+{% comment %}
+Google Shopping / Merchant Center + Shopify Sale Price Feed by Alex Czartoryski
+https://business.czarto.com/2020/08/12/shopify-sale-price-google-shopping/
+
+The latest version of this script available here:
+https://github.com/Czarto/ShopifyScripts/blob/master/Templates/collection.xml-sale-pricing.liquid
+{% endcomment %}
 {% paginate collection.products by 1000 %}
 {%- case shop.currency -%}
 {%- when 'USD' -%}{%- assign CountryCode = 'US' -%}
@@ -9,7 +16,7 @@
 {%- else -%}{%- assign CountryCode = 'US' -%}
 {%- endcase -%}
 <channel>
-<title>{{ shop.name }} {{ collection.title | strip_html | strip_newlines | replace: '&', '&amp;' | replace }}</title>
+<title>{{ shop.name }} {{ collection.title | strip_html | strip_newlines | replace: '&', '&amp;' }}</title>
 <link>{{ shop.url }}</link>
 <description>{{ collection.description | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
 {% for product in collection.products %} 
