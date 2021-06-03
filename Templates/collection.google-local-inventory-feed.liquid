@@ -1,0 +1,36 @@
+{% layout none %}<?xml version="1.0"?>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+{% paginate collection.products by 1000 %}
+{%- assign CountryCode = 'US' -%}
+{%- if shop.currency == 'CAD' -%}{%- assign CountryCode = 'CA' -%}{%- endif -%}
+{%- assign StoreCode = "" -%}
+<channel>
+<title>{{ shop.name }} {{ collection.title | strip_html | strip_newlines | replace: '&', '&amp;' }}</title>
+<link>{{ shop.url }}</link>
+<description>{{ collection.description | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
+{% for product in collection.products %} 
+  {% for variant in product.variants %}
+
+    {%- assign OnSale = false -%}
+    {%- assign Price = variant.price -%}
+    {%- if variant.compare_at_price > variant.price -%}
+      {%- assign OnSale = true -%}
+      {%- assign Price = variant.compare_at_price -%}
+      {%- assign SalePrice = variant.price -%}
+    {%- endif -%}
+
+<item>
+<g:store_code>{{ StoreCode }}</g:store_code>
+<g:id>shopify_{{ CountryCode }}_{{ product.id }}_{{ variant.id }}</g:id>
+<g:quantity>{{ variant.inventory_quantity  }}</g:quantity>
+<g:price>{{ Price | money_without_currency }} {{ shop.currency }}</g:price>
+{%- if OnSale -%}
+<g:sale_price>{{ SalePrice | money_without_currency }} {{ shop.currency }}</g:sale_price>
+{%- endif -%}
+</item>
+
+    {% endfor %}
+{% endfor %}
+</channel>
+</rss>
+{% endpaginate %}
