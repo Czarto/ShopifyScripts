@@ -33,7 +33,7 @@ Documentation: https://business.czarto.com/2019/12/11/update-your-shopify-facebo
 
 <item>
 <g:id>{{ variant.id }}</g:id>
-<g:brand>{{ product.vendor }}</g:brand>
+<g:brand>{{ product.vendor | replace: '&', '&amp;' }}</g:brand>
 {% if useSEOdescription and product.metafields.global.description_tag.size > 0 %}<g:description>{{ product.metafields.global.description_tag | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:description>{% endif %}
 <g:product_type>{{ product.type | replace: '&', '&amp;' }}</g:product_type>
 <g:mpn>{{ variant.sku }}</g:mpn>
@@ -54,7 +54,7 @@ Documentation: https://business.czarto.com/2019/12/11/update-your-shopify-facebo
 
 <item>
 <g:id>{{ product.id }}</g:id>   
-<g:brand>{{ product.vendor }}</g:brand>
+<g:brand>{{ product.vendor | replace: '&', '&amp;'  }}</g:brand>
 {% if useSEOdescription and product.metafields.global.description_tag.size > 0 %}<description>{{ product.metafields.global.description_tag | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>{% endif %} 
 <g:product_type>{{ product.type | replace: '&', '&amp;' }}</g:product_type>
 <g:item_group_id>{{ product.id }}</g:item_group_id>
