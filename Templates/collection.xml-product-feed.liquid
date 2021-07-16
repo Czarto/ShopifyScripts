@@ -2,7 +2,7 @@
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
 {% paginate collection.products by 1000 %}
 {%- assign useSEOtitle = false -%}
-{%- assign useSEOdescription = false -%}
+{%- assign useSEOdescription = true -%}
 {%- assign CountryCode = 'US' -%}
 {%- if shop.currency == 'CAD' -%}{%- assign CountryCode = 'CA' -%}{%- endif -%}
 {%- assign Color = "" -%}
