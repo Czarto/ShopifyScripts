@@ -74,6 +74,7 @@ TODO: Move this into a snippet and use capture to assign the variable
     <g:item_group_id>shopify_{{ CountryCode }}_{{ product.id }}</g:item_group_id>
     <g:id>shopify_{{ CountryCode }}_{{ product.id }}_{{ variant.id }}</g:id>
     <g:mpn>{{ variant.sku }}</g:mpn>
+    <g:barcode>{{ variant.barcode }}</g:barcode>
 
     {%- comment -%} Sale Price {%- endcomment -%}
     {%- if variant.compare_at_price > variant.price -%}
