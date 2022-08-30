@@ -1,0 +1,19 @@
+{% comment %}
+Script based on Lars C. L. Larsen's post here:
+https://blog.adnudging.com/how-to-track-new-customer-acquisition-in-google-analytics-with-shopify-672d6542574b
+{% endcomment %}
+{% if first_time_accessed %}
+<script>
+    window.onload = function () {
+        // GA userid
+        if(__st["cid"]) ga('set', '&uid', __st["cid"]);
+
+        var orders_count = {{ customer.orders_count }};
+        if (orders_count === 1) {
+            ga('send', 'event', 'customer type', 'first purchase', 'first purchase', orders_count);
+        } else if (orders_count > 1) {
+            ga('send', 'event', 'customer type', 'repeat purchase', 'repeat purchase', orders_count);
+        }
+    };
+</script>
+{% endif %}
