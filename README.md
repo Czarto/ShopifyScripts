@@ -19,10 +19,6 @@ Various collection templates that output product data in a machine readable form
   - Blog Post: <a href="https://business.czarto.com/2020/10/14/enhance-shopify-google-shopping/">Enhance Shopify’s Google Shopping feed</a>
   - *Augment your Google Shopping Feed with Sale Price, Additional Variant Images by color, Automatic Exclusion of Out of Stock varaints, and Intelligent Exclusion of Low Stock color variants.*
 
-- **Google Shopping Sale Price Feed**
-  - https://github.com/Czarto/ShopifyScripts/blob/master/Templates/collection.xml-sale-pricing.liquid
-  - Blog Post: <a href="https://business.czarto.com/2020/08/12/shopify-sale-price-google-shopping/">Add Sale Price to your Shopify Google Shopping Feed</a> 
-
 ### Deprecated
 Old scripts and code that are no longer being maintained.
 
