@@ -44,7 +44,7 @@ TODO: Move this into a snippet and use capture to assign the variable
 
     {%- comment -%} Get color option {%- endcomment -%}
     {%- for option in product.options -%}
-      {%- if option == 'Color' -%}{% capture option_color %}option{{ forloop.index }}{% endcapture %}{%- endif -%}
+      {%- if option == 'Color' or option == 'Colour' -%}{% capture option_color %}option{{ forloop.index }}{% endcapture %}{%- endif -%}
     {%- endfor -%}
 
     {%- comment -%} Make a list of Colors to exclude {%- endcomment -%}
