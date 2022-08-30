@@ -81,7 +81,7 @@ TODO: Move this into a snippet and use capture to assign the variable
     {%- comment -%} Additional Images by Color {%- endcomment -%}
     {%- assign additional_images = product.images -%}
     {%- for option in product.options -%}
-    {%- if option == 'Color' -%}{% capture variant_color %}{{ variant.options[forloop.index0] }}{% endcapture %}{%- endif -%}
+    {%- if option == 'Color' or option == 'Colour' -%}{% capture variant_color %}{{ variant.options[forloop.index0] }}{% endcapture %}{%- endif -%}
     {%- endfor -%}
     {% if filter_variantImages_byColor %}{% assign additional_images = product.images | where: "alt", variant_color | sort: 'attached_to_variant' | reverse%}{% endif %}
     {% if additional_images.size > 1 %}{%- for image in additional_images offset:1 limit:10 -%}
