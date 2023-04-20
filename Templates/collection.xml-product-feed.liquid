@@ -41,15 +41,15 @@
 
 <item>
 <title>{{ productTitle | strip_html | replace: '&', '&amp;' }}</title>
-<link>{{ shop.url }}{{ variant.url }}</link>
+<link>{{ shop.url }}{{ variant.url }}&currency={{ cart.currency.iso_code }}</link>
 <description>{{ productDescription | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
 <g:google_product_category>{{ GoogleProductCategory | replace: '&', '&amp;'  }}</g:google_product_category>
 <g:item_group_id>shopify_{{ CountryCode }}_{{ product.id }}</g:item_group_id>
 <g:id>shopify_{{ CountryCode }}_{{ product.id }}_{{ variant.id }}</g:id>
 <g:condition>new</g:condition>
-<g:price>{{ Price | money_without_currency }} {{ shop.currency }}</g:price>
+<g:price>{{ Price | money_without_currency }} {{ cart.currency.iso_code }}</g:price>
 {%- if OnSale -%}
-<g:sale_price>{{ SalePrice | money_without_currency }} {{ shop.currency }}</g:sale_price>
+<g:sale_price>{{ SalePrice | money_without_currency }} {{ cart.currency.iso_code }}</g:sale_price>
 {%- endif -%}
 <g:availability>{% if variant.available %}in stock{% else %}out of stock{% endif %}</g:availability>
 <g:image_link>http:{% if variant.image.src %}{{ variant.image.src | product_img_url: 'grande' }}{% else %}{{ product.featured_image.src | product_img_url: 'grande' }}{% endif %}</g:image_link>
