@@ -60,7 +60,7 @@ TODO: Move this into a snippet and use capture to assign the variable
 <g:sale_price>{{ SalePrice | money_without_currency }} {{ cart.currency.iso_code }}</g:sale_price>
 {%- endif -%}
 <g:availability>{% if variant.available %}in stock{% else %}out of stock{% endif %}</g:availability>
-<g:image_link>http:{% if variant.image.src %}{{ variant.image.src | product_img_url: 'grande' }}{% else %}{{ product.featured_image.src | product_img_url: 'grande' }}{% endif %}</g:image_link>
+<g:image_link>http:{% if variant.image.src %}{{ variant.image.src | product_img_url: 'master' }}{% else %}{{ product.featured_image.src | product_img_url: 'master' }}{% endif %}</g:image_link>
 <g:gtin>{{ variant.barcode }}</g:gtin>
 <g:brand>{{ product.vendor }}</g:brand>
 <g:mpn>{{ variant.sku }}</g:mpn>
