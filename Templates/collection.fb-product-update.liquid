@@ -16,6 +16,7 @@ Documentation: https://business.czarto.com/2019/12/11/update-your-shopify-facebo
 <link>{{ shop.url }}</link>
 <description>{{ collection.description | strip_html }}</description>
 {% for product in collection.products %}
+{%- assign GoogleProductCategory = product.metafields.mm-google-shopping.google_product_category -%}
 {%- assign Gender = product.metafields.mm-google-shopping.gender -%}
 {%- assign AgeGroup = product.metafields.mm-google-shopping.age_group -%}
 {%- assign Material = product.metafields.mm-google-shopping.material  -%}
@@ -35,6 +36,8 @@ Documentation: https://business.czarto.com/2019/12/11/update-your-shopify-facebo
 <g:id>{{ variant.id }}</g:id>
 {% if useSEOdescription and product.metafields.global.description_tag.size > 0 %}<g:description>{{ product.metafields.global.description_tag | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:description>{% endif %}
 <g:content_id>{{ variant.id }}</g:content_id>
+<link>{{ shop.url }}{{ variant.url }}</link>
+<g:google_product_category>{{ GoogleProductCategory | replace: '&', '&amp;'  }}</g:google_product_category>
 {% if Material %}<g:material>{{ Material }}</g:material>{% endif %}
 {% if Gender %}<g:gender>{{ Gender }}</g:gender>{% endif %}
 {% if AgeGroup %}<g:age_group>{{ AgeGroup }}</g:age_group>{% endif %}
@@ -50,6 +53,8 @@ Documentation: https://business.czarto.com/2019/12/11/update-your-shopify-facebo
 
 <item>
 <g:id>{{ product.id }}</g:id>   
+<link>{{ shop.url }}{{ product.url }}</link>
+<g:google_product_category>{{ GoogleProductCategory | replace: '&', '&amp;'  }}</g:google_product_category>
 {% if useSEOdescription and product.metafields.global.description_tag.size > 0 %}<description>{{ product.metafields.global.description_tag | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>{% endif %} 
 {% if Material %}<g:material>{{ Material }}</g:material>{% endif %}
 {% if Gender %}<g:gender>{{ Gender }}</g:gender>{% endif %}
