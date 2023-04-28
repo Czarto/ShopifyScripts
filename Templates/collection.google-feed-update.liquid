@@ -21,7 +21,6 @@ TODO: Specify Sizes to never exclude. eg: Women's 7,8
 {%- assign ignore_x_largest_sizes = 1 -%}
 {%- assign minimum_percentage_availability = 50 -%}
 {%- assign filter_variantImages_byColor = false -%}
-{%- assign use_barcode_as_gtin = false -%}
 
 {%- comment -%}
 TODO: Move this into a snippet and use capture to assign the variable
@@ -76,7 +75,6 @@ TODO: Move this into a snippet and use capture to assign the variable
     <g:id>shopify_{{ CountryCode }}_{{ product.id }}_{{ variant.id }}</g:id>
     <g:mpn>{{ variant.sku }}</g:mpn>
     <g:barcode>{{ variant.barcode }}</g:barcode>
-    {% if use_barcode_as_gtin %}<g:gtin>{{ variant.barcode }}</g:gtin>{% endif %}
 
     {%- comment -%} Additional Images by Color {%- endcomment -%}
     {%- assign additional_images = product.images -%}
