@@ -22,7 +22,7 @@ Documentation: https://business.czarto.com/2019/12/11/update-your-shopify-facebo
 {%- assign Material = product.metafields.mm-google-shopping.material  -%}
 {%- assign Color = "" -%}
 
-{%- if product.variants.size > 0 -%}
+{%- if product.variants.size > 1 -%}
 {%- for variant in product.variants -%}
 {%- if includeOutOfStock or variant.available -%}
 {%- for option in product.options -%}
