@@ -3,8 +3,16 @@
 {% paginate collection.products by 1000 %}
 {%- assign useSEOtitle = false -%}
 {%- assign useSEOdescription = true -%}
-{%- assign CountryCode = 'US' -%}
-{%- if shop.currency == 'CAD' -%}{%- assign CountryCode = 'CA' -%}{%- endif -%}
+{%- comment -%}
+TODO: Move this into a snippet and use capture to assign the variable
+{%- endcomment -%}
+{%- case shop.currency -%}
+{%- when 'USD' -%}{%- assign CountryCode = 'US' -%}
+{%- when 'CAD' -%}{%- assign CountryCode = 'CA' -%}
+{%- when 'GBP' -%}{%- assign CountryCode = 'GB' -%}
+{%- when 'AUD' -%}{%- assign CountryCode = 'AU' -%}
+{%- else -%}{%- assign CountryCode = 'US' -%}
+{%- endcase -%}
 {%- assign Color = "" -%}
 {%- assign Size = "" -%}
 <channel>
@@ -25,7 +33,7 @@
   	{%- endif -%}
   	{%- endfor -%}
     
-    {%- capture productTitle -%}{{ product.vendor }} {{ product.title }}{%- endcapture -%}
+    {%- capture productTitle -%}{{ product.title }}{%- endcapture -%}
     {%- unless productTitle contains Color -%}{%- capture productTitle -%}{{ productTitle }} {{ Color }}{%- endcapture -%}{%- endunless -%}
     {%- if useSEOtitle and product.metafields.global.title_tag.size > 0 -%}{%- assign productTitle = product.metafields.global.title_tag -%}{%- endif -%}
     {%- assign productDescription = product.description -%}
@@ -41,18 +49,18 @@
 
 <item>
 <title>{{ productTitle | strip_html | replace: '&', '&amp;' }}</title>
-<link>{{ shop.url }}{{ variant.url }}</link>
+<link>{{ shop.url }}{{ variant.url }}&amp;currency={{ cart.currency.iso_code }}</link>
 <description>{{ productDescription | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>
 <g:google_product_category>{{ GoogleProductCategory | replace: '&', '&amp;'  }}</g:google_product_category>
 <g:item_group_id>shopify_{{ CountryCode }}_{{ product.id }}</g:item_group_id>
 <g:id>shopify_{{ CountryCode }}_{{ product.id }}_{{ variant.id }}</g:id>
 <g:condition>new</g:condition>
-<g:price>{{ Price | money_without_currency }} {{ shop.currency }}</g:price>
+<g:price>{{ Price | money_without_currency }} {{ cart.currency.iso_code }}</g:price>
 {%- if OnSale -%}
-<g:sale_price>{{ SalePrice | money_without_currency }} {{ shop.currency }}</g:sale_price>
+<g:sale_price>{{ SalePrice | money_without_currency }} {{ cart.currency.iso_code }}</g:sale_price>
 {%- endif -%}
 <g:availability>{% if variant.available %}in stock{% else %}out of stock{% endif %}</g:availability>
-<g:image_link>http:{% if variant.image.src %}{{ variant.image.src | product_img_url: 'grande' }}{% else %}{{ product.featured_image.src | product_img_url: 'grande' }}{% endif %}</g:image_link>
+<g:image_link>http:{% if variant.image.src %}{{ variant.image.src | product_img_url: 'master' }}{% else %}{{ product.featured_image.src | product_img_url: 'master' }}{% endif %}</g:image_link>
 <g:gtin>{{ variant.barcode }}</g:gtin>
 <g:brand>{{ product.vendor }}</g:brand>
 <g:mpn>{{ variant.sku }}</g:mpn>

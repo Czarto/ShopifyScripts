@@ -1,0 +1,46 @@
+{% layout none %}<?xml version="1.0"?>
+<rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
+{%- paginate collection.products by 1000 -%}
+<channel>
+<title>{{ shop.name }} {{ collection.title | replace: '&', '&amp;' }}</title>
+<link>{{ shop.url }}</link>
+<description>{{ collection.description | strip_html }}</description>
+{% for product in collection.products %}
+{%- if product.variants.size > 0 -%}
+{%- for variant in product.variants -%}
+
+{%- assign OnSale = false -%}
+{%- assign Price = variant.price -%}
+{%- if variant.compare_at_price > variant.price -%}
+    {%- assign OnSale = true -%}
+    {%- assign Price = variant.compare_at_price -%}
+    {%- assign SalePrice = variant.price -%}
+{%- endif -%}
+
+<item>
+<g:id>{{ variant.id }}</g:id>
+<g:content_id>{{ variant.id }}</g:content_id>
+<link>{{ shop.url }}{{ variant.url }}&amp;currency={{ cart.currency.iso_code }}</link>
+<g:price>{{ Price | money_without_currency }} {{ cart.currency.iso_code }}</g:price>
+{%- if OnSale -%}
+<g:sale_price>{{ SalePrice | money_without_currency }} {{ cart.currency.iso_code }}</g:sale_price>
+{%- endif -%}
+</item>
+
+{% endfor %}
+{%- else -%}
+
+<item>
+<g:id>{{ product.id }}</g:id>
+<link>{{ shop.url }}{{ product.url }}&amp;currency={{ cart.currency.iso_code }}</link> 
+<g:price>{{ Price | money_without_currency }} {{ cart.currency.iso_code }}</g:price>
+{%- if OnSale -%}
+<g:sale_price>{{ SalePrice | money_without_currency }} {{ cart.currency.iso_code }}</g:sale_price>
+{%- endif -%}
+</item>
+
+{% endif %}
+{% endfor %}
+</channel>
+</rss>
+{% endpaginate %}

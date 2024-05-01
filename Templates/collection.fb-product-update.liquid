@@ -2,9 +2,9 @@
 <rss xmlns:g="http://base.google.com/ns/1.0" version="2.0">
 {%- paginate collection.products by 1000 -%}
 {%- assign useSEOdescription = true -%}
-{%- assign additionalImagesForVariants = false -%}
+{%- assign additionalImagesForVariants = true -%}
 {%- assign includeOutOfStock = false -%}
-{%- assign filterVariantImagesByColor = false -%}
+{%- assign filterVariantImagesByColor = true -%}
 {% comment %}
 This template is used to add additional information to the Facebook product catalog
 Documentation: https://business.czarto.com/2019/12/11/update-your-shopify-facebook-product-feed-with-missing-attributes/
@@ -16,12 +16,13 @@ Documentation: https://business.czarto.com/2019/12/11/update-your-shopify-facebo
 <link>{{ shop.url }}</link>
 <description>{{ collection.description | strip_html }}</description>
 {% for product in collection.products %}
+{%- assign GoogleProductCategory = product.metafields.mm-google-shopping.google_product_category -%}
 {%- assign Gender = product.metafields.mm-google-shopping.gender -%}
 {%- assign AgeGroup = product.metafields.mm-google-shopping.age_group -%}
 {%- assign Material = product.metafields.mm-google-shopping.material  -%}
 {%- assign Color = "" -%}
 
-{%- if product.variants.size > 0 -%}
+{%- if product.variants.size > 1 -%}
 {%- for variant in product.variants -%}
 {%- if includeOutOfStock or variant.available -%}
 {%- for option in product.options -%}
@@ -34,7 +35,7 @@ Documentation: https://business.czarto.com/2019/12/11/update-your-shopify-facebo
 <item>
 <g:id>{{ variant.id }}</g:id>
 {% if useSEOdescription and product.metafields.global.description_tag.size > 0 %}<g:description>{{ product.metafields.global.description_tag | strip_html | strip_newlines | replace: '&', '&amp;' }}</g:description>{% endif %}
-<g:content_id>{{ variant.id }}</g:content_id>
+<g:google_product_category>{{ GoogleProductCategory | replace: '&', '&amp;'  }}</g:google_product_category>
 {% if Material %}<g:material>{{ Material }}</g:material>{% endif %}
 {% if Gender %}<g:gender>{{ Gender }}</g:gender>{% endif %}
 {% if AgeGroup %}<g:age_group>{{ AgeGroup }}</g:age_group>{% endif %}
@@ -49,7 +50,8 @@ Documentation: https://business.czarto.com/2019/12/11/update-your-shopify-facebo
 {%- else -%}
 
 <item>
-<g:id>{{ product.id }}</g:id>   
+<g:id>{{ product.variants[0].id }}</g:id>   
+<g:google_product_category>{{ GoogleProductCategory | replace: '&', '&amp;'  }}</g:google_product_category>
 {% if useSEOdescription and product.metafields.global.description_tag.size > 0 %}<description>{{ product.metafields.global.description_tag | strip_html | strip_newlines | replace: '&', '&amp;' }}</description>{% endif %} 
 {% if Material %}<g:material>{{ Material }}</g:material>{% endif %}
 {% if Gender %}<g:gender>{{ Gender }}</g:gender>{% endif %}
