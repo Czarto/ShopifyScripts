@@ -1,0 +1,142 @@
+{%- layout none -%}
+{%- paginate collection.products by 1000 -%}
+{%- liquid
+    assign productBrand = 'Manitobah'
+    assign updateDelete = ''
+    assign productIDType = 'UPC'
+    assign footwearSizeSystem = 'US Footwear Size System'
+    assign shoeSizeClass = 'Alpha'
+    assign usesBatteries = 'false'
+    assign shopCurrency = cart.currency.iso_code
+
+    echo "Product Type,Seller SKU,Brand,Update Delete,Product Name,Product ID,Product ID Type,Product Description,Recommended Browse Nodes,Style Number,Sole Material,Heel Type,Model Year,Heel Height,Closure Type,Item Type,Model Name,Outer Material Type,Manufacturer Part Number,Manufacturer,Heel Height Unit Of Measure,Heel Height,Footwear Size System,Shoe Size Age Group,Shoe Size Gender,Shoe Size Class,Shoe Size Width,Shoe Size,Shoe Size To Range (If Range),Shoe Size Gender (If Unisex),Shoe Size Width (If Unisex),Shoe Size (If Unisex),Shoe Size To Range (If Unisex and Range),Standard Price,Quantity,Target Gender,Age Range Description,Main Image URL,Other Image URL,Other Image URL,Other Image URL,Other Image URL,Other Image URL,Other Image URL,Other Image URL,Other Image URL,Swatch Image URL,Parentage,Parent SKU,Relationship Type,Variation Theme,Style Name,Key Product Features,Key Product Features,Key Product Features,Key Product Features,Key Product Features,Search Terms,Style Keyword,Toe Style,Arch Type,Team Name,Boot Opening Circumference,Department,Color,Color Map,Size,Material Fabric,Fur Description,Pattern Style,Water Resistance Level,Occasion Lifestyle,Special Features,Special Features,Special Features,Special Features,Special Features,Minimum Circumference Unit of Measure,Item Type,Season of the Product,Platinum Keywords,Platinum Keywords,Platinum Keywords,Platinum Keywords,Platinum Keywords,Collection,Target Audience,Target Audience,Target Audience,Target Audience,Target Audience,Manufacturer Hotline Number,Pronation Correction,League Name,Special Size Type,shaft_style_type,Catalog Number,Country/Region as Labeled,Product Lifecycle Supply Type,Product Lifecycle Supply Type,Product Lifecycle Supply Type,Product Lifecycle Supply Type,Product Lifecycle Supply Type,Item Booking Date,is-stain-resistant,Cleat Description,Cleat Material Type,Strap Type,character,Duration Unit,Shaft Diameter,Shoe Safety Code ISO-20345,Duration,Sub Brand,Surface Recommendation,flash_point_unit_of_measure,Shaft Diameter Unit,Insole Type,Built-in Light,Shipping Weight,Website Shipping Weight Unit Of Measure,Shoe Height Map,Shaft Height,Platform Height,Item Length Unit Of Measure,Item Length,Item Width,Item Height,Shaft Height Unit Of Measure,Item Width Unit Of Measure,Maximum Girth Size,Shoe Width,Maximum Circumference Unit of Measure,Item Height Unit Of Measure,shoe_width_unit_of_measure,Liquid Volume,Liquid Volume Unit,Fulfillment Center ID,Package height,Package Width,Package Length,Package Length Unit Of Measure,Package Weight,Package Weight Unit Of Measure,Package Height Unit Of Measure,Package Width Unit Of Measure,Compliance Regulation Type,Compliance Regulation Type,Compliance Regulation Type,Compliance Regulation Type,Compliance Regulation Type,Regulatory Identification,Regulatory Identification,Regulatory Identification,Regulatory Identification,Regulatory Identification,CPSIA Warning Description,Cpsia Warning,Country/Region of Origin,item_weight_unit_of_measure,Item Weight,Is this product a battery or does it utilize batteries?,Batteries are Included,Battery composition,Battery type/size,Battery type/size,Battery type/size,Number of batteries,Number of batteries,Number of batteries,Battery weight (grams),battery_weight_unit_of_measure,Number of Lithium Metal Cells,Number of Lithium-ion Cells,Lithium Battery Packaging,Watt hours per battery,lithium_battery_energy_content_unit_of_measure,Lithium content (grams),lithium_battery_weight_unit_of_measure,Applicable Dangerous Goods Regulations,Applicable Dangerous Goods Regulations,Applicable Dangerous Goods Regulations,Applicable Dangerous Goods Regulations,Applicable Dangerous Goods Regulations,UN number,Safety Data Sheet (SDS) URL,Volume,item_volume_unit_of_measure,Contains Liquid Contents?,Certification Expiration Date,Fabric Type,Flash point (°C)?,Warranty Description,Certification Date of Issue,External Testing Certification,Import Designation,Legal Disclaimer Description,Safety Warning,Material/Fabric Regulations,Material/Fabric Regulations,Material/Fabric Regulations,Certification Metadata,Product Compliance Certificate,Categorization/GHS pictograms (select all that apply),Categorization/GHS pictograms (select all that apply),Categorization/GHS pictograms (select all that apply),Manufacturer's Suggested Retail Price,Currency,Product Tax Code,Handling Time,Launch Date,Release Date,Restock Date,Sale Price,Sale Start Date,Sale End Date,Max Aggregate Ship Quantity,Item Package Quantity,Offering Can Be Gift Messaged,Is Gift Wrap Available,Is Discontinued by Manufacturer?,Minimum Advertised Price,Number of Items,Offer End Date,Max Order Quantity,Shipping-Template,Offer Start Date,Item Condition,Condition Note,Business Price,Quantity Price Type,Quantity Lower Bound 1,Quantity Price 1,Quantity Lower Bound 2,Quantity Price 2,Quantity Lower Bound 3,Quantity Price 3,Quantity Lower Bound 4,Quantity Price 4,Quantity Lower Bound 5,Quantity Price 5,Progressive Discount Type,Progressive Discount Lower Bound 1,Progressive Discount Value 1,Progressive Discount Lower Bound 2,Progressive Discount Value 2,Progressive Discount Lower Bound 3,Progressive Discount Value 3,National Stock Number,United Nations Standard Products and Services Code,Pricing Action"
+-%}
+    {%- for product in collection.products -%}
+        {%- liquid
+        assign productType = 'none'
+        assign productName = product.title | replace: ',','' | remove: '"' | remove: "'" | remove: "," |  strip_html | strip
+        assign productDescription = product.description | strip_html | strip_newlines | escape | remove: "," | truncate: 2000
+        if product.metafields.global.description_tag.size > 0
+            assign productDescription = product.metafields.global.description_tag | remove: ","
+        endif
+        case product.type
+            when 'mukluk'
+                assign productType = 'boot'
+            when 'slipper'
+                assign productType = 'slipper'
+            when 'moccasin'
+                assign productType = 'shoe'
+        endcase
+
+        assign productAgeGroup = 'adult'
+        assign productAgeRangeDescription = productAgeGroup
+        -%}
+        {%- for variant in product.variants -%}
+            {%- liquid
+            assign sellerSKU = variant.sku
+            assign productID = variant.barcode
+            assign shoeSizeWidth = 'Medium'
+            assign variantSize = ''
+            assign variantColor = ''
+            assign variantColorMap = ''
+            assign variantSalePrice = variant.price | money_without_currency
+            assign variantStandardPrice = variant.price | money_without_currency
+            assign variantMSRP = variant.compare_at_price | money_without_currency
+            assign variantQuantity = 0
+            assign variantWeightUnitOfMeasure = variant.weight_unit
+            assign variantWeight = variant.weight
+            assign variantCondition = 'New'
+
+            for option in product.options
+                if option == 'Color' or option == 'Colour'
+                    assign variantColor = variant.options[forloop.index0]
+                elsif option == 'Size'
+                    assign variantSize = variant.options[forloop.index0]
+                endif
+            endfor
+
+            assign productGender = 'unisex'
+            assign productTargetGender = 'unisex'
+            if variantSize contains 'Ladies'
+                assign productGender = 'Women'
+                assign productTargetGender = 'Female'
+            elsif variantSize contains 'Mens'
+                assign productGender = 'Men'
+                assign productTargetGender = 'Male'
+            endif
+
+            assign productType = 'shoe'
+            assign productBrowseNode = 7141124011
+            case product.type
+                when 'mukluk'
+                    assign productType = 'boot'
+                    case productTargetGender
+                        when 'Female'
+                            assign productBrowseNode = 679380011
+                        when 'Male'
+                            assign productBrowseNode = 5658904011
+                    endcase
+                when 'slipper'
+                    assign productType = 'slipper'
+                    case productTargetGender
+                        when 'Female'
+                            assign productBrowseNode = 679433011
+                        when 'Male'
+                            assign productBrowseNode = 679324011
+                    endcase
+                when 'moccasin'
+                    assign productType = 'shoe'
+                    case productTargetGender
+                        when 'Female'
+                            assign productBrowseNode = 679337011
+                        when 'Male'
+                            assign productBrowseNode = 679313011
+                endcase
+            endcase
+
+            assign variantParentage = ''
+            assign variantParentSKU = ''
+            assign variantRelationshipType = 'Variation'
+            assign variantVariationTheme = ''
+
+            assign productStyleNumber = variant.sku
+            assign productOuterMatrialType = 'leather'
+
+            if variant.image
+                assign variantMainImageUrl = variant.image | image_url: width: 2000 | prepend: "https:"
+            else
+                assign variantMainImageUrl = product.featured_image | image_url: width: 2000 | prepend: "https:"
+            endif
+
+            assign variantOtherImagesUrl = product.images | where: "alt", variantColor | sort: 'attached_to_variant' | reverse
+            if variantOtherImagesUrl[1]
+                assign variantOtherImageUrl1 = variantOtherImagesUrl[1] | image_url: width: 2000 | prepend: "https:"
+            endif
+            if variantOtherImagesUrl[2]
+                assign variantOtherImageUrl2 = variantOtherImagesUrl[2] | image_url: width: 2000 | prepend: "https:"
+            endif
+            if variantOtherImagesUrl[3]
+                assign variantOtherImageUrl3 = variantOtherImagesUrl[3] | image_url: width: 2000 | prepend: "https:"
+            endif
+            if variantOtherImagesUrl[4]
+                assign variantOtherImageUrl4 = variantOtherImagesUrl[4] | image_url: width: 2000 | prepend: "https:"
+            endif
+            if variantOtherImagesUrl[5]
+                assign variantOtherImageUrl5 = variantOtherImagesUrl[5] | image_url: width: 2000 | prepend: "https:"
+            endif
+            if variantOtherImagesUrl[6]
+                assign variantOtherImageUrl6 = variantOtherImagesUrl[6] | image_url: width: 2000 | prepend: "https:"
+            endif
+            if variantOtherImagesUrl[7]
+                assign variantOtherImageUrl7 = variantOtherImagesUrl[7] | image_url: width: 2000 | prepend: "https:"
+            endif
+            if variantOtherImagesUrl[8]
+                assign variantOtherImageUrl8 = variantOtherImagesUrl[8] | image_url: width: 2000 | prepend: "https:"
+            endif
+            -%}
+            {% unless productType == 'none' %}
+{{ productType }},{{ sellerSKU }},{{ productBrand }},{{ updateDelete }},{{ productName }},{{ productID }},{{ productIDType }},{{ productDescription }},{{ productBrowseNode }},{{ productStyleNumber  }},,,,,,,,{{ productOuterMatrialType }},,,,,{{ footwearSizeSystem  }},{{productAgeGroup}},{{productGender}},{{shoeSizeClass}},{{shoeSizeWidth}},{{variantSize}},,,,,,{{variantStandardPrice}},{{variantQuantity}},{{productTargetGender}},{{productAgeRangeDescription}},{{variantMainImageUrl}},{{variantOtherImageUrl1}},{{variantOtherImageUrl2}},{{variantOtherImageUrl3}},{{variantOtherImageUrl4}},{{variantOtherImageUrl5}},{{variantOtherImageUrl6}},{{variantOtherImageUrl7}},{{variantOtherImageUrl8}},,{{variantParentage}},{{variantParentSKU}},{{variantRelationshipType}},{{variantVariationTheme}},,,,,,,,,,,,,,{{variantColor}},{{variantColorMap}},{{variantSize}},,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,{{variantWeightUnitOfMeasure}},{{variantWeight}},{{usesBatteries}},{{usesBatteries}},,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,{{variantMSRP}},{{shopCurrency}},,,,,,{{variantSalePrice}},,,,,,,,,,,,,,{{variantCondition}},,,,,,,,,,,
+            {%- endunless -%}
+        {%- endfor -%}
+    {%- endfor -%}
+{%- endpaginate -%}
