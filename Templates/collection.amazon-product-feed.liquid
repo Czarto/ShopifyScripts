@@ -13,27 +13,19 @@
 -%}
     {%- for product in collection.products -%}
         {%- liquid
-        assign productType = 'none'
         assign productName = product.title | replace: ',','' | remove: '"' | remove: "'" | remove: "," |  strip_html | strip
+        assign productBrand = product.vendor
         assign productDescription = product.description | strip_html | strip_newlines | escape | remove: "," | truncate: 2000
         if product.metafields.global.description_tag.size > 0
             assign productDescription = product.metafields.global.description_tag | remove: ","
         endif
-        case product.type
-            when 'mukluk'
-                assign productType = 'boot'
-            when 'slipper'
-                assign productType = 'slipper'
-            when 'moccasin'
-                assign productType = 'shoe'
-        endcase
 
         assign productAgeGroup = 'adult'
         assign productAgeRangeDescription = productAgeGroup
         -%}
         {%- for variant in product.variants -%}
             {%- liquid
-            assign sellerSKU = variant.sku
+            assign variantSKU = variant.sku
             assign productID = variant.barcode
             assign shoeSizeWidth = 'Medium'
             assign variantSize = ''
@@ -44,7 +36,7 @@
             assign variantMSRP = variant.compare_at_price | money_without_currency
             assign variantQuantity = 0
             assign variantWeightUnitOfMeasure = variant.weight_unit
-            assign variantWeight = variant.weight
+            assign variantWeight = variant.weight_in_unit
             assign variantCondition = 'New'
 
             for option in product.options
@@ -65,11 +57,25 @@
                 assign productTargetGender = 'Male'
             endif
 
-            assign productType = 'shoe'
-            assign productBrowseNode = 7141124011
+            # Product Type
+            assign productType = 'none'
             case product.type
-                when 'mukluk'
+                when 'Mukluk'
                     assign productType = 'boot'
+                when 'Slipper'
+                    assign productType = 'slipper'
+                when 'Moccasin'
+                    assign productType = 'shoe'
+            endcase
+            case productName
+                when 'Tipi'
+                    assign productType = 'slipper'
+            endcase
+
+            # Recommended Browse Nodes
+            assign productBrowseNode = 7141124011
+            case productType
+                when 'boot'
                     case productTargetGender
                         when 'Female'
                             assign productBrowseNode = 679380011
@@ -77,15 +83,13 @@
                             assign productBrowseNode = 5658904011
                     endcase
                 when 'slipper'
-                    assign productType = 'slipper'
                     case productTargetGender
                         when 'Female'
                             assign productBrowseNode = 679433011
                         when 'Male'
                             assign productBrowseNode = 679324011
                     endcase
-                when 'moccasin'
-                    assign productType = 'shoe'
+                when 'shoe'
                     case productTargetGender
                         when 'Female'
                             assign productBrowseNode = 679337011
@@ -108,34 +112,45 @@
                 assign variantMainImageUrl = product.featured_image | image_url: width: 2000 | prepend: "https:"
             endif
 
-            assign variantOtherImagesUrl = product.images | where: "alt", variantColor | sort: 'attached_to_variant' | reverse
-            if variantOtherImagesUrl[1]
-                assign variantOtherImageUrl1 = variantOtherImagesUrl[1] | image_url: width: 2000 | prepend: "https:"
+            # Image ALT text must exactly match variant color for images to be matched
+            assign variantOtherImages = product.images | where: "alt", variantColor | sort: 'attached_to_variant' | reverse
+
+            assign variantOtherImageUrl1 = ''
+            assign variantOtherImageUrl2 = ''
+            assign variantOtherImageUrl3 = ''
+            assign variantOtherImageUrl4 = ''
+            assign variantOtherImageUrl5 = ''
+            assign variantOtherImageUrl6 = ''
+            assign variantOtherImageUrl7 = ''
+            assign variantOtherImageUrl8 = ''
+
+            if variantOtherImages[1]
+                assign variantOtherImageUrl1 = variantOtherImages[1] | image_url: width: 2000 | prepend: "https:"
             endif
-            if variantOtherImagesUrl[2]
-                assign variantOtherImageUrl2 = variantOtherImagesUrl[2] | image_url: width: 2000 | prepend: "https:"
+            if variantOtherImages[2]
+                assign variantOtherImageUrl2 = variantOtherImages[2] | image_url: width: 2000 | prepend: "https:"
             endif
-            if variantOtherImagesUrl[3]
-                assign variantOtherImageUrl3 = variantOtherImagesUrl[3] | image_url: width: 2000 | prepend: "https:"
+            if variantOtherImages[3]
+                assign variantOtherImageUrl3 = variantOtherImages[3] | image_url: width: 2000 | prepend: "https:"
             endif
-            if variantOtherImagesUrl[4]
-                assign variantOtherImageUrl4 = variantOtherImagesUrl[4] | image_url: width: 2000 | prepend: "https:"
+            if variantOtherImages[4]
+                assign variantOtherImageUrl4 = variantOtherImages[4] | image_url: width: 2000 | prepend: "https:"
             endif
-            if variantOtherImagesUrl[5]
-                assign variantOtherImageUrl5 = variantOtherImagesUrl[5] | image_url: width: 2000 | prepend: "https:"
+            if variantOtherImages[5]
+                assign variantOtherImageUrl5 = variantOtherImages[5] | image_url: width: 2000 | prepend: "https:"
             endif
-            if variantOtherImagesUrl[6]
-                assign variantOtherImageUrl6 = variantOtherImagesUrl[6] | image_url: width: 2000 | prepend: "https:"
+            if variantOtherImages[6]
+                assign variantOtherImageUrl6 = variantOtherImages[6] | image_url: width: 2000 | prepend: "https:"
             endif
-            if variantOtherImagesUrl[7]
-                assign variantOtherImageUrl7 = variantOtherImagesUrl[7] | image_url: width: 2000 | prepend: "https:"
+            if variantOtherImages[7]
+                assign variantOtherImageUrl7 = variantOtherImages[7] | image_url: width: 2000 | prepend: "https:"
             endif
-            if variantOtherImagesUrl[8]
-                assign variantOtherImageUrl8 = variantOtherImagesUrl[8] | image_url: width: 2000 | prepend: "https:"
+            if variantOtherImages[8]
+                assign variantOtherImageUrl8 = variantOtherImages[8] | image_url: width: 2000 | prepend: "https:"
             endif
             -%}
             {% unless productType == 'none' %}
-{{ productType }},{{ sellerSKU }},{{ productBrand }},{{ updateDelete }},{{ productName }},{{ productID }},{{ productIDType }},{{ productDescription }},{{ productBrowseNode }},{{ productStyleNumber  }},,,,,,,,{{ productOuterMatrialType }},,,,,{{ footwearSizeSystem  }},{{productAgeGroup}},{{productGender}},{{shoeSizeClass}},{{shoeSizeWidth}},{{variantSize}},,,,,,{{variantStandardPrice}},{{variantQuantity}},{{productTargetGender}},{{productAgeRangeDescription}},{{variantMainImageUrl}},{{variantOtherImageUrl1}},{{variantOtherImageUrl2}},{{variantOtherImageUrl3}},{{variantOtherImageUrl4}},{{variantOtherImageUrl5}},{{variantOtherImageUrl6}},{{variantOtherImageUrl7}},{{variantOtherImageUrl8}},,{{variantParentage}},{{variantParentSKU}},{{variantRelationshipType}},{{variantVariationTheme}},,,,,,,,,,,,,,{{variantColor}},{{variantColorMap}},{{variantSize}},,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,{{variantWeightUnitOfMeasure}},{{variantWeight}},{{usesBatteries}},{{usesBatteries}},,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,{{variantMSRP}},{{shopCurrency}},,,,,,{{variantSalePrice}},,,,,,,,,,,,,,{{variantCondition}},,,,,,,,,,,
+{{ productType }},{{ variantSKU }},{{ productBrand }},{{ updateDelete }},{{ productName }},{{ productID }},{{ productIDType }},{{ productDescription }},{{ productBrowseNode }},{{ productStyleNumber  }},,,,,,,,{{ productOuterMatrialType }},,,,,{{ footwearSizeSystem  }},{{productAgeGroup}},{{productGender}},{{shoeSizeClass}},{{shoeSizeWidth}},{{variantSize}},,,,,,{{variantStandardPrice}},{{variantQuantity}},{{productTargetGender}},{{productAgeRangeDescription}},{{variantMainImageUrl}},{{variantOtherImageUrl1}},{{variantOtherImageUrl2}},{{variantOtherImageUrl3}},{{variantOtherImageUrl4}},{{variantOtherImageUrl5}},{{variantOtherImageUrl6}},{{variantOtherImageUrl7}},{{variantOtherImageUrl8}},,{{variantParentage}},{{variantParentSKU}},{{variantRelationshipType}},{{variantVariationTheme}},,,,,,,,,,,,,,{{variantColor}},{{variantColorMap}},{{variantSize}},,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,{{variantWeightUnitOfMeasure}},{{variantWeight}},{{usesBatteries}},{{usesBatteries}},,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,{{variantMSRP}},{{shopCurrency}},,,,,,{{variantSalePrice}},,,,,,,,,,,,,,{{variantCondition}},,,,,,,,,,,
             {%- endunless -%}
         {%- endfor -%}
     {%- endfor -%}
