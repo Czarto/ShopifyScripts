@@ -67,7 +67,7 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
                 when 'Slipper'
                     assign feed_product_type = 'slipper'
                 when 'Moccasin'
-                    assign feed_product_type = 'shoe'
+                    assign feed_product_type = 'shoes'
             endcase
             case item_name
                 when 'Tipi'
@@ -91,7 +91,7 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
                         when 'Male'
                             assign recommended_browse_nodes = 679324011
                     endcase
-                when 'shoe'
+                when 'shoes'
                     case target_gender
                         when 'Female'
                             assign recommended_browse_nodes = 679337011
