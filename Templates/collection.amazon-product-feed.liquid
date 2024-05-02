@@ -1,156 +1,156 @@
 {%- layout none -%}
 {%- paginate collection.products by 1000 -%}
 {%- liquid
-    assign productBrand = 'Manitobah'
-    assign updateDelete = ''
-    assign productIDType = 'UPC'
-    assign footwearSizeSystem = 'US Footwear Size System'
-    assign shoeSizeClass = 'Alpha'
-    assign usesBatteries = 'false'
-    assign shopCurrency = cart.currency.iso_code
+    assign brand_name = 'Manitobah'
+    assign update_delete = ''
+    assign external_product_id_type = 'UPC'
+    assign footwear_size_system = 'US Footwear Size System'
+    assign footwear_size_class = 'Alpha'
+    assign currency_code = cart.currency.iso_code
 
-    echo "Product Type,Seller SKU,Brand,Update Delete,Product Name,Product ID,Product ID Type,Product Description,Recommended Browse Nodes,Style Number,Sole Material,Heel Type,Model Year,Heel Height,Closure Type,Item Type,Model Name,Outer Material Type,Manufacturer Part Number,Manufacturer,Heel Height Unit Of Measure,Heel Height,Footwear Size System,Shoe Size Age Group,Shoe Size Gender,Shoe Size Class,Shoe Size Width,Shoe Size,Shoe Size To Range (If Range),Shoe Size Gender (If Unisex),Shoe Size Width (If Unisex),Shoe Size (If Unisex),Shoe Size To Range (If Unisex and Range),Standard Price,Quantity,Target Gender,Age Range Description,Main Image URL,Other Image URL,Other Image URL,Other Image URL,Other Image URL,Other Image URL,Other Image URL,Other Image URL,Other Image URL,Swatch Image URL,Parentage,Parent SKU,Relationship Type,Variation Theme,Style Name,Key Product Features,Key Product Features,Key Product Features,Key Product Features,Key Product Features,Search Terms,Style Keyword,Toe Style,Arch Type,Team Name,Boot Opening Circumference,Department,Color,Color Map,Size,Material Fabric,Fur Description,Pattern Style,Water Resistance Level,Occasion Lifestyle,Special Features,Special Features,Special Features,Special Features,Special Features,Minimum Circumference Unit of Measure,Item Type,Season of the Product,Platinum Keywords,Platinum Keywords,Platinum Keywords,Platinum Keywords,Platinum Keywords,Collection,Target Audience,Target Audience,Target Audience,Target Audience,Target Audience,Manufacturer Hotline Number,Pronation Correction,League Name,Special Size Type,shaft_style_type,Catalog Number,Country/Region as Labeled,Product Lifecycle Supply Type,Product Lifecycle Supply Type,Product Lifecycle Supply Type,Product Lifecycle Supply Type,Product Lifecycle Supply Type,Item Booking Date,is-stain-resistant,Cleat Description,Cleat Material Type,Strap Type,character,Duration Unit,Shaft Diameter,Shoe Safety Code ISO-20345,Duration,Sub Brand,Surface Recommendation,flash_point_unit_of_measure,Shaft Diameter Unit,Insole Type,Built-in Light,Shipping Weight,Website Shipping Weight Unit Of Measure,Shoe Height Map,Shaft Height,Platform Height,Item Length Unit Of Measure,Item Length,Item Width,Item Height,Shaft Height Unit Of Measure,Item Width Unit Of Measure,Maximum Girth Size,Shoe Width,Maximum Circumference Unit of Measure,Item Height Unit Of Measure,shoe_width_unit_of_measure,Liquid Volume,Liquid Volume Unit,Fulfillment Center ID,Package height,Package Width,Package Length,Package Length Unit Of Measure,Package Weight,Package Weight Unit Of Measure,Package Height Unit Of Measure,Package Width Unit Of Measure,Compliance Regulation Type,Compliance Regulation Type,Compliance Regulation Type,Compliance Regulation Type,Compliance Regulation Type,Regulatory Identification,Regulatory Identification,Regulatory Identification,Regulatory Identification,Regulatory Identification,CPSIA Warning Description,Cpsia Warning,Country/Region of Origin,item_weight_unit_of_measure,Item Weight,Is this product a battery or does it utilize batteries?,Batteries are Included,Battery composition,Battery type/size,Battery type/size,Battery type/size,Number of batteries,Number of batteries,Number of batteries,Battery weight (grams),battery_weight_unit_of_measure,Number of Lithium Metal Cells,Number of Lithium-ion Cells,Lithium Battery Packaging,Watt hours per battery,lithium_battery_energy_content_unit_of_measure,Lithium content (grams),lithium_battery_weight_unit_of_measure,Applicable Dangerous Goods Regulations,Applicable Dangerous Goods Regulations,Applicable Dangerous Goods Regulations,Applicable Dangerous Goods Regulations,Applicable Dangerous Goods Regulations,UN number,Safety Data Sheet (SDS) URL,Volume,item_volume_unit_of_measure,Contains Liquid Contents?,Certification Expiration Date,Fabric Type,Flash point (°C)?,Warranty Description,Certification Date of Issue,External Testing Certification,Import Designation,Legal Disclaimer Description,Safety Warning,Material/Fabric Regulations,Material/Fabric Regulations,Material/Fabric Regulations,Certification Metadata,Product Compliance Certificate,Categorization/GHS pictograms (select all that apply),Categorization/GHS pictograms (select all that apply),Categorization/GHS pictograms (select all that apply),Manufacturer's Suggested Retail Price,Currency,Product Tax Code,Handling Time,Launch Date,Release Date,Restock Date,Sale Price,Sale Start Date,Sale End Date,Max Aggregate Ship Quantity,Item Package Quantity,Offering Can Be Gift Messaged,Is Gift Wrap Available,Is Discontinued by Manufacturer?,Minimum Advertised Price,Number of Items,Offer End Date,Max Order Quantity,Shipping-Template,Offer Start Date,Item Condition,Condition Note,Business Price,Quantity Price Type,Quantity Lower Bound 1,Quantity Price 1,Quantity Lower Bound 2,Quantity Price 2,Quantity Lower Bound 3,Quantity Price 3,Quantity Lower Bound 4,Quantity Price 4,Quantity Lower Bound 5,Quantity Price 5,Progressive Discount Type,Progressive Discount Lower Bound 1,Progressive Discount Value 1,Progressive Discount Lower Bound 2,Progressive Discount Value 2,Progressive Discount Lower Bound 3,Progressive Discount Value 3,National Stock Number,United Nations Standard Products and Services Code,Pricing Action"
+    echo "feed_product_type	item_sku	brand_name	update_delete	item_name	product_description	external_product_id	recommended_browse_nodes	external_product_id_type	model	sole_material	heel_type	item_type	model_name	part_number	manufacturer	heel_height_unit_of_measure	heel_height_string	footwear_size_system	footwear_age_group	footwear_gender	footwear_size_class	footwear_width	footwear_size	footwear_to_size	footwear_gender_unisex	footwear_width_unisex	footwear_size_unisex	footwear_to_size_unisex	standard_price	quantity	model_year	heel_height	closure_type	outer_material_type	target_gender	age_range_description	main_image_url	other_image_url1	other_image_url2	other_image_url3	other_image_url4	other_image_url5	other_image_url6	other_image_url7	other_image_url8	swatch_image_url	parent_child	parent_sku	relationship_type	variation_theme	style_name	bullet_point1	bullet_point2	bullet_point3	bullet_point4	bullet_point5	generic_keywords	toe_style	arch_type	department_name1	department_name2	department_name3	department_name4	department_name5	department_name6	department_name7	department_name8	department_name9	department_name10	color_name	color_map	material_type	fur_description	pattern_type	water_resistance_level	lifestyle1	lifestyle2	lifestyle3	lifestyle4	lifestyle5	special_features1	special_features2	special_features3	special_features4	special_features5	item_type_name	manufacturer_contact_information	lining_description	league_name	lifecycle_supply_type1	lifecycle_supply_type2	lifecycle_supply_type3	lifecycle_supply_type4	lifecycle_supply_type5	item_booking_date	style_keywords	team_name	minimum_circumference	size_name	minimum_circumference_unit_of_measure	seasons	platinum_keywords1	platinum_keywords2	platinum_keywords3	platinum_keywords4	platinum_keywords5	collection_name	target_audience_keywords1	target_audience_keywords2	target_audience_keywords3	target_audience_keywords4	target_audience_keywords5	pronation_correction	special_size_type	shaft_style_type	catalog_number	country_as_labeled	is_stain_resistant	shaft_circumference	shaft_circumference_unit_of_measure	subject_character	duration_unit_of_measure	duration	flash_point_unit_of_measure	has_builtin_light	cleat_description	cleat_material_type	strap_type	shaft_diameter	shoe_safety_code_iso_20345	sub_brand_name	surface_recommendation	shaft_diameter_unit_of_measure	insole_type	height_map	size_map	liquid_volume	liquid_volume_unit_of_measure	website_shipping_weight	website_shipping_weight_unit_of_measure	shaft_height	platform_height	item_length_unit_of_measure	item_length	item_width	item_height	shaft_height_unit_of_measure	item_width_unit_of_measure	maximum_circumference	shoe_width	maximum_circumference_unit_of_measure	item_height_unit_of_measure	shoe_width_unit_of_measure	item_display_width	item_display_height_unit_of_measure	item_display_width_unit_of_measure	item_display_height	fulfillment_center_id	package_height	package_width	package_length	package_length_unit_of_measure	package_weight	package_weight_unit_of_measure	package_height_unit_of_measure	package_width_unit_of_measure	regulation_type1	regulation_type2	regulation_type3	regulation_type4	regulation_type5	regulatory_compliance_certification_value1	regulatory_compliance_certification_value2	regulatory_compliance_certification_value3	regulatory_compliance_certification_value4	regulatory_compliance_certification_value5	cpsia_cautionary_statement1	cpsia_cautionary_statement2	cpsia_cautionary_statement3	cpsia_cautionary_statement4	country_of_origin	item_weight_unit_of_measure	item_weight	batteries_required	are_batteries_included	battery_cell_composition	battery_type1	battery_type2	battery_type3	number_of_batteries1	number_of_batteries2	number_of_batteries3	battery_weight	battery_weight_unit_of_measure	number_of_lithium_metal_cells	number_of_lithium_ion_cells	lithium_battery_packaging	lithium_battery_energy_content	lithium_battery_energy_content_unit_of_measure	lithium_battery_weight	lithium_battery_weight_unit_of_measure	supplier_declared_dg_hz_regulation1	supplier_declared_dg_hz_regulation2	supplier_declared_dg_hz_regulation3	supplier_declared_dg_hz_regulation4	supplier_declared_dg_hz_regulation5	hazmat_united_nations_regulatory_id	safety_data_sheet_url	item_volume	item_volume_unit_of_measure	contains_liquid_contents	legal_compliance_certification_expiration_date	flash_point	warranty_description	legal_compliance_certification_date_of_issue	external_testing_certification	supplier_declared_material_regulation1	supplier_declared_material_regulation2	supplier_declared_material_regulation3	legal_compliance_certification_metadata	legal_compliance_certification_value	ghs_classification_class1	ghs_classification_class2	ghs_classification_class3	cpsia_cautionary_description	fabric_type	import_designation	legal_disclaimer_description	safety_warning	list_price	currency	product_tax_code	fulfillment_latency	merchant_release_date	restock_date	sale_price	sale_from_date	sale_end_date	offering_can_be_gift_messaged	offering_can_be_giftwrapped	map_price	offering_end_date	max_orderquantity_available	merchant_shipping_group_name	offering_start_date	condition_type	condition_note	product_site_launch_date	max_aggregate_shipquantity_available	item_packagequantity_available	is_discontinued_by_manufacturer	number_of_items	business_price	quantity_price_type	quantity_lower_bound1	quantity_price1	quantity_lower_bound2	quantity_price2	quantity_lower_bound3	quantity_price3	quantity_lower_bound4	quantity_price4	quantity_lower_bound5	quantity_price5	progressive_discount_type	progressive_discount_lower_bound1	progressive_discount_value1	progressive_discount_lower_bound2	progressive_discount_value2	progressive_discount_lower_bound3	progressive_discount_value3	national_stock_number	unspsc_code	pricing_action"
 -%}
     {%- for product in collection.products -%}
         {%- liquid
-        assign productName = product.title | replace: ',','' | remove: '"' | remove: "'" | remove: "," |  strip_html | strip
-        assign productBrand = product.vendor
-        assign productDescription = product.description | strip_html | strip_newlines | escape | remove: "," | truncate: 2000
+        assign item_name = product.title | replace: ',','' | remove: '"' | remove: "'" | remove: "," |  strip_html | strip
+        assign brand_name = product.vendor
+        assign product_description = product.description | strip_html | strip_newlines | escape | remove: "," | truncate: 2000
         if product.metafields.global.description_tag.size > 0
-            assign productDescription = product.metafields.global.description_tag | remove: ","
+            assign product_description = product.metafields.global.description_tag | remove: ","
         endif
 
-        assign productAgeGroup = 'adult'
-        assign productAgeRangeDescription = productAgeGroup
+        assign footwear_age_group = 'adult'
+        assign age_range_description = footwear_age_group
         -%}
         {%- for variant in product.variants -%}
             {%- liquid
-            assign variantSKU = variant.sku
-            assign productID = variant.barcode
-            assign shoeSizeWidth = 'Medium'
-            assign variantSize = ''
-            assign variantColor = ''
-            assign variantColorMap = ''
-            assign variantSalePrice = variant.price | money_without_currency
-            assign variantStandardPrice = variant.price | money_without_currency
-            assign variantMSRP = variant.compare_at_price | money_without_currency
-            assign variantQuantity = 0
-            assign variantWeightUnitOfMeasure = variant.weight_unit
-            assign variantWeight = variant.weight_in_unit
-            assign variantCondition = 'New'
+            assign item_sku = variant.sku
+            assign external_product_id = variant.barcode
+            assign footwear_width = 'Medium'
+            assign footwear_size = ''
+            assign color_name = ''
+            assign color_map = ''
+            assign sale_price = variant.price | money_without_currency
+            assign standard_price = variant.price | money_without_currency
+            assign list_price = variant.compare_at_price | money_without_currency
+            assign quantity_available = 0
+            assign item_weight_unit_of_measure = variant.weight_unit
+            assign item_weight = variant.weight_in_unit
+            assign condition_type = 'New'
 
             for option in product.options
                 if option == 'Color' or option == 'Colour'
-                    assign variantColor = variant.options[forloop.index0]
+                    assign color_name = variant.options[forloop.index0]
                 elsif option == 'Size'
-                    assign variantSize = variant.options[forloop.index0]
+                    assign footwear_size = variant.options[forloop.index0]
                 endif
             endfor
 
-            assign productGender = 'unisex'
-            assign productTargetGender = 'unisex'
-            if variantSize contains 'Ladies'
-                assign productGender = 'Women'
-                assign productTargetGender = 'Female'
-            elsif variantSize contains 'Mens'
-                assign productGender = 'Men'
-                assign productTargetGender = 'Male'
+            assign footwear_gender = 'unisex'
+            assign target_gender = 'unisex'
+            if footwear_size contains 'Ladies'
+                assign footwear_gender = 'Women'
+                assign target_gender = 'Female'
+            elsif footwear_size contains 'Mens'
+                assign footwear_gender = 'Men'
+                assign target_gender = 'Male'
             endif
 
             # Product Type
-            assign productType = 'none'
+            assign feed_product_type = 'none'
             case product.type
                 when 'Mukluk'
-                    assign productType = 'boot'
+                    assign feed_product_type = 'boot'
                 when 'Slipper'
-                    assign productType = 'slipper'
+                    assign feed_product_type = 'slipper'
                 when 'Moccasin'
-                    assign productType = 'shoe'
+                    assign feed_product_type = 'shoe'
             endcase
-            case productName
+            case item_name
                 when 'Tipi'
-                    assign productType = 'slipper'
+                    assign feed_product_type = 'slipper'
             endcase
 
             # Recommended Browse Nodes
-            assign productBrowseNode = 7141124011
-            case productType
+            assign recommended_browse_nodes = 7141124011
+            case feed_product_type
                 when 'boot'
-                    case productTargetGender
+                    case target_gender
                         when 'Female'
-                            assign productBrowseNode = 679380011
+                            assign recommended_browse_nodes = 679380011
                         when 'Male'
-                            assign productBrowseNode = 5658904011
+                            assign recommended_browse_nodes = 5658904011
                     endcase
                 when 'slipper'
-                    case productTargetGender
+                    case target_gender
                         when 'Female'
-                            assign productBrowseNode = 679433011
+                            assign recommended_browse_nodes = 679433011
                         when 'Male'
-                            assign productBrowseNode = 679324011
+                            assign recommended_browse_nodes = 679324011
                     endcase
                 when 'shoe'
-                    case productTargetGender
+                    case target_gender
                         when 'Female'
-                            assign productBrowseNode = 679337011
+                            assign recommended_browse_nodes = 679337011
                         when 'Male'
-                            assign productBrowseNode = 679313011
+                            assign recommended_browse_nodes = 679313011
                 endcase
             endcase
 
-            assign variantParentage = ''
-            assign variantParentSKU = ''
-            assign variantRelationshipType = 'Variation'
-            assign variantVariationTheme = ''
+            assign parent_child = ''
+            assign parent_sku = ''
+            assign relationship_type = 'Variation'
+            assign variation_theme = ''
 
-            assign productStyleNumber = variant.sku
-            assign productOuterMatrialType = 'leather'
+            assign model_number = variant.sku
+            assign outer_material_type = 'leather'
 
             if variant.image
-                assign variantMainImageUrl = variant.image | image_url: width: 2000 | prepend: "https:"
+                assign main_image_url = variant.image | image_url: width: 2000 | prepend: "https:"
             else
-                assign variantMainImageUrl = product.featured_image | image_url: width: 2000 | prepend: "https:"
+                assign main_image_url = product.featured_image | image_url: width: 2000 | prepend: "https:"
             endif
 
             # Image ALT text must exactly match variant color for images to be matched
-            assign variantOtherImages = product.images | where: "alt", variantColor | sort: 'attached_to_variant' | reverse
+            assign variantOtherImages = product.images | where: "alt", color_name | sort: 'attached_to_variant' | reverse
 
-            assign variantOtherImageUrl1 = ''
-            assign variantOtherImageUrl2 = ''
-            assign variantOtherImageUrl3 = ''
-            assign variantOtherImageUrl4 = ''
-            assign variantOtherImageUrl5 = ''
-            assign variantOtherImageUrl6 = ''
-            assign variantOtherImageUrl7 = ''
-            assign variantOtherImageUrl8 = ''
+            assign other_image_url1 = ''
+            assign other_image_url2 = ''
+            assign other_image_url3 = ''
+            assign other_image_url4 = ''
+            assign other_image_url5 = ''
+            assign other_image_url6 = ''
+            assign other_image_url7 = ''
+            assign other_image_url8 = ''
 
             if variantOtherImages[1]
-                assign variantOtherImageUrl1 = variantOtherImages[1] | image_url: width: 2000 | prepend: "https:"
+                assign other_image_url1 = variantOtherImages[1] | image_url: width: 2000 | prepend: "https:"
             endif
             if variantOtherImages[2]
-                assign variantOtherImageUrl2 = variantOtherImages[2] | image_url: width: 2000 | prepend: "https:"
+                assign other_image_url2 = variantOtherImages[2] | image_url: width: 2000 | prepend: "https:"
             endif
             if variantOtherImages[3]
-                assign variantOtherImageUrl3 = variantOtherImages[3] | image_url: width: 2000 | prepend: "https:"
+                assign other_image_url3 = variantOtherImages[3] | image_url: width: 2000 | prepend: "https:"
             endif
             if variantOtherImages[4]
-                assign variantOtherImageUrl4 = variantOtherImages[4] | image_url: width: 2000 | prepend: "https:"
+                assign other_image_url4 = variantOtherImages[4] | image_url: width: 2000 | prepend: "https:"
             endif
             if variantOtherImages[5]
-                assign variantOtherImageUrl5 = variantOtherImages[5] | image_url: width: 2000 | prepend: "https:"
+                assign other_image_url5 = variantOtherImages[5] | image_url: width: 2000 | prepend: "https:"
             endif
             if variantOtherImages[6]
-                assign variantOtherImageUrl6 = variantOtherImages[6] | image_url: width: 2000 | prepend: "https:"
+                assign other_image_url6 = variantOtherImages[6] | image_url: width: 2000 | prepend: "https:"
             endif
             if variantOtherImages[7]
-                assign variantOtherImageUrl7 = variantOtherImages[7] | image_url: width: 2000 | prepend: "https:"
+                assign other_image_url7 = variantOtherImages[7] | image_url: width: 2000 | prepend: "https:"
             endif
             if variantOtherImages[8]
-                assign variantOtherImageUrl8 = variantOtherImages[8] | image_url: width: 2000 | prepend: "https:"
+                assign other_image_url8 = variantOtherImages[8] | image_url: width: 2000 | prepend: "https:"
             endif
             -%}
-            {% unless productType == 'none' %}
-{{ productType }},{{ variantSKU }},{{ productBrand }},{{ updateDelete }},{{ productName }},{{ productID }},{{ productIDType }},{{ productDescription }},{{ productBrowseNode }},{{ productStyleNumber  }},,,,,,,,{{ productOuterMatrialType }},,,,,{{ footwearSizeSystem  }},{{productAgeGroup}},{{productGender}},{{shoeSizeClass}},{{shoeSizeWidth}},{{variantSize}},,,,,,{{variantStandardPrice}},{{variantQuantity}},{{productTargetGender}},{{productAgeRangeDescription}},{{variantMainImageUrl}},{{variantOtherImageUrl1}},{{variantOtherImageUrl2}},{{variantOtherImageUrl3}},{{variantOtherImageUrl4}},{{variantOtherImageUrl5}},{{variantOtherImageUrl6}},{{variantOtherImageUrl7}},{{variantOtherImageUrl8}},,{{variantParentage}},{{variantParentSKU}},{{variantRelationshipType}},{{variantVariationTheme}},,,,,,,,,,,,,,{{variantColor}},{{variantColorMap}},{{variantSize}},,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,{{variantWeightUnitOfMeasure}},{{variantWeight}},{{usesBatteries}},{{usesBatteries}},,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,{{variantMSRP}},{{shopCurrency}},,,,,,{{variantSalePrice}},,,,,,,,,,,,,,{{variantCondition}},,,,,,,,,,,
+            {% unless feed_product_type == 'none' %}
+{%- # feed_product_type item_sku	    brand_name	        update_delete	    item_name	    product_description	        external_product_id	        recommended_browse_nodes	    external_product_id_type	    model	            sole_material	    heel_type	    item_type	    model_name	    part_number	    manufacturer	    heel_height_unit_of_measure	    heel_height_string	        footwear_size_system	    footwear_age_group	    footwear_gender	    footwear_size_class	    footwear_width	    footwear_size	    footwear_to_size	    footwear_gender_unisex	    footwear_width_unisex	    footwear_size_unisex	    footwear_to_size_unisex	    standard_price	    quantity	            model_year	     heel_height	closure_type	    outer_material_type	    target_gender	    age_range_description	    main_image_url	    other_image_url1	    other_image_url2	    other_image_url3	    other_image_url4	    other_image_url5	    other_image_url6	    other_image_url7	    other_image_url8	    swatch_image_url	    parent_child	    parent_sku	    relationship_type	    variation_theme	    style_name	    bullet_point1	    bullet_point2	    bullet_point3	    bullet_point4	    bullet_point5	generic_keywords	        toe_style	    arch_type	    department_name1	    department_name2	    department_name3	    department_name4	    department_name5	    department_name6	    department_name7	    department_name8	    department_name9	    department_name10	    color_name	    color_map	    material_type	    fur_description	    pattern_type	    water_resistance_level	lifestyle1	lifestyle2	lifestyle3	lifestyle4	lifestyle5	special_features1	special_features2	special_features3	special_features4	special_features5	item_type_name	manufacturer_contact_information	lining_description	league_name	lifecycle_supply_type1	lifecycle_supply_type2	lifecycle_supply_type3	lifecycle_supply_type4	lifecycle_supply_type5	item_booking_date	style_keywords	team_name	minimum_circumference	size_name	minimum_circumference_unit_of_measure	seasons	platinum_keywords1	platinum_keywords2	platinum_keywords3	platinum_keywords4	platinum_keywords5	collection_name	target_audience_keywords1	target_audience_keywords2	target_audience_keywords3	target_audience_keywords4	target_audience_keywords5	pronation_correction	special_size_type	shaft_style_type	catalog_number	country_as_labeled	is_stain_resistant	shaft_circumference	shaft_circumference_unit_of_measure	subject_character	duration_unit_of_measure	duration	flash_point_unit_of_measure	has_builtin_light	cleat_description	cleat_material_type	strap_type	shaft_diameter	shoe_safety_code_iso_20345	sub_brand_name	surface_recommendation	shaft_diameter_unit_of_measure	insole_type	height_map	size_map	liquid_volume	liquid_volume_unit_of_measure	website_shipping_weight	website_shipping_weight_unit_of_measure	shaft_height	platform_height	item_length_unit_of_measure	item_length	item_width	item_height	shaft_height_unit_of_measure	item_width_unit_of_measure	maximum_circumference	shoe_width	maximum_circumference_unit_of_measure	item_height_unit_of_measure	shoe_width_unit_of_measure	item_display_width	item_display_height_unit_of_measure	item_display_width_unit_of_measure	item_display_height	fulfillment_center_id	package_height	package_width	package_length	package_length_unit_of_measure	package_weight	package_weight_unit_of_measure	package_height_unit_of_measure	package_width_unit_of_measure	regulation_type1	regulation_type2	regulation_type3	regulation_type4	regulation_type5	regulatory_compliance_certification_value1	regulatory_compliance_certification_value2	regulatory_compliance_certification_value3	regulatory_compliance_certification_value4	regulatory_compliance_certification_value5	cpsia_cautionary_statement1	cpsia_cautionary_statement2	cpsia_cautionary_statement3	cpsia_cautionary_statement4	country_of_origin	item_weight_unit_of_measure	item_weight	batteries_required	are_batteries_included	battery_cell_composition	battery_type1	battery_type2	battery_type3	number_of_batteries1	number_of_batteries2	number_of_batteries3	battery_weight	battery_weight_unit_of_measure	number_of_lithium_metal_cells	number_of_lithium_ion_cells	lithium_battery_packaging	lithium_battery_energy_content	lithium_battery_energy_content_unit_of_measure	lithium_battery_weight	lithium_battery_weight_unit_of_measure	supplier_declared_dg_hz_regulation1	supplier_declared_dg_hz_regulation2	supplier_declared_dg_hz_regulation3	supplier_declared_dg_hz_regulation4	supplier_declared_dg_hz_regulation5	hazmat_united_nations_regulatory_id	safety_data_sheet_url	item_volume	item_volume_unit_of_measure	contains_liquid_contents	legal_compliance_certification_expiration_date	flash_point	warranty_description	legal_compliance_certification_date_of_issue	external_testing_certification	supplier_declared_material_regulation1	supplier_declared_material_regulation2	supplier_declared_material_regulation3	legal_compliance_certification_metadata	legal_compliance_certification_value	ghs_classification_class1	ghs_classification_class2	ghs_classification_class3	cpsia_cautionary_description	fabric_type	import_designation	legal_disclaimer_description	safety_warning	list_price	currency	product_tax_code	fulfillment_latency	merchant_release_date	restock_date	sale_price	sale_from_date	sale_end_date	offering_can_be_gift_messaged	offering_can_be_giftwrapped	map_price	offering_end_date	max_orderquantity_available	merchant_shipping_group_name	offering_start_date	condition_type	condition_note	product_site_launch_date	max_aggregate_shipquantity_available	item_packagequantity_available	is_discontinued_by_manufacturer	number_of_items	business_price	quantity_price_type	quantity_lower_bound1	quantity_price1	quantity_lower_bound2	quantity_price2	quantity_lower_bound3	quantity_price3	quantity_lower_bound4	quantity_price4	quantity_lower_bound5	quantity_price5	progressive_discount_type	progressive_discount_lower_bound1	progressive_discount_value1	progressive_discount_lower_bound2	progressive_discount_value2	progressive_discount_lower_bound3	progressive_discount_value3	national_stock_number	unspsc_code	pricing_action -%}
+{{ feed_product_type }}	{{ item_sku }}	{{ brand_name }}	{{ update_delete }}	{{ item_name }}	{{ product_description }}	{{ external_product_id }}	{{ recommended_browse_nodes }}	{{ external_product_id_type }}	{{ model_number }}	{{ sole_material }}	{{heel_type}}	{{item_type}}	{{model_name}}	{{part_number}}	{{manufacturer}}	{{heel_height_unit_of_measure}}	{{ heel_height_string }}	{{ footwear_size_system  }}	{{footwear_age_group}}	{{footwear_gender}}	{{footwear_size_class}}	{{footwear_width}}	{{footwear_size}}	{{footwear_to_size}}	{{footwear_gender_unisex}}	{{footwear_width_unisex}}	{{footwear_size_unisex}}	{{footwear_to_size_unisex}}	{{standard_price}}	{{quantity_available}}	{{model_year}}	{{heel_height}}	{{closure_type}}	{{outer_material_type}}	{{target_gender}}	{{age_range_description}}	{{main_image_url}}	{{other_image_url1}}	{{other_image_url2}}	{{other_image_url3}}	{{other_image_url4}}	{{other_image_url5}}	{{other_image_url6}}	{{other_image_url7}}	{{other_image_url8}}	{{swatch_image_url}}	{{parent_child}}	{{parent_sku}}	{{relationship_type}}	{{variation_theme}}	{{style_name}}	{{bullet_point1}}	{{bullet_point2}}	{{bullet_point3}}	{{bullet_point4}}	{{bullet_point5}}	{{generic_keywords}}	{{toe_style}}	{{arch_type}}	{{department_name1}}	{{department_name2}}	{{department_name3}}	{{department_name4}}	{{department_name5}}	{{department_name6}}	{{department_name7}}	{{department_name8}}	{{department_name9}}	{{department_name10}}	{{color_name}}	{{color_map}}	{{material_type}}	{{fur_description}}	{{pattern_type}}	{{water_resistance_level}}{{lifestyle1}}	{{lifestyle2}}	{{lifestyle3}}	{{lifestyle4}}	{{lifestyle5}}	{{special_features1}}	{{special_features2}}	{{special_features3}}	{{special_features4}}	{{special_features5}}	{{item_type_name}}	{{manufacturer_contact_information}}	{{lining_description}}	{{league_name}}	{{lifecycle_supply_type1}}	{{lifecycle_supply_type2}}	{{lifecycle_supply_type3}}	{{lifecycle_supply_type4}}	{{lifecycle_supply_type5}}	{{item_booking_date}}	{{style_keywords}}	{{team_name}}	{{minimum_circumference}}	{{size_name}}	{{minimum_circumference_unit_of_measure}}	{{seasons}}	{{platinum_keywords1}}	{{platinum_keywords2}}	{{platinum_keywords3}}	{{platinum_keywords4}}	{{platinum_keywords5}}	{{collection_name}}	{{target_audience_keywords1}}	{{target_audience_keywords2}}	{{target_audience_keywords3}}	{{target_audience_keywords4}}	{{target_audience_keywords5}}	{{pronation_correction}}	{{special_size_type}}	{{shaft_style_type}}	{{catalog_number}}	{{country_as_labeled}}	{{is_stain_resistant}}	{{shaft_circumference}}	{{shaft_circumference_unit_of_measure}}	{{subject_character}}	{{duration_unit_of_measure}}	{{duration}}	{{flash_point_unit_of_measure}}	{{has_builtin_light}}	{{cleat_description}}	{{cleat_material_type}}	{{strap_type}}	{{shaft_diameter}}	{{shoe_safety_code_iso_20345}}	{{sub_brand_name}}	{{surface_recommendation}}	{{shaft_diameter_unit_of_measure}}	{{insole_type}}	{{height_map}}	{{size_map}}	{{liquid_volume}}	{{liquid_volume_unit_of_measure}}	{{website_shipping_weight}}	{{website_shipping_weight_unit_of_measure}}	{{shaft_height}}	{{platform_height}}	{{item_length_unit_of_measure}}	{{item_length}}	{{item_width}}	{{item_height}}	{{shaft_height_unit_of_measure}}	{{item_width_unit_of_measure}}	{{maximum_circumference}}	{{shoe_width}}	{{maximum_circumference_unit_of_measure}}	{{item_height_unit_of_measure}}	{{shoe_width_unit_of_measure}}	{{item_display_width}}	{{item_display_height_unit_of_measure}}	{{item_display_width_unit_of_measure}}	{{item_display_height}}	{{fulfillment_center_id}}	{{package_height}}	{{package_width}}	{{package_length}}	{{package_length_unit_of_measure}}	{{package_weight}}	{{package_weight_unit_of_measure}}	{{package_height_unit_of_measure}}	{{package_width_unit_of_measure}}	{{regulation_type1}}	{{regulation_type2}}	{{regulation_type3}}	{{regulation_type4}}	{{regulation_type5}}	{{regulatory_compliance_certification_value1}}	{{regulatory_compliance_certification_value2}}	{{regulatory_compliance_certification_value3}}	{{regulatory_compliance_certification_value4}}	{{regulatory_compliance_certification_value5}}	{{cpsia_cautionary_statement1}}	{{cpsia_cautionary_statement2}}	{{cpsia_cautionary_statement3}}	{{cpsia_cautionary_statement4}}	{{country_of_origin}}	{{item_weight_unit_of_measure}}	{{item_weight}}	{{batteries_required}}	{{are_batteries_included}}	{{battery_cell_composition}}	{{battery_type1}}	{{battery_type2}}	{{battery_type3}}	{{number_of_batteries1}}	{{number_of_batteries2}}	{{number_of_batteries3}}	{{battery_weight}}	{{battery_weight_unit_of_measure}}	{{number_of_lithium_metal_cells}}	{{number_of_lithium_ion_cells}}	{{lithium_battery_packaging}}	{{lithium_battery_energy_content}}	{{lithium_battery_energy_content_unit_of_measure}}	{{lithium_battery_weight}}	{{lithium_battery_weight_unit_of_measure}}	{{supplier_declared_dg_hz_regulation1}}	{{supplier_declared_dg_hz_regulation2}}	{{supplier_declared_dg_hz_regulation3}}	{{supplier_declared_dg_hz_regulation4}}	{{supplier_declared_dg_hz_regulation5}}	{{hazmat_united_nations_regulatory_id}}	{{safety_data_sheet_url}}	{{item_volume}}	{{item_volume_unit_of_measure}}	{{contains_liquid_contents}}	{{legal_compliance_certification_expiration_date}}	{{flash_point}}	{{warranty_description}}	{{legal_compliance_certification_date_of_issue}}	{{external_testing_certification}}	{{supplier_declared_material_regulation1}}	{{supplier_declared_material_regulation2}}	{{supplier_declared_material_regulation3}}	{{legal_compliance_certification_metadata}}	{{legal_compliance_certification_value}}	{{ghs_classification_class1}}	{{ghs_classification_class2}}	{{ghs_classification_class3}}	{{cpsia_cautionary_description}}	{{fabric_type}}	{{import_designation}}	{{legal_disclaimer_description}}	{{safety_warning}}	{{list_price}}	{{currency_code}}	{{product_tax_code}}	{{fulfillment_latency}}	{{merchant_release_date}}	{{restock_date}}	{{sale_price}}	{{sale_from_date}}	{{sale_end_date}}	{{offering_can_be_gift_messaged}}	{{offering_can_be_giftwrapped}}	{{map_price}}	{{offering_end_date}}	{{max_orderquantity_available}}	{{merchant_shipping_group_name}}	{{offering_start_date}}	{{condition_type}}	{{condition_note}}	{{product_site_launch_date}}	{{max_aggregate_shipquantity_available}}	{{item_packagequantity_available}}	{{is_discontinued_by_manufacturer}}	{{number_of_items}}	{{business_price}}	{{quantity_price_type}}	{{quantity_lower_bound1}}	{{quantity_price1}}	{{quantity_lower_bound2}}	{{quantity_price2}}	{{quantity_lower_bound3}}	{{quantity_price3}}	{{quantity_lower_bound4}}	{{quantity_price4}}	{{quantity_lower_bound5}}	{{quantity_price5}}	{{progressive_discount_type}}	{{progressive_discount_lower_bound1}}	{{progressive_discount_value1}}	{{progressive_discount_lower_bound2}}	{{progressive_discount_value2}}	{{progressive_discount_lower_bound3}}	{{progressive_discount_value3}}	{{national_stock_number}}	{{unspsc_code}}	{{pricing_action}}
             {%- endunless -%}
         {%- endfor -%}
     {%- endfor -%}
