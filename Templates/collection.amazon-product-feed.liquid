@@ -32,7 +32,8 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
             assign footwear_size = ''
             assign color_name = ''
             assign color_map = ''
-            assign sale_price = variant.price | money_without_currency
+            # TODO: on sale logic
+            # assign sale_price = variant.price | money_without_currency
             assign standard_price = variant.price | money_without_currency
             assign list_price = variant.compare_at_price | money_without_currency
             assign quantity_available = 0
