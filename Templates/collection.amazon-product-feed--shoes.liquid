@@ -3,8 +3,10 @@
 {%- liquid
     # TODO: Parent Variant relationships
     # TODO: Shoe Size
+    # TODO: Richer item_name
+    # TODO: Set item style name
     assign brand_name = 'Manitobah'
-    assign update_delete = ''
+    assign update_delete = 'Update'
     assign external_product_id_type = 'UPC'
     assign footwear_size_system = 'US Footwear Size System'
     assign footwear_size_class = 'Alpha'
@@ -18,6 +20,8 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
         {%- liquid
         assign item_name = product.title | replace: ',','' | remove: '"' | remove: "'" | remove: "," |  strip_html | strip
         assign brand_name = product.vendor
+
+        # Description
         assign product_description = product.description | strip_html | strip_newlines | escape | remove: "," | truncate: 2000
         if product.metafields.global.description_tag.size > 0
             assign product_description = product.metafields.global.description_tag | remove: ","
@@ -25,12 +29,44 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
 
         assign footwear_age_group = 'adult'
         assign age_range_description = footwear_age_group
+
+        # Product Type
+        assign feed_product_type = 'none'
+        case product.type
+            when 'Mukluk'
+                assign feed_product_type = 'boot'
+            when 'Slipper'
+                assign feed_product_type = 'slipper'
+            when 'Moccasin'
+                assign feed_product_type = 'shoes'
+        endcase
+        case item_name
+            when 'Tipi'
+                assign feed_product_type = 'slipper'
+        endcase
+
+        # Parent's Item SKU
+        assign item_sku = product.first_available_variant.sku | slice: 0, 5
+        assign parent_child = 'parent'
+        assign parent_sku = ''
+        assign relationship_type = 'Variation'
+        assign variation_theme = 'color-size'
         -%}
         {%- if product.variants.size > 1 -%}
-            {%  comment  %}  Output Master Product LIne {% endcomment %}
+{{ feed_product_type }}	{{ item_sku }}	{{ brand_name }}	{{ update_delete }}	{{ item_name }}	{{ product_description }}	{{ external_product_id }}	{{ recommended_browse_nodes }}	{{ external_product_id_type }}	{{ model_number }}	{{ sole_material }}	{{heel_type}}	{{item_type}}	{{model_name}}	{{part_number}}	{{manufacturer}}	{{heel_height_unit_of_measure}}	{{ heel_height_string }}	{{ footwear_size_system  }}	{{footwear_age_group}}	{{footwear_gender}}	{{footwear_size_class}}	{{footwear_width}}	{{footwear_size}}	{{footwear_to_size}}	{{footwear_gender_unisex}}	{{footwear_width_unisex}}	{{footwear_size_unisex}}	{{footwear_to_size_unisex}}	{{standard_price}}	{{quantity_available}}	{{outer_material_type}}	{{model_year}}	{{heel_height}}	{{closure_type}}	{{care_instructions}}	{{target_gender}}	{{age_range_description}}	{{main_image_url}}	{{other_image_url1}}	{{other_image_url2}}	{{other_image_url3}}	{{other_image_url4}}	{{other_image_url5}}	{{other_image_url6}}	{{other_image_url7}}	{{other_image_url8}}	{{swatch_image_url}}	{{parent_child}}	{{parent_sku}}	{{relationship_type}}	{{variation_theme}}	{{style_name}}	{{bullet_point1}}	{{bullet_point2}}	{{bullet_point3}}	{{bullet_point4}}	{{bullet_point5}}	{{generic_keywords}}	{{toe_style}}	{{arch_type}}	{{department_name1}}	{{department_name2}}	{{department_name3}}	{{department_name4}}	{{department_name5}}	{{department_name6}}	{{department_name7}}	{{department_name8}}	{{department_name9}}	{{department_name10}}	{{color_name}}	{{color_map}}	{{material_type}}	{{fur_description}}	{{pattern_type}}	{{water_resistance_level}}	{{lifestyle1}}	{{lifestyle2}}	{{lifestyle3}}	{{lifestyle4}}	{{lifestyle5}}	{{special_features1}}	{{special_features2}}	{{special_features3}}	{{special_features4}}	{{special_features5}}	{{item_type_name}}	{{manufacturer_contact_information}}	{{lining_description}}	{{league_name}}	{{lifecycle_supply_type1}}	{{lifecycle_supply_type2}}	{{lifecycle_supply_type3}}	{{lifecycle_supply_type4}}	{{lifecycle_supply_type5}}	{{item_booking_date}}	{{minimum_circumference_unit_of_measure}}	{{seasons}}	{{collection_name}}	{{target_audience_keywords1}}	{{target_audience_keywords2}}	{{target_audience_keywords3}}	{{target_audience_keywords4}}	{{target_audience_keywords5}}	{{pronation_correction}}	{{special_size_type}}	{{shaft_style_type}}	{{catalog_number}}	{{style_keywords}}	{{team_name}}	{{minimum_circumference}}	{{is_stain_resistant}}	{{country_as_labeled}}	{{platinum_keywords1}}	{{platinum_keywords2}}	{{platinum_keywords3}}	{{platinum_keywords4}}	{{platinum_keywords5}}	{{size_name}}	{{shaft_circumference}}	{{shaft_circumference_unit_of_measure}}	{{is_autographed}}	{{athlete}}	{{weave_type}}	{{shoulder_strap_drop}}	{{shoulder_strap_drop_unit_of_measure}}	{{occasion_type}}	{{sport_type1}}	{{sport_type2}}	{{frame_material_type}}	{{fit_type}}	{{theme_theme}}	{{included_components}}	{{pattern_name}}	{{subject_character}}	{{duration_unit_of_measure}}	{{duration}}	{{flash_point_unit_of_measure}}	{{has_builtin_light}}	{{shaft_diameter}}	{{shoe_safety_code_iso_20345}}	{{surface_recommendation}}	{{insole_type}}	{{cleat_description}}	{{cleat_material_type}}	{{strap_type}}	{{sub_brand_name}}	{{shaft_diameter_unit_of_measure}}	{{shoe_dimension_unit_of_measure}}	{{legal_compliance_certification_certifying_authority_name}}	{{legal_compliance_certification_geographic_jurisdiction}}	{{opacity_unit_of_measure}}	{{size_info_display_name}}	{{sleeve_type}}	{{fabric_wash}}	{{height_map}}	{{size_map}}	{{liquid_volume}}	{{liquid_volume_unit_of_measure}}	{{item_display_width}}	{{item_display_height_unit_of_measure}}	{{item_display_width_unit_of_measure}}	{{item_display_height}}	{{maximum_circumference}}	{{shoe_width}}	{{maximum_circumference_unit_of_measure}}	{{website_shipping_weight}}	{{website_shipping_weight_unit_of_measure}}	{{shaft_height}}	{{platform_height}}	{{item_length_unit_of_measure}}	{{item_length}}	{{item_width}}	{{item_height}}	{{shaft_height_unit_of_measure}}	{{item_width_unit_of_measure}}	{{item_height_unit_of_measure}}	{{shoe_width_unit_of_measure}}	{{capacity_unit_of_measure}}	{{display_size}}	{{display_size_unit_of_measure}}	{{capacity}}	{{fulfillment_center_id}}	{{package_height}}	{{package_width}}	{{package_length}}	{{package_length_unit_of_measure}}	{{package_weight}}	{{package_weight_unit_of_measure}}	{{package_height_unit_of_measure}}	{{package_width_unit_of_measure}}	{{regulation_type1}}	{{regulation_type2}}	{{regulation_type3}}	{{regulation_type4}}	{{regulation_type5}}	{{regulatory_compliance_certification_value1}}	{{regulatory_compliance_certification_value2}}	{{regulatory_compliance_certification_value3}}	{{regulatory_compliance_certification_value4}}	{{regulatory_compliance_certification_value5}}	{{cpsia_cautionary_statement1}}	{{cpsia_cautionary_statement2}}	{{cpsia_cautionary_statement3}}	{{cpsia_cautionary_statement4}}	{{country_of_origin}}	{{item_weight_unit_of_measure}}	{{item_weight}}	{{batteries_required}}	{{are_batteries_included}}	{{battery_cell_composition}}	{{battery_type1}}	{{battery_type2}}	{{battery_type3}}	{{number_of_batteries1}}	{{number_of_batteries2}}	{{number_of_batteries3}}	{{battery_weight}}	{{battery_weight_unit_of_measure}}	{{number_of_lithium_metal_cells}}	{{number_of_lithium_ion_cells}}	{{lithium_battery_packaging}}	{{lithium_battery_energy_content}}	{{lithium_battery_energy_content_unit_of_measure}}	{{lithium_battery_weight}}	{{lithium_battery_weight_unit_of_measure}}	{{supplier_declared_dg_hz_regulation1}}	{{supplier_declared_dg_hz_regulation2}}	{{supplier_declared_dg_hz_regulation3}}	{{supplier_declared_dg_hz_regulation4}}	{{supplier_declared_dg_hz_regulation5}}	{{hazmat_united_nations_regulatory_id}}	{{safety_data_sheet_url}}	{{item_volume}}	{{item_volume_unit_of_measure}}	{{contains_liquid_contents}}	{{legal_compliance_certification_expiration_date}}	{{flash_point}}	{{warranty_description}}	{{legal_compliance_certification_date_of_issue}}	{{external_testing_certification}}	{{supplier_declared_material_regulation1}}	{{supplier_declared_material_regulation2}}	{{supplier_declared_material_regulation3}}	{{legal_compliance_certification_metadata}}	{{legal_compliance_certification_value}}	{{ghs_classification_class1}}	{{ghs_classification_class2}}	{{ghs_classification_class3}}	{{legal_disclaimer_description}}	{{safety_warning}}	{{fabric_type}}	{{import_designation}}	{{cpsia_cautionary_description}}	{{legal_compliance_certification_regulatory_organization_name}}	{{legal_compliance_certification_status}}	{{list_price}}	{{currency_code}}	{{product_tax_code}}	{{fulfillment_latency}}	{{merchant_release_date}}	{{restock_date}}	{{sale_price}}	{{sale_from_date}}	{{sale_end_date}}	{{offering_can_be_gift_messaged}}	{{offering_can_be_giftwrapped}}	{{map_price}}	{{offering_end_date}}	{{max_order_quantity}}	{{merchant_shipping_group_name}}	{{offering_start_date}}	{{condition_type}}	{{condition_note}}	{{number_of_items}}	{{product_site_launch_date}}	{{max_aggregate_ship_quantity}}	{{item_package_quantity}}	{{is_discontinued_by_manufacturer}}
         {%- endif -%}
+        {%- liquid
+        
+        # Parent SKU
+        assign parent_sku = item_sku
+        assign parent_child = 'child'
+        assign relationship_type = 'Variation'
+        assign variation_theme = 'color-size'
+
+        -%}
         {%- for variant in product.variants -%}
             {%- liquid
+            
             assign item_sku = variant.sku
             assign external_product_id = variant.barcode
             assign footwear_width = 'Medium'
@@ -64,20 +100,7 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
                 assign target_gender = 'Male'
             endif
 
-            # Product Type
-            assign feed_product_type = 'none'
-            case product.type
-                when 'Mukluk'
-                    assign feed_product_type = 'boot'
-                when 'Slipper'
-                    assign feed_product_type = 'slipper'
-                when 'Moccasin'
-                    assign feed_product_type = 'shoes'
-            endcase
-            case item_name
-                when 'Tipi'
-                    assign feed_product_type = 'slipper'
-            endcase
+
 
             # Recommended Browse Nodes
             assign recommended_browse_nodes = 7141124011
@@ -105,11 +128,7 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
                 endcase
             endcase
 
-            assign parent_child = ''
-            # parent_sku = left(5) of variant.sku
-            assign parent_sku = ''
-            assign relationship_type = 'Variation'
-            assign variation_theme = ''
+
 
             assign model_number = variant.sku
             assign outer_material_type = 'leather'
