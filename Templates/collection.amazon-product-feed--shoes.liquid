@@ -1,6 +1,8 @@
 {%- layout none -%}
 {%- paginate collection.products by 1000 -%}
 {%- liquid
+    # TODO: Parent Variant relationships
+    # TODO: Shoe Size
     assign brand_name = 'Manitobah'
     assign update_delete = ''
     assign external_product_id_type = 'UPC'
@@ -24,6 +26,9 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
         assign footwear_age_group = 'adult'
         assign age_range_description = footwear_age_group
         -%}
+        {%- if product.variants.size > 1 -%}
+            {%  comment  %}  Output Master Product LIne {% endcomment %}
+        {%- endif -%}
         {%- for variant in product.variants -%}
             {%- liquid
             assign item_sku = variant.sku
@@ -101,6 +106,7 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
             endcase
 
             assign parent_child = ''
+            # parent_sku = left(5) of variant.sku
             assign parent_sku = ''
             assign relationship_type = 'Variation'
             assign variation_theme = ''
