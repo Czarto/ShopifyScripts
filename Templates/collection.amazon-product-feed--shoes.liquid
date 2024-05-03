@@ -1,13 +1,11 @@
 {%- layout none -%}
 {%- paginate collection.products by 1000 -%}
 {%- liquid
-    # TODO: Parent Variant relationships
     # TODO: Shoe Size
     # TODO: Richer item_name
     # TODO: Set item style name
     assign brand_name = 'Manitobah'
     assign update_delete = 'Update'
-    assign external_product_id_type = 'UPC'
     assign footwear_size_system = 'US Footwear Size System'
     assign footwear_size_class = 'Alpha'
     assign currency_code = cart.currency.iso_code
@@ -45,6 +43,9 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
                 assign feed_product_type = 'slipper'
         endcase
 
+        # Clear product id type for Parent nodes
+        assign external_product_id_type = ''
+
         # Parent's Item SKU
         assign item_sku = product.first_available_variant.sku | slice: 0, 5
         assign parent_child = 'parent'
@@ -62,6 +63,9 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
         assign parent_child = 'child'
         assign relationship_type = 'Variation'
         assign variation_theme = 'color-size'
+
+        # Set Product Id type for child nodes
+        assign external_product_id_type = 'UPC'
 
         -%}
         {%- for variant in product.variants -%}
