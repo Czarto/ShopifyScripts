@@ -1,7 +1,6 @@
 {%- layout none -%}
 {%- paginate collection.products by 1000 -%}
 {%- liquid
-    # TODO: Richer item_name
     assign brand_name = 'Manitobah'
     assign update_delete = 'Update'
     assign footwear_size_system = 'US Footwear Size System'
@@ -15,7 +14,16 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
     {%- for product in collection.products -%}
         {%- liquid
         assign model_name = product.title | replace: ',','' | remove: '"' | remove: "'" | remove: "," |  strip_html | strip
+
+        # Item Name
         assign item_name = model_name
+        unless item_name contains product.type
+            assign item_name = item_name | append: ' ' | append: product.type
+        endunless
+        case model_name
+        when 'Tipi'
+            assign item_name = item_name | replace: 'Moccasin', 'Slipper'
+        endcase
         # assign brand_name = product.vendor
 
         # Description
@@ -37,7 +45,7 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
             when 'Moccasin'
                 assign feed_product_type = 'shoes'
         endcase
-        case item_name
+        case model_name
             when 'Tipi'
                 assign feed_product_type = 'slipper'
         endcase
@@ -120,6 +128,7 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
             assign item_weight = variant.weight_in_unit
             assign condition_type = 'New'
 
+            # Color and Size data
             for option in product.options
                 if option == 'Color' or option == 'Colour'
                     assign color_name = variant.options[forloop.index0]
@@ -175,7 +184,6 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
                             assign recommended_browse_nodes = 679313011
                 endcase
             endcase
-
 
 
             assign model_number = variant.sku
