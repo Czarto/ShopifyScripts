@@ -3,8 +3,6 @@
 {%- liquid
     assign brand_name = 'Manitobah'
     assign update_delete = 'Update'
-    assign footwear_size_system = 'US Footwear Size System'
-    assign footwear_size_class = 'Numeric'
     assign currency_code = cart.currency.iso_code
 -%}
 TemplateType=fptcustom	Version=2024.0502	Category=shoes	TemplateSignature=U0xJUFBFUixTQU5EQUwsVEVDSE5JQ0FMX1NQT1JUX1NIT0UsU0hPRVMsQk9PVCxTSE9FX0FDQ0VTU09SWSxIQU5EQkFH	settings=attributeRow=3&contentLanguageTag=en_CA&dataRow=4&feedType=113&headerLanguageTag=en_CA&isEdit=false&isProcessingSummary=false&labelRow=2&primaryMarketplaceId=amzn1.mp.o.A2EUQ1WTGCTBG2&reportProvenance=false&templateIdentifier=c01ab600-e6d4-4292-98c7-16e1da48eeac&timestamp=2024-05-02T00%3A39%3A50.822Z	"     Use ENGLISH to fill in this template. DO NOT modify or delete the coloured header rows. To expand all optional columns, click the ""2"" button on the top left."																																	Images										Variation				Discovery																																																																																			Product Enrichment																					Dimensions																											Fulfillment									Compliance																																																																	Offer																							
@@ -32,8 +30,19 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
             assign product_description = product.metafields.global.description_tag | remove: ","
         endif
 
+        assign footwear_size_system = 'US Footwear Size System'
         assign footwear_age_group = 'adult'
         assign age_range_description = footwear_age_group
+        assign footwear_width = 'Medium'
+        assign footwear_width_unisex = ''
+        assign footwear_size_class = 'Numeric'
+        assign footwear_size_unisex = ''
+        assign footwear_gender = ''
+        assign footwear_gender_unisex = ''
+        assign target_gender = ''
+
+        assign outer_material_type = ''
+
 
         # Product Type
         assign feed_product_type = 'none'
@@ -60,9 +69,20 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
         assign parent_sku = ''
         assign relationship_type = ''
         assign variation_theme = 'color-size'
+        assign model_number = ''
+        assign color_name = ''
+        assign color_map = ''
 
         # Parent's Image
         assign main_image_url = product.featured_image | image_url: width: 2000 | prepend: "https:"
+        assign other_image_url1 = ''
+        assign other_image_url2 = ''
+        assign other_image_url3 = ''
+        assign other_image_url4 = ''
+        assign other_image_url5 = ''
+        assign other_image_url6 = ''
+        assign other_image_url7 = ''
+        assign other_image_url8 = ''
 
         # Parent's Recommended Browse Node
         for option in product.options
@@ -72,6 +92,7 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
         endfor
         assign recommended_browse_nodes = 7141124011
         if footwear_size contains 'Ladies'
+            assign footwear_gender = 'Women'
             case feed_product_type
             when 'boot'
                 assign recommended_browse_nodes = 679380011
@@ -81,6 +102,7 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
                 assign recommended_browse_nodes = 679337011
             endcase
         elsif footwear_size contains 'Mens'
+        assign footwear_gender = 'Men'
             case feed_product_type
             when 'boot'
                 assign recommended_browse_nodes = 5658904011
@@ -90,7 +112,8 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
                 assign recommended_browse_nodes = 679313011
             endcase
         endif
-        assign footwear_size = ''
+        assign footwear_size = 5
+        assign footwear_to_size = ''
 
         -%}
         {%- if product.variants.size > 1 -%}
@@ -114,8 +137,11 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
             # Reset values
             assign item_sku = variant.sku
             assign external_product_id = variant.barcode
-            assign footwear_width = ''
+            assign footwear_size_system = 'US Footwear Size System'
+            assign footwear_width = 'Medium'
+            assign footwear_size_class = 'Numeric'
             assign footwear_size = ''
+            assign footwear_to_size = ''
             assign color_name = ''
             assign color_map = ''
 
@@ -140,6 +166,7 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
             # Footwear size and gender values
             assign footwear_gender_unisex = ''
             assign footwear_size_unisex = ''
+            assign footwear_width_unisex = ''
             assign footwear_size = ''
             assign target_gender = ''
 
@@ -153,6 +180,7 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
                     assign footwear_gender_unisex = 'Men'
                     assign target_gender = 'Unisex'
                     assign footwear_size_unisex = variantSizes[4]
+                    assign footwear_width_unisex = "Medium"
                 endif
             elsif variantSizes.first == 'Mens'
                 assign footwear_gender = 'Men'
