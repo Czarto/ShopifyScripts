@@ -4,7 +4,7 @@
 
     assign fulfillment_center_id = 'AMAZON_NA'
     assign brand_name = 'Manitobah'
-    assign update_delete = 'Partial Update'
+    assign update_delete = 'Update'
     assign currency_code = cart.currency.iso_code
     assign price_adjustment = 1.05
 -%}
@@ -16,7 +16,6 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
         {%- liquid
         assign model_name = product.title | replace: ',','' | remove: '"' | remove: "'" | remove: "," |  strip_html | strip
 
-        #TODO: Create variant names with variant details
         # Item Name
         assign item_name = model_name
         unless item_name contains product.type
@@ -139,6 +138,7 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
             {%- liquid
             
             # Reset values
+            assign item_name = model_name | append: ' ' | append: variant.title
             assign item_sku = variant.sku
             assign external_product_id = variant.barcode
             assign footwear_size_system = 'US Footwear Size System'
@@ -153,7 +153,7 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
             # assign sale_price = variant.price | money_without_currency
             assign standard_price = variant.price | times: price_adjustment | money_without_currency
             assign list_price = variant.compare_at_price | money_without_currency
-            assign quantity_available = 0
+            assign quantity_available = ''
             assign item_weight_unit_of_measure = variant.weight_unit
             assign item_weight = variant.weight_in_unit
             assign condition_type = 'New'
