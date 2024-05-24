@@ -3,11 +3,13 @@
 {%- liquid
 
     assign brand_name = 'Manitobah'
+    assign manufacturer = 'Manitobah'
+    assign manufacturer_contact_information = 'Blue Moose Clothing Company Ltd, 401-25 Forks Market Road, Winnipeg, MB  R3C 4S8 Tel +1-855-685-5857'
+
     assign update_delete = 'Update'
     assign currency_code = cart.currency.iso_code
     assign price_adjustment = 1.05
 
-    assign manufacturer_contact_information = 'Blue Moose Clothing Company Ltd, 401-25 Forks Market Road, Winnipeg, MB  R3C 4S8 Tel +1-855-685-5857'
     assign batteries_required = 'no'
     assign are_batteries_included = false
     assign contains_liquid_contents = 'no'
@@ -21,6 +23,7 @@
     assign package_height_unit_of_measure = 'in'
     assign package_width_unit_of_measure = 'in'
     assign package_weight_unit_of_measure = 'lb'
+    assign item_package_quantity = 1
 
 -%}
 TemplateType=fptcustom	Version=2024.0502	Category=shoes	TemplateSignature=U0xJUFBFUixTQU5EQUwsVEVDSE5JQ0FMX1NQT1JUX1NIT0UsU0hPRVMsQk9PVCxTSE9FX0FDQ0VTU09SWSxIQU5EQkFH	settings=attributeRow=3&contentLanguageTag=en_CA&dataRow=4&feedType=113&headerLanguageTag=en_CA&isEdit=false&isProcessingSummary=false&labelRow=2&primaryMarketplaceId=amzn1.mp.o.A2EUQ1WTGCTBG2&reportProvenance=false&templateIdentifier=c01ab600-e6d4-4292-98c7-16e1da48eeac&timestamp=2024-05-02T00%3A39%3A50.822Z	"     Use ENGLISH to fill in this template. DO NOT modify or delete the coloured header rows. To expand all optional columns, click the ""2"" button on the top left."																																	Images										Variation				Discovery																																																																																			Product Enrichment																					Dimensions																											Fulfillment									Compliance																																																																	Offer																							
@@ -87,6 +90,12 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
                 assign item_type = 'slipper'
                 assign item_type_name = 'slipper'
         endcase
+
+        # Special Features
+        assign special_features1 = 'Breathable'
+        assign special_features2 = 'Flexible'
+        assign special_features3 = 'Lightweight'
+
 
         # Clear product id type for Parent nodes
         assign external_product_id = ''
@@ -189,6 +198,7 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
             assign condition_type = 'New'
 
             # Color and Size data
+            # TODO: Color Map
             for option in product.options
                 if option == 'Color' or option == 'Colour'
                     assign color_name = variant.options[forloop.index0]
@@ -252,6 +262,7 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
             assign outer_material_type = 'leather'
 
             # Main Variant Image
+            # TODO: Include Video if present
             if variant.image
                 assign main_image_url = variant.image | image_url: width: 2000 | prepend: "https:"
             else
