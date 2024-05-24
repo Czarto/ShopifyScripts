@@ -64,10 +64,11 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
         assign outer_material_type = ''
 
 
-        # Product Type, Item Type, Item Type Name
+        # Product Type, Item Type, Item Type Name, etc...
         assign item_type = 'Shoes'
         assign item_type_name = ''
         assign feed_product_type = 'none'
+        assign sole_material = ''
         case product.type
             when 'Mukluk'
                 assign feed_product_type = 'boot'
@@ -79,16 +80,22 @@ feed_product_type	item_sku	brand_name	update_delete	item_name	product_descriptio
                 assign feed_product_type = 'shoes'
                 assign item_type = 'shoes'
                 assign item_type_name = 'moccasin'
+                assign sole_material = 'Rubber'
+
             when 'Shoes'
                 assign feed_product_type = 'shoes'
                 assign item_type = 'shoes'
                 assign item_type_name = 'moccasin'
+                assign sole_material = 'Rubber'
+
         endcase
         case model_name
             when 'Tipi'
                 assign feed_product_type = 'slipper'
                 assign item_type = 'slipper'
                 assign item_type_name = 'slipper'
+                assign sole_material = 'Leather'
+
         endcase
 
         # Special Features
